@@ -143,7 +143,7 @@ export default function SoulmateCalculatorPage() {
                   {chart.venus.sign}
                 </div>
                 <div className="text-xs text-[var(--color-muted-fg)] mt-1">{t("loveAttraction")}</div>
-                {chart.venus.retrograde && <Badge variant="rose" className="mt-2">{t("retrograde", { ns: "venus" })}</Badge>}
+                {chart.venus.retrograde && <Badge variant="rose" className="mt-2">Retrograde ℞</Badge>}
               </Card>
 
               <Card variant="feature" padding="md" className="text-center">
