@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
-import { locales, localeNames, type Locale } from "@/i18n/locales";
+import { isPublishedLocale, locales, localeNames, type Locale } from "@/i18n/locales";
 import { cn } from "@/lib/utils";
 import { Globe } from "lucide-react";
 
@@ -21,6 +21,9 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
+
+  const publishedLocales = locales.filter((loc) => isPublishedLocale(loc));
+  if (publishedLocales.length < 2) return null;
 
   const handleSwitch = (newLocale: Locale) => {
     setOpen(false);
@@ -46,7 +49,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
           role="listbox"
           aria-label="Available languages"
         >
-          {locales.map((loc) => (
+          {publishedLocales.map((loc) => (
             <button
               key={loc}
               role="option"

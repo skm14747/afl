@@ -18,6 +18,7 @@ import {
   type NatalChart,
 } from "@/lib/astro-engine";
 import { ZODIAC_ELEMENTS, ZODIAC_SIGNS, type ZodiacSign } from "@/lib/astrology-data";
+import { Link } from "@/i18n/navigation";
 import { Heart, Sparkles, Moon, Eye, Star, Users } from "lucide-react";
 
 function getPartnerTraits(chart: NatalChart): {
@@ -93,9 +94,10 @@ export default function SoulmateCalculatorPage() {
     >
       <div className="max-w-2xl mx-auto text-center mb-10">
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
-          This tool explores your astrological placements related to love and partnership,
-          offering traditional astrological interpretations and reflective insights about your
-          romantic nature.
+          This is one birth chart. Venus, Moon, and Mars describe how you love and what you look for in a partner. It is not a prediction of a named soulmate. For two people, use the{" "}
+          <Link href="/synastry-chart" className="underline">synastry chart</Link>
+          {" "}or the{" "}
+          <Link href="/moon-phase-soulmate" className="underline">moon-phase soulmate test</Link>.
         </p>
       </div>
 

@@ -2,7 +2,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Cormorant_Garamond, DM_Sans, Noto_Sans_Devanagari, Noto_Sans_JP, Noto_Sans_Arabic } from "next/font/google";
-import { locales, isRtl, type Locale } from "@/i18n/locales";
+import { locales, isPublishedLocale, isRtl, type Locale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
 
 /** Root locale layout must read params for <html lang>, dir, fonts, and i18n messages. */
@@ -61,32 +61,35 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
   const messages = await getMessages();
-  const rtl = isRtl(locale as Locale);
+  const published = isPublishedLocale(locale);
+  const htmlLang = published ? locale : "en";
+  const rtl = published && isRtl(locale as Locale);
 
   const fontVars = [
     cormorantGaramond.variable,
     dmSans.variable,
-    locale === "hi" ? notoDevanagari.variable : "",
-    locale === "ja" ? notoJP.variable : "",
-    locale === "ar" ? notoArabic.variable : "",
+    published && locale === "hi" ? notoDevanagari.variable : "",
+    published && locale === "ja" ? notoJP.variable : "",
+    published && locale === "ar" ? notoArabic.variable : "",
   ].filter(Boolean).join(" ");
 
   const bodyFontFamily =
-    locale === "hi"
+    published && locale === "hi"
       ? "var(--font-devanagari), var(--font-dm-sans), var(--font-body)"
-      : locale === "ja"
+      : published && locale === "ja"
         ? "var(--font-jp), var(--font-dm-sans), var(--font-body)"
-        : locale === "ar"
+        : published && locale === "ar"
           ? "var(--font-arabic), var(--font-dm-sans), var(--font-body)"
           : "var(--font-dm-sans), var(--font-body)";
 
   return (
     <html
-      lang={locale}
+      lang={htmlLang}
       dir={rtl ? "rtl" : "ltr"}
       className={`${fontVars} h-full`}
       suppressHydrationWarning
     >
+      {published ? null : <meta name="robots" content="noindex, follow" />}
       <body
         className="min-h-full flex flex-col antialiased"
         style={{ fontFamily: bodyFontFamily }}

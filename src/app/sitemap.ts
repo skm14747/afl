@@ -8,6 +8,7 @@ const SITE = "https://astrologyforlove.com";
 type AppHref = Parameters<typeof getPathname>[0]["href"];
 
 function absoluteUrl(locale: Locale, href: AppHref): string {
+  if (href === "/") return SITE;
   return new URL(getPathname({ locale, href }), SITE).toString();
 }
 

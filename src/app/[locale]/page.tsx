@@ -63,11 +63,20 @@ export const metadata: Metadata = {
     siteName: "AstrologyForLove",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "AstrologyForLove — Free Zodiac Compatibility Calculators",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,
+    images: ["/opengraph-image"],
   },
 };
 

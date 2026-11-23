@@ -1,10 +1,10 @@
 import { toolMetadata } from "@/lib/seo";
 
 export const metadata = toolMetadata({
-  title: "Soulmate Synastry Calculator — Romantic Destiny",
-    description: "Explore deep synastry indicators traditionally associated with soulmate connections. Venus, Moon, Mars, and North Node analysis.",
+  title: "Soulmate Calculator — One-Person Love Profile",
+    description: "One birth chart. Venus, Moon, and Mars describe how you love and what you look for in a partner. This is not a reading of two people.",
     ogTitle: "Soulmate Calculator — AstrologyForLove",
-    ogDescription: "Discover your astrological soulmate profile through natal chart analysis.",
+    ogDescription: "A one-person love profile from Venus, Moon, and Mars. Not a two-chart synastry reading.",
     href: "/soulmate-calculator",
 });
 
