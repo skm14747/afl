@@ -1,0 +1,211 @@
+/* ============================================
+   AstrologyForLove — Design Tokens
+   Cosmic Connection Brand Identity
+   ============================================ */
+
+:root {
+  /* ── Primary Palette ── */
+  --cosmic-navy: #17152D;
+  --mystic-plum: #392544;
+  --champagne-gold: #D8AF79;
+  --romantic-rose: #D99BA6;
+  --ivory: #F6F0E9;
+  --lavender-mist: #B9A9C9;
+
+  /* ── Primary (Cosmic Navy) Scale ── */
+  --primary-50: #EEEEF5;
+  --primary-100: #D5D4E8;
+  --primary-200: #ABAACD;
+  --primary-300: #8180B2;
+  --primary-400: #575697;
+  --primary-500: #2D2C7C;
+  --primary-600: #242361;
+  --primary-700: #1E1C4A;
+  --primary-800: #17152D;
+  --primary-900: #100F20;
+  --primary-950: #0A0914;
+
+  /* ── Secondary (Mystic Plum) Scale ── */
+  --secondary-50: #F5EEF3;
+  --secondary-100: #E6D5E0;
+  --secondary-200: #CDABC2;
+  --secondary-300: #B481A3;
+  --secondary-400: #9B5785;
+  --secondary-500: #6E3B5E;
+  --secondary-600: #573050;
+  --secondary-700: #482B44;
+  --secondary-800: #392544;
+  --secondary-900: #2A1A32;
+  --secondary-950: #1B1121;
+
+  /* ── Neutral Scale ── */
+  --neutral-50: #F8F6F3;
+  --neutral-100: #F0ECE6;
+  --neutral-200: #E0D9CF;
+  --neutral-300: #C9BFB2;
+  --neutral-400: #A99E8F;
+  --neutral-500: #8A7E6D;
+  --neutral-600: #6E6456;
+  --neutral-700: #534B40;
+  --neutral-800: #3A342C;
+  --neutral-900: #221F1A;
+  --neutral-950: #131210;
+
+  /* ── Gold Scale ── */
+  --gold-50: #FBF6EE;
+  --gold-100: #F5E8D2;
+  --gold-200: #EDD4A9;
+  --gold-300: #E3C08A;
+  --gold-400: #D8AF79;
+  --gold-500: #C9985C;
+  --gold-600: #B07F3F;
+  --gold-700: #8E6632;
+  --gold-800: #6B4D26;
+  --gold-900: #48341A;
+
+  /* ── Rose Scale ── */
+  --rose-50: #FBF2F4;
+  --rose-100: #F5DFE3;
+  --rose-200: #EDBFC8;
+  --rose-300: #E3A5B1;
+  --rose-400: #D99BA6;
+  --rose-500: #C47E8C;
+  --rose-600: #AD6373;
+  --rose-700: #8F4D5D;
+  --rose-800: #6E3A47;
+  --rose-900: #4D2832;
+
+  /* ── Semantic Colors (Light Theme) ── */
+  --color-bg: var(--ivory);
+  --color-bg-alt: #FFFFFF;
+  --color-fg: var(--cosmic-navy);
+  --color-fg-secondary: var(--neutral-600);
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-primary: var(--cosmic-navy);
+  --color-primary-fg: #FFFFFF;
+  --color-secondary: var(--mystic-plum);
+  --color-secondary-fg: #FFFFFF;
+  --color-accent: var(--champagne-gold);
+  --color-accent-fg: var(--cosmic-navy);
+  --color-muted: var(--neutral-100);
+  --color-muted-fg: var(--neutral-600);
+  --color-border: var(--neutral-200);
+  --color-border-subtle: var(--neutral-100);
+  --color-input: var(--neutral-200);
+  --color-input-bg: #FFFFFF;
+  --color-focus-ring: var(--lavender-mist);
+  --color-success: #2D8A5E;
+  --color-success-bg: #E8F5EE;
+  --color-warning: #C48B2C;
+  --color-warning-bg: #FEF5E7;
+  --color-error: #C4423A;
+  --color-error-bg: #FDE8E8;
+  --color-info: #3B6BA5;
+  --color-info-bg: #E8F0F8;
+
+  /* ── Typography ── */
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+
+  --text-display-1: clamp(2.75rem, 5vw + 1rem, 4.5rem);
+  --text-display-2: clamp(2.25rem, 4vw + 0.75rem, 3.5rem);
+  --text-h1: clamp(2rem, 3vw + 0.5rem, 3rem);
+  --text-h2: clamp(1.625rem, 2.5vw + 0.5rem, 2.25rem);
+  --text-h3: clamp(1.375rem, 2vw + 0.25rem, 1.75rem);
+  --text-h4: clamp(1.125rem, 1.5vw + 0.25rem, 1.375rem);
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-caption: 0.8125rem;
+  --text-overline: 0.75rem;
+
+  --leading-display: 1.1;
+  --leading-heading: 1.25;
+  --leading-body: 1.6;
+  --leading-tight: 1.3;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+
+  /* ── Spacing (4px base) ── */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+
+  /* ── Containers ── */
+  --container-reading: 760px;
+  --container-standard: 1120px;
+  --container-wide: 1280px;
+
+  /* ── Border Radius ── */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 2px rgba(23, 21, 45, 0.06);
+  --shadow-md: 0 4px 12px rgba(23, 21, 45, 0.08);
+  --shadow-lg: 0 8px 24px rgba(23, 21, 45, 0.1);
+  --shadow-xl: 0 16px 48px rgba(23, 21, 45, 0.12);
+  --shadow-glow-gold: 0 0 20px rgba(216, 175, 121, 0.15);
+  --shadow-glow-rose: 0 0 20px rgba(217, 155, 166, 0.15);
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+  --transition-celestial: 3s ease-in-out;
+}
+
+/* ── Dark Theme ── */
+[data-theme="dark"] {
+  --color-bg: var(--cosmic-navy);
+  --color-bg-alt: var(--primary-900);
+  --color-fg: var(--ivory);
+  --color-fg-secondary: var(--neutral-300);
+  --color-surface: var(--primary-800);
+  --color-surface-elevated: var(--primary-700);
+  --color-primary: var(--champagne-gold);
+  --color-primary-fg: var(--cosmic-navy);
+  --color-secondary: var(--lavender-mist);
+  --color-secondary-fg: var(--cosmic-navy);
+  --color-accent: var(--champagne-gold);
+  --color-accent-fg: var(--cosmic-navy);
+  --color-muted: var(--primary-700);
+  --color-muted-fg: var(--neutral-400);
+  --color-border: var(--primary-600);
+  --color-border-subtle: var(--primary-700);
+  --color-input: var(--primary-600);
+  --color-input-bg: var(--primary-800);
+  --color-focus-ring: var(--champagne-gold);
+  --color-success: #3AAF72;
+  --color-success-bg: rgba(58, 175, 114, 0.15);
+  --color-warning: #DBA23E;
+  --color-warning-bg: rgba(219, 162, 62, 0.15);
+  --color-error: #E05E57;
+  --color-error-bg: rgba(224, 94, 87, 0.15);
+  --color-info: #5B8EC4;
+  --color-info-bg: rgba(91, 142, 196, 0.15);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.4);
+  --shadow-glow-gold: 0 0 24px rgba(216, 175, 121, 0.2);
+  --shadow-glow-rose: 0 0 24px rgba(217, 155, 166, 0.2);
+}
