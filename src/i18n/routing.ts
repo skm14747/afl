@@ -4,7 +4,7 @@ import { locales, defaultLocale } from "./locales";
 export const routing = defineRouting({
   locales,
   defaultLocale,
-  localePrefix: "always",
+  localePrefix: "as-needed",
   pathnames: {
     "/": "/",
     "/love-compatibility": {
