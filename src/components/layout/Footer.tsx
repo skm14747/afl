@@ -42,8 +42,14 @@ export function Footer() {
     <footer className="bg-cosmic-gradient text-[var(--ivory)] mt-auto bg-stars relative overflow-hidden">
       {/* Soft ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute w-[400px] h-[400px] rounded-full opacity-[0.03] blur-[80px]" style={{ background: "var(--champagne-gold)", bottom: "-20%", left: "20%" }} />
-        <div className="absolute w-[300px] h-[300px] rounded-full opacity-[0.025] blur-[60px]" style={{ background: "var(--romantic-rose)", top: "10%", right: "15%" }} />
+        <div
+          className="absolute w-[400px] h-[400px] rounded-full opacity-[0.03] blur-[80px]"
+          style={{ background: "var(--champagne-gold)", bottom: "-20%", left: "20%" }}
+        />
+        <div
+          className="absolute w-[300px] h-[300px] rounded-full opacity-[0.025] blur-[60px]"
+          style={{ background: "var(--romantic-rose)", top: "10%", right: "15%" }}
+        />
       </div>
       <Container size="wide" className="py-20 relative">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -73,13 +79,31 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-16 pt-8 border-t border-[var(--primary-600)]/40 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-[var(--neutral-500)]">
-            {t("copyright")}
-          </p>
-          <p className="text-xs text-[var(--neutral-500)] italic" style={{ fontFamily: "var(--font-display)" }}>
-            {t("tagline")}
-          </p>
+
+        {/* Bottom bar */}
+        <div className="mt-16 pt-8 border-t border-[var(--primary-600)]/40">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-[var(--neutral-500)]">
+              {t("copyright")}
+            </p>
+            <div className="flex items-center gap-6">
+              <span className="text-xs text-[var(--neutral-500)] hover:text-[var(--neutral-400)] transition-colors cursor-pointer">
+                Privacy
+              </span>
+              <span className="text-xs text-[var(--neutral-500)] hover:text-[var(--neutral-400)] transition-colors cursor-pointer">
+                Terms
+              </span>
+              <span className="text-xs text-[var(--neutral-500)] hover:text-[var(--neutral-400)] transition-colors cursor-pointer">
+                Contact
+              </span>
+            </div>
+            <p
+              className="text-xs text-[var(--neutral-500)] italic"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {t("tagline")}
+            </p>
+          </div>
         </div>
       </Container>
     </footer>

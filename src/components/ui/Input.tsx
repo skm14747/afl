@@ -22,9 +22,9 @@ export function TextInput({ label, error, hint, className, id, ...props }: TextI
       <input
         id={inputId}
         className={cn(
-          "w-full px-3 py-2.5 text-sm rounded-[var(--radius-md)]",
+          "w-full px-3 py-2.5 text-sm rounded-[var(--radius-lg)]",
           "bg-[var(--color-input-bg)] border border-[var(--color-input)]",
-          "text-[var(--color-fg)] placeholder:text-[var(--neutral-400)]",
+          "text-[var(--color-fg)] placeholder:text-[var(--neutral-500)]",
           "transition-colors",
           "focus:outline-none focus:border-[var(--color-focus-ring)] focus:ring-2 focus:ring-[var(--color-focus-ring)]/30",
           error && "border-[var(--color-error)] focus:border-[var(--color-error)] focus:ring-[var(--color-error)]/30",
@@ -75,7 +75,7 @@ export function Select({ label, error, options, placeholder, className, id, ...p
       <select
         id={selectId}
         className={cn(
-          "w-full px-3 py-2.5 text-sm rounded-[var(--radius-md)]",
+          "w-full px-3 py-2.5 text-sm rounded-[var(--radius-lg)]",
           "bg-[var(--color-input-bg)] border border-[var(--color-input)]",
           "text-[var(--color-fg)]",
           "transition-colors",

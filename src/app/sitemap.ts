@@ -1,23 +1,21 @@
 import type { MetadataRoute } from "next";
 import { locales, localePublicationStatus } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
+import { getSitemapTools } from "@/lib/tool-registry";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://astrologyforlove.com";
 
+  // Build route list from the tool registry (live tools only)
+  const toolRoutes = getSitemapTools().map((tool) => ({
+    path: `/${tool.id}`,
+    priority: tool.sitemapPriority,
+    changeFrequency: "weekly" as const,
+  }));
+
   const routes = [
     { path: "/", priority: 1.0, changeFrequency: "weekly" as const },
-    { path: "/love-compatibility", priority: 0.9, changeFrequency: "weekly" as const },
-    { path: "/venus-sign-calculator", priority: 0.9, changeFrequency: "weekly" as const },
-    { path: "/moon-sign-compatibility", priority: 0.9, changeFrequency: "weekly" as const },
-    { path: "/soulmate-calculator", priority: 0.8, changeFrequency: "weekly" as const },
-    { path: "/marriage-compatibility", priority: 0.8, changeFrequency: "weekly" as const },
-    { path: "/birth-chart-compatibility", priority: 0.8, changeFrequency: "weekly" as const },
-    { path: "/twin-flame-calculator", priority: 0.7, changeFrequency: "weekly" as const },
-    { path: "/relationship-numerology", priority: 0.7, changeFrequency: "weekly" as const },
-    { path: "/rising-sign-compatibility", priority: 0.7, changeFrequency: "weekly" as const },
-    { path: "/ex-compatibility", priority: 0.6, changeFrequency: "weekly" as const },
-    { path: "/zodiac-love", priority: 0.8, changeFrequency: "weekly" as const },
+    ...toolRoutes,
   ];
 
   const entries: MetadataRoute.Sitemap = [];

@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ZodiacIcon } from "@/components/astrology/ZodiacIcon";
+import { ChartWheel } from "@/components/astrology/ChartWheel";
 import { PlanetBadge } from "@/components/astrology/PlanetBadge";
 import {
   calculateNatalChart,
@@ -107,6 +108,7 @@ export default function SoulmateCalculatorPage() {
             value={birthDetails}
             onChange={setBirthDetails}
             showTime
+            showLocation
             errors={errors}
           />
           <div className="mt-6 flex justify-center">
@@ -126,7 +128,9 @@ export default function SoulmateCalculatorPage() {
       {chart && traits && (
         <>
           <ResultsSection title="Your Romantic Astrology Profile">
-            {/* Key placements */}
+            <div className="max-w-md mx-auto mb-10">
+              <ChartWheel chart={chart} caption="Your natal wheel" />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-10">
               <Card variant="feature" padding="md" className="text-center">
                 <div className="flex justify-center mb-2">

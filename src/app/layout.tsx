@@ -17,9 +17,13 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "AstrologyForLove — Written in the Stars. Felt in the Heart.",
+  metadataBase: new URL("https://astrologyforlove.com"),
+  title: {
+    default: "Love Astrology & Zodiac Compatibility | AstrologyForLove",
+    template: "%s | AstrologyForLove",
+  },
   description:
-    "Premium love astrology, zodiac compatibility, soulmate discovery, and relationship insights.",
+    "Check zodiac compatibility for love, a soulmate, or marriage. Free Venus, Moon, and birth-chart tools calculate real planetary positions in your browser.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

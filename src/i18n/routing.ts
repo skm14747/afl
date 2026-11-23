@@ -137,6 +137,32 @@ export const routing = defineRouting({
       ar: "/twafuq-alsabiq",
     },
 
+    "/composite-chart": {
+      en: "/composite-chart",
+      es: "/carta-compuesta",
+      fr: "/theme-composite",
+      de: "/komposit-horoskop",
+      pt: "/mapa-composto",
+      hi: "/composite-kundli",
+      it: "/tema-composito",
+      ja: "/konpojitto-chaato",
+      id: "/peta-komposit",
+      ar: "/kharita-murakkaba",
+    },
+
+    "/kundli-matching": {
+      en: "/kundli-matching",
+      es: "/kundli-matching",
+      fr: "/kundli-matching",
+      de: "/kundli-matching",
+      pt: "/kundli-matching",
+      hi: "/kundli-milan",
+      it: "/kundli-matching",
+      ja: "/kundli-matching",
+      id: "/kundli-matching",
+      ar: "/kundli-matching",
+    },
+
     "/zodiac-love": {
       en: "/zodiac-love",
       es: "/amor-zodiaco",
@@ -148,6 +174,32 @@ export const routing = defineRouting({
       ja: "/seiza-no-ai",
       id: "/cinta-zodiak",
       ar: "/hub-alabraj",
+    },
+
+    "/love-language-calculator": {
+      en: "/love-language-calculator",
+      es: "/calculadora-lenguaje-amor",
+      fr: "/calculateur-langage-amour",
+      de: "/liebessprache-rechner",
+      pt: "/calculadora-linguagem-amor",
+      hi: "/prem-bhasha-calculator",
+      it: "/calcolatore-linguaggio-amore",
+      ja: "/ai-no-gengo-keisanki",
+      id: "/kalkulator-bahasa-cinta",
+      ar: "/hasibat-lughat-alhub",
+    },
+
+    "/relationship-pattern-analyzer": {
+      en: "/relationship-pattern-analyzer",
+      es: "/analizador-patrones-relacion",
+      fr: "/analyseur-schemas-relationnels",
+      de: "/beziehungsmuster-analyse",
+      pt: "/analisador-padroes-relacionamento",
+      hi: "/sambandh-pattern-vishleshan",
+      it: "/analizzatore-schemi-relazione",
+      ja: "/kankei-pataan-bunseki",
+      id: "/penganalisis-pola-hubungan",
+      ar: "/muhalil-anmat-alilaqat",
     },
   },
 });

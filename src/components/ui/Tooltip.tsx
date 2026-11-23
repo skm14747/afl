@@ -28,7 +28,7 @@ export function Tooltip({ content, children, position = "top", className }: Tool
         <div
           role="tooltip"
           className={cn(
-            "absolute z-50 px-2.5 py-1.5 text-xs font-medium rounded-[var(--radius-md)]",
+            "absolute z-50 px-2.5 py-1.5 text-xs font-medium rounded-[var(--radius-lg)]",
             "bg-[var(--cosmic-navy)] text-white shadow-[var(--shadow-md)]",
             "whitespace-nowrap pointer-events-none",
             position === "top" && "bottom-full left-1/2 -translate-x-1/2 mb-2",

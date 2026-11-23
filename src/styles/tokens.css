@@ -12,6 +12,13 @@
   --ivory: #F6F0E9;
   --lavender-mist: #B9A9C9;
 
+  /* ── Supporting Colors ── */
+  --deep-aubergine: #241B30;
+  --muted-mauve: #806A83;
+  --soft-blush: #EBD5D5;
+  --warm-white: #FFFCF8;
+  --subtle-border: rgba(57, 37, 68, 0.12);
+
   /* ── Primary (Cosmic Navy) Scale ── */
   --primary-50: #EEEEF5;
   --primary-100: #D5D4E8;

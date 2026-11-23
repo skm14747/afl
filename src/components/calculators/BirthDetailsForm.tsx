@@ -4,6 +4,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { TextInput, DateInput } from "@/components/ui/Input";
 import type { BirthDetails } from "@/lib/astro-engine";
+import { CityPicker } from "./CityPicker";
 
 interface BirthDetailsFormProps {
   label?: string;
@@ -12,6 +13,7 @@ interface BirthDetailsFormProps {
   showTime?: boolean;
   showLocation?: boolean;
   requireTime?: boolean;
+  requireLocation?: boolean;
   errors?: Record<string, string>;
   className?: string;
 }
@@ -23,6 +25,7 @@ export function BirthDetailsForm({
   showTime = true,
   showLocation = false,
   requireTime = false,
+  requireLocation = false,
   errors = {},
   className,
 }: BirthDetailsFormProps) {
@@ -58,26 +61,12 @@ export function BirthDetailsForm({
       )}
 
       {showLocation && (
-        <div className="grid grid-cols-2 gap-3">
-          <TextInput
-            label="Latitude"
-            type="number"
-            step="0.0001"
-            placeholder="e.g. 40.7128"
-            value={value.latitude?.toString() || ""}
-            onChange={(e) => onChange({ ...value, latitude: parseFloat(e.target.value) || undefined })}
-            hint="Decimal degrees"
-          />
-          <TextInput
-            label="Longitude"
-            type="number"
-            step="0.0001"
-            placeholder="e.g. -74.0060"
-            value={value.longitude?.toString() || ""}
-            onChange={(e) => onChange({ ...value, longitude: parseFloat(e.target.value) || undefined })}
-            hint="Decimal degrees"
-          />
-        </div>
+        <CityPicker
+          value={value}
+          onChange={onChange}
+          error={errors.place}
+          required={requireLocation}
+        />
       )}
 
       {showTime && !requireTime && !value.time && (

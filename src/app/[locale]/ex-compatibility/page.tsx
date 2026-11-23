@@ -15,6 +15,7 @@ import {
   type NatalChart,
   type CompatibilityResult,
 } from "@/lib/astro-engine";
+import { SynastryReport } from "@/components/calculators/SynastryReport";
 import { RotateCcw, Heart, MessageCircle, AlertTriangle, Eye, Sparkles } from "lucide-react";
 
 export default function ExCompatibilityPage() {
@@ -57,8 +58,8 @@ export default function ExCompatibilityPage() {
       <div className="max-w-3xl mx-auto">
         <Card variant="default" padding="lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <BirthDetailsForm label="You" value={personA} onChange={setPersonA} showTime errors={errors.a} />
-            <BirthDetailsForm label="Your Ex" value={personB} onChange={setPersonB} showTime errors={errors.b} />
+            <BirthDetailsForm label="You" value={personA} onChange={setPersonA} showTime showLocation errors={errors.a} />
+            <BirthDetailsForm label="Your Ex" value={personB} onChange={setPersonB} showTime showLocation errors={errors.b} />
           </div>
           <div className="flex justify-center mt-8">
             <Button variant="secondary" size="lg" onClick={handleCalculate} icon={<Eye className="w-4 h-4" />}>
@@ -145,6 +146,13 @@ export default function ExCompatibilityPage() {
               </p>
             </Card>
           </div>
+          <SynastryReport
+            chartA={result.chartA}
+            chartB={result.chartB}
+            detailsA={personA as BirthDetails}
+            detailsB={personB as BirthDetails}
+            result={result.compat}
+          />
         </>
       )}
 

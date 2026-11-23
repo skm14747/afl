@@ -11,10 +11,12 @@ import { ZodiacIcon } from "@/components/astrology/ZodiacIcon";
 import {
   calculateNatalChart,
   calculateAspects,
+  calculateChartCompatibility,
   type BirthDetails,
   type NatalChart,
   type AspectInfo,
 } from "@/lib/astro-engine";
+import { SynastryReport } from "@/components/calculators/SynastryReport";
 import { Flame, Sparkles, Heart, Moon, Star } from "lucide-react";
 
 function analyzeTwinFlameIndicators(chartA: NatalChart, chartB: NatalChart, aspects: AspectInfo[]) {
@@ -145,8 +147,8 @@ export default function TwinFlameCalculatorPage() {
       <div className="max-w-3xl mx-auto">
         <Card variant="default" padding="lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <BirthDetailsForm label="Person A" value={personA} onChange={setPersonA} showTime errors={errors.a} />
-            <BirthDetailsForm label="Person B" value={personB} onChange={setPersonB} showTime errors={errors.b} />
+            <BirthDetailsForm label="Person A" value={personA} onChange={setPersonA} showTime showLocation errors={errors.a} />
+            <BirthDetailsForm label="Person B" value={personB} onChange={setPersonB} showTime showLocation errors={errors.b} />
           </div>
           <div className="flex justify-center mt-8">
             <Button variant="secondary" size="lg" onClick={handleCalculate} icon={<Flame className="w-4 h-4" />}>
@@ -219,6 +221,15 @@ export default function TwinFlameCalculatorPage() {
                 </div>
               </Card>
             </div>
+          )}
+          {chartA && chartB && (
+            <SynastryReport
+              chartA={chartA}
+              chartB={chartB}
+              detailsA={personA as BirthDetails}
+              detailsB={personB as BirthDetails}
+              result={calculateChartCompatibility(chartA, chartB)}
+            />
           )}
         </>
       )}

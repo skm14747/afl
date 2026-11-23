@@ -6,11 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:engine": "tsx scripts/check-engine.ts"
   },
   "dependencies": {
     "astronomy-engine": "^2.1.19",
     "lucide-react": "^1.78.0",
+    "luxon": "^3.7.2",
     "next": "16.4.6",
     "next-intl": "^4.16.0",
     "react": "19.3.0",
@@ -18,12 +20,14 @@
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "4.3.3",
+    "@types/luxon": "^3.7.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "tailwindcss": "4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

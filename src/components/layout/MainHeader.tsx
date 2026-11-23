@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/branding/Logo";
@@ -12,11 +12,22 @@ import { Menu, X } from "lucide-react";
 
 interface MainHeaderProps {
   className?: string;
+  theme?: "dark" | "light";
 }
 
-export function MainHeader({ className }: MainHeaderProps) {
+export function MainHeader({ className, theme = "light" }: MainHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const t = useTranslations("nav");
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const isDarkMode = theme === "dark" && !scrolled;
 
   const navItems = [
     { label: t("compatibility"), href: "/love-compatibility" as const },
@@ -28,14 +39,23 @@ export function MainHeader({ className }: MainHeaderProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 glass border-b border-[var(--color-border-subtle)]/60",
+        "fixed top-0 inset-x-0 z-40 transition-all duration-500",
+        scrolled
+          ? "glass border-b border-[var(--color-border-subtle)]/60 shadow-[var(--shadow-sm)]"
+          : theme === "dark"
+            ? "bg-transparent"
+            : "glass border-b border-[var(--color-border-subtle)]/60",
         className
       )}
     >
       <Container size="wide">
         <div className="flex items-center justify-between h-[60px]">
           <Link href="/">
-            <Logo variant="horizontal" theme="light" size="sm" />
+            <Logo
+              variant="horizontal"
+              theme={isDarkMode ? "gold" : "light"}
+              size="sm"
+            />
           </Link>
 
           <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
@@ -43,7 +63,12 @@ export function MainHeader({ className }: MainHeaderProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3.5 py-2 text-[13px] font-medium text-[var(--color-fg)] hover:text-[var(--champagne-gold)] transition-colors duration-200 rounded-[var(--radius-md)] tracking-wide"
+                className={cn(
+                  "px-3.5 py-2 text-[13px] font-medium transition-colors duration-200 rounded-[var(--radius-md)] tracking-wide",
+                  isDarkMode
+                    ? "text-[var(--ivory)]/80 hover:text-[var(--champagne-gold)]"
+                    : "text-[var(--color-fg)] hover:text-[var(--champagne-gold)]"
+                )}
               >
                 {item.label}
               </Link>
@@ -52,14 +77,15 @@ export function MainHeader({ className }: MainHeaderProps) {
 
           <div className="hidden md:flex items-center gap-3">
             <LanguageSwitcher />
-            <Button variant="ghost" size="sm">{t("signIn")}</Button>
-            <Button variant="secondary" size="sm">{t("getReading")}</Button>
           </div>
 
           <Button
             variant="icon"
             size="sm"
-            className="md:hidden"
+            className={cn(
+              "md:hidden",
+              isDarkMode && "text-[var(--ivory)]"
+            )}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
@@ -69,7 +95,7 @@ export function MainHeader({ className }: MainHeaderProps) {
       </Container>
 
       {mobileOpen && (
-        <div className="md:hidden border-t border-[var(--color-border-subtle)] bg-[var(--color-bg)]">
+        <div className="md:hidden border-t border-[var(--color-border-subtle)] glass">
           <Container>
             <nav className="flex flex-col py-4 gap-1" aria-label="Mobile navigation">
               {navItems.map((item) => (
@@ -84,8 +110,6 @@ export function MainHeader({ className }: MainHeaderProps) {
               ))}
               <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-[var(--color-border-subtle)]">
                 <LanguageSwitcher />
-                <Button variant="ghost" size="sm">{t("signIn")}</Button>
-                <Button variant="secondary" size="sm">{t("getReading")}</Button>
               </div>
             </nav>
           </Container>

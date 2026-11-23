@@ -17,6 +17,8 @@ import {
   type NatalChart,
   type CompatibilityResult,
 } from "@/lib/astro-engine";
+import { SynastryReport } from "@/components/calculators/SynastryReport";
+import { SavedChartsBar } from "@/components/calculators/SavedChartsBar";
 import { Compass, Star, AlertTriangle } from "lucide-react";
 
 const PLANET_LIST = ["sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto"] as const;
@@ -78,8 +80,14 @@ export default function BirthChartCompatibilityPage() {
       <div className="max-w-3xl mx-auto">
         <Card variant="default" padding="lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <BirthDetailsForm label="Person A" value={personA} onChange={setPersonA} showTime errors={errors.a} />
-            <BirthDetailsForm label="Person B" value={personB} onChange={setPersonB} showTime errors={errors.b} />
+            <div className="flex flex-col gap-4">
+              <SavedChartsBar details={personA as BirthDetails} onLoad={setPersonA} />
+              <BirthDetailsForm label="Person A" value={personA} onChange={setPersonA} showTime showLocation errors={errors.a} />
+            </div>
+            <div className="flex flex-col gap-4">
+              <SavedChartsBar details={personB as BirthDetails} onLoad={setPersonB} />
+              <BirthDetailsForm label="Person B" value={personB} onChange={setPersonB} showTime showLocation errors={errors.b} />
+            </div>
           </div>
           <div className="flex justify-center mt-8">
             <Button variant="secondary" size="lg" onClick={handleCalculate} icon={<Compass className="w-4 h-4" />}>
@@ -200,6 +208,13 @@ export default function BirthChartCompatibilityPage() {
               ))}
             </div>
           </div>
+          <SynastryReport
+            chartA={chartA}
+            chartB={chartB}
+            detailsA={personA as BirthDetails}
+            detailsB={personB as BirthDetails}
+            result={result}
+          />
         </>
       )}
 
@@ -215,13 +230,14 @@ export default function BirthChartCompatibilityPage() {
           },
           {
             question: "Is this more accurate than Sun sign compatibility?",
-            answer: "Yes — synastry considers all personal planets (Sun, Moon, Mercury, Venus, Mars) and their exact positions, providing a much more nuanced and specific picture of relationship dynamics.",
+            answer: "Yes. This reading uses all ten planets from Sun through Pluto. Houses are whole sign and appear when both a birth time and a city are given.",
           },
         ]}
       />
 
       <RelatedTools
         tools={[
+          { title: "Composite Chart", description: "The relationship as its own chart.", href: "/composite-chart" },
           { title: "Marriage Compatibility", description: "Partnership-focused analysis.", href: "/marriage-compatibility" },
           { title: "Twin Flame Calculator", description: "Explore intense soul connections.", href: "/twin-flame-calculator" },
           { title: "Venus Sign Calculator", description: "Discover your love planet.", href: "/venus-sign-calculator" },

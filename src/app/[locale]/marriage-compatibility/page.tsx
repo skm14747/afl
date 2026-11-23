@@ -17,6 +17,8 @@ import {
   type NatalChart,
   type CompatibilityResult,
 } from "@/lib/astro-engine";
+import { SynastryReport } from "@/components/calculators/SynastryReport";
+import { Link } from "@/i18n/navigation";
 import { Heart, Shield, MessageCircle, Sparkles, AlertTriangle, Star } from "lucide-react";
 
 export default function MarriageCompatibilityPage() {
@@ -58,7 +60,9 @@ export default function MarriageCompatibilityPage() {
           the dimensions most relevant to long-term partnership: emotional bonding, communication
           harmony, romantic attraction, shared values, and commitment potential.
           No astrological score can predict marriage success — but understanding your dynamics
-          can support better communication and self-awareness.
+          can support better communication and self-awareness. This page is a tropical Western
+          reading. For Ashtakoota, Mangal dosha, and porutham, use the{" "}
+          <Link href="/kundli-matching" className="underline">Vedic kundli match</Link>.
         </p>
       </div>
 
@@ -71,6 +75,7 @@ export default function MarriageCompatibilityPage() {
               value={personA}
               onChange={setPersonA}
               showTime
+              showLocation
               errors={errors.a}
             />
             <BirthDetailsForm
@@ -78,6 +83,7 @@ export default function MarriageCompatibilityPage() {
               value={personB}
               onChange={setPersonB}
               showTime
+              showLocation
               errors={errors.b}
             />
           </div>
@@ -257,9 +263,8 @@ export default function MarriageCompatibilityPage() {
             <div className="text-sm text-[var(--color-muted-fg)] leading-relaxed space-y-3">
               <p>
                 This compatibility analysis compares the actual planetary positions in both birth charts
-                using precise ephemeris calculations. It evaluates major aspects (conjunction, sextile,
-                square, trine, opposition) between the five personal planets: Sun, Moon, Mercury, Venus,
-                and Mars.
+                using precise ephemeris calculations. It evaluates major aspects between all ten planets,
+                from the Sun through Pluto. Houses, when a city and time are given, are whole sign.
               </p>
               <p>
                 Scores are weighted by relevance: Venus-Mars aspects influence romance scores,
@@ -273,6 +278,15 @@ export default function MarriageCompatibilityPage() {
               </p>
             </div>
           </div>
+          {chartA && chartB && result && (
+            <SynastryReport
+              chartA={chartA}
+              chartB={chartB}
+              detailsA={personA as BirthDetails}
+              detailsB={personB as BirthDetails}
+              result={result}
+            />
+          )}
         </>
       )}
 

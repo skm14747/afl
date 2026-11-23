@@ -37,7 +37,9 @@
     "exCompat": "Ex-Compatibility",
     "copyright": "© 2026 AstrologyForLove. All rights reserved.",
     "tagline": "Written in the Stars. Felt in the Heart.",
-    "description": "Discover your cosmic love story through the wisdom of the stars."
+    "description": "Discover your cosmic love story through the wisdom of the stars.",
+    "composite": "Composite Chart",
+    "kundli": "Kundli Matching"
   },
   "home": {
     "heroTitle": "AstrologyForLove",

@@ -24,6 +24,12 @@
   --color-ivory: var(--ivory);
   --color-lavender-mist: var(--lavender-mist);
 
+  --color-deep-aubergine: var(--deep-aubergine);
+  --color-muted-mauve: var(--muted-mauve);
+  --color-soft-blush: var(--soft-blush);
+  --color-warm-white: var(--warm-white);
+  --color-subtle-border: var(--subtle-border);
+
   --color-gold-50: var(--gold-50);
   --color-gold-100: var(--gold-100);
   --color-gold-200: var(--gold-200);
@@ -181,6 +187,26 @@ p {
   max-width: var(--container-wide);
   margin-inline: auto;
   padding-inline: var(--space-4);
+}
+
+/* ── Editorial backgrounds ── */
+.bg-editorial {
+  background-color: var(--warm-white);
+}
+
+.bg-immersive {
+  background: linear-gradient(
+    180deg,
+    var(--deep-aubergine) 0%,
+    var(--cosmic-navy) 60%,
+    color-mix(in srgb, var(--cosmic-navy) 90%, var(--mystic-plum)) 100%
+  );
+}
+
+/* ── Serif italic emphasis ── */
+.text-serif-italic {
+  font-family: var(--font-display);
+  font-style: italic;
 }
 
 /* ── Celestial Background Pattern ── */
@@ -481,4 +507,19 @@ a.sparkle-link:hover::after {
   flex: 1;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--champagne-gold), transparent);
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .print-results {
+    break-inside: avoid;
+  }
 }
