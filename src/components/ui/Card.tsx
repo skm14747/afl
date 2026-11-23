@@ -12,11 +12,11 @@ interface CardProps {
 }
 
 const variantStyles = {
-  default: "bg-[var(--color-surface)] border border-[var(--color-border-subtle)]",
-  elevated: "bg-[var(--color-surface-elevated)] shadow-[var(--shadow-md)]",
-  outlined: "bg-transparent border border-[var(--color-border)]",
-  feature: "bg-[var(--color-surface-elevated)] border border-[var(--gold-200)] shadow-[var(--shadow-glow-gold)]",
-  cosmic: "bg-[var(--cosmic-navy)] text-[var(--ivory)] border border-[var(--primary-600)]",
+  default: "bg-[var(--color-surface)] border border-[var(--color-border-subtle)] hover:border-[var(--color-border)]",
+  elevated: "bg-[var(--color-surface-elevated)] shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)]",
+  outlined: "bg-transparent border border-[var(--color-border)] hover:border-[var(--gold-200)]",
+  feature: "bg-[var(--color-surface-elevated)] border border-[var(--gold-200)] shadow-[var(--shadow-glow-gold)] hover:shadow-[0_0_30px_rgba(216,175,121,0.2)]",
+  cosmic: "bg-[var(--cosmic-navy)] text-[var(--ivory)] border border-[var(--primary-500)]/50 shadow-[0_0_20px_rgba(23,21,45,0.3)]",
 };
 
 const paddingStyles = {
@@ -35,10 +35,10 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-[var(--radius-lg)] transition-all",
+        "rounded-[var(--radius-xl)] transition-all duration-300",
         variantStyles[variant],
         paddingStyles[padding],
-        hover && "hover:shadow-[var(--shadow-lg)] hover:-translate-y-0.5 cursor-pointer sparkle-hover shimmer-gold",
+        hover && "hover:shadow-[var(--shadow-lg)] hover:-translate-y-1 cursor-pointer sparkle-hover shimmer-gold",
         className
       )}
     >

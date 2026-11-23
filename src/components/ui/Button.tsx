@@ -18,25 +18,25 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const variantStyles: Record<ButtonVariant, string> = {
   primary: [
     "bg-[var(--cosmic-navy)] text-white",
-    "hover:bg-[var(--primary-700)]",
-    "active:bg-[var(--primary-900)]",
+    "hover:bg-[var(--primary-700)] hover:shadow-[0_4px_16px_rgba(23,21,45,0.2)]",
+    "active:bg-[var(--primary-900)] active:scale-[0.98]",
     "disabled:bg-[var(--neutral-300)] disabled:text-[var(--neutral-500)]",
   ].join(" "),
   secondary: [
-    "bg-[var(--champagne-gold)] text-[var(--cosmic-navy)]",
-    "hover:bg-[var(--gold-500)]",
-    "active:bg-[var(--gold-600)]",
+    "bg-[var(--champagne-gold)] text-[var(--cosmic-navy)] font-semibold",
+    "hover:bg-[var(--gold-300)] hover:shadow-[0_4px_20px_rgba(216,175,121,0.25)]",
+    "active:bg-[var(--gold-600)] active:scale-[0.98]",
     "disabled:bg-[var(--neutral-200)] disabled:text-[var(--neutral-500)]",
   ].join(" "),
   outline: [
     "border border-[var(--color-border)] bg-transparent text-[var(--color-fg)]",
-    "hover:bg-[var(--color-muted)] hover:border-[var(--neutral-300)]",
-    "active:bg-[var(--neutral-200)]",
+    "hover:bg-[var(--color-muted)] hover:border-[var(--champagne-gold)]/50 hover:text-[var(--champagne-gold)]",
+    "active:bg-[var(--neutral-200)] active:scale-[0.98]",
     "disabled:border-[var(--neutral-200)] disabled:text-[var(--neutral-400)]",
   ].join(" "),
   ghost: [
     "bg-transparent text-[var(--color-fg)]",
-    "hover:bg-[var(--color-muted)]",
+    "hover:bg-[var(--color-muted)] hover:text-[var(--champagne-gold)]",
     "active:bg-[var(--neutral-200)]",
     "disabled:text-[var(--neutral-400)]",
   ].join(" "),
@@ -76,8 +76,8 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center font-medium transition-all",
-        "rounded-[var(--radius-md)]",
+        "inline-flex items-center justify-center font-medium transition-all duration-200",
+        "rounded-[var(--radius-lg)]",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus-ring)]",
         "disabled:cursor-not-allowed disabled:opacity-70",
         "cursor-pointer sparkle-hover heart-click",

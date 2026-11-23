@@ -28,12 +28,12 @@ export function MainHeader({ className }: MainHeaderProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 bg-[var(--color-bg)]/95 backdrop-blur-md border-b border-[var(--color-border-subtle)]",
+        "sticky top-0 z-40 glass border-b border-[var(--color-border-subtle)]/60",
         className
       )}
     >
       <Container size="wide">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-[60px]">
           <Link href="/">
             <Logo variant="horizontal" theme="light" size="sm" />
           </Link>
@@ -43,7 +43,7 @@ export function MainHeader({ className }: MainHeaderProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-2 text-sm text-[var(--color-fg)] hover:text-[var(--champagne-gold)] transition-colors rounded-[var(--radius-md)]"
+                className="px-3.5 py-2 text-[13px] font-medium text-[var(--color-fg)] hover:text-[var(--champagne-gold)] transition-colors duration-200 rounded-[var(--radius-md)] tracking-wide"
               >
                 {item.label}
               </Link>

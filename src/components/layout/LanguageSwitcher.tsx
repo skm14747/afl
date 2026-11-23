@@ -31,7 +31,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     <div ref={ref} className={cn("relative", className)}>
       <button
         onClick={() => setOpen(!open)}
-        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium border border-[var(--color-border-subtle)] rounded-[var(--radius-md)] hover:bg-[var(--color-muted)] transition-colors cursor-pointer"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-[var(--color-border-subtle)] rounded-[var(--radius-full)] hover:bg-[var(--color-muted)] hover:border-[var(--champagne-gold)]/40 transition-all duration-200 cursor-pointer"
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-label="Switch language"
@@ -42,7 +42,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
 
       {open && (
         <div
-          className="absolute end-0 top-full mt-1 z-50 w-48 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] py-1 overflow-hidden"
+          className="absolute end-0 top-full mt-2 z-50 w-52 bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-xl)] shadow-[var(--shadow-xl)] py-2 overflow-hidden"
           role="listbox"
           aria-label="Available languages"
         >
@@ -53,10 +53,10 @@ export function LanguageSwitcher({ className }: { className?: string }) {
               aria-selected={loc === locale}
               onClick={() => handleSwitch(loc)}
               className={cn(
-                "w-full text-start px-3 py-2 text-sm transition-colors cursor-pointer",
+                "w-full text-start px-4 py-2.5 text-sm transition-all duration-150 cursor-pointer",
                 loc === locale
-                  ? "bg-[var(--color-muted)] text-[var(--champagne-gold)] font-medium"
-                  : "text-[var(--color-fg)] hover:bg-[var(--color-muted)]"
+                  ? "bg-[var(--color-muted)] text-[var(--champagne-gold)] font-semibold"
+                  : "text-[var(--color-fg)] hover:bg-[var(--color-muted)] hover:text-[var(--champagne-gold)] hover:ps-5"
               )}
             >
               {localeNames[loc]}

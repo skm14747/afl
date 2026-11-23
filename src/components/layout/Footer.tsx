@@ -39,26 +39,31 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[var(--cosmic-navy)] text-[var(--ivory)] mt-auto">
-      <Container size="wide" className="py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+    <footer className="bg-cosmic-gradient text-[var(--ivory)] mt-auto bg-stars relative overflow-hidden">
+      {/* Soft ambient glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute w-[400px] h-[400px] rounded-full opacity-[0.03] blur-[80px]" style={{ background: "var(--champagne-gold)", bottom: "-20%", left: "20%" }} />
+        <div className="absolute w-[300px] h-[300px] rounded-full opacity-[0.025] blur-[60px]" style={{ background: "var(--romantic-rose)", top: "10%", right: "15%" }} />
+      </div>
+      <Container size="wide" className="py-20 relative">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-1">
             <Logo variant="horizontal" theme="gold" size="sm" showTagline />
-            <p className="mt-4 text-sm text-[var(--neutral-400)] leading-relaxed max-w-xs">
+            <p className="mt-5 text-sm text-[var(--neutral-400)] leading-[1.7] max-w-xs">
               {t("description")}
             </p>
           </div>
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--champagne-gold)] mb-4">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--champagne-gold)] mb-5">
                 {section.title}
               </h3>
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 {section.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-[var(--neutral-400)] hover:text-[var(--ivory)] transition-colors"
+                      className="text-sm text-[var(--neutral-400)] hover:text-[var(--champagne-gold)] transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -68,7 +73,7 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-12 pt-8 border-t border-[var(--primary-600)] flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-16 pt-8 border-t border-[var(--primary-600)]/40 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[var(--neutral-500)]">
             {t("copyright")}
           </p>

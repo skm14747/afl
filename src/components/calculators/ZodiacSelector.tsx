@@ -42,17 +42,17 @@ export function ZodiacSelector({ value, onChange, label, className }: ZodiacSele
               type="button"
               onClick={() => onChange(sign)}
               className={cn(
-                "flex flex-col items-center gap-1 py-2.5 px-1 rounded-[var(--radius-lg)] border transition-all cursor-pointer",
-                "hover:shadow-[var(--shadow-sm)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus-ring)]",
+                "flex flex-col items-center gap-1.5 py-3 px-1.5 rounded-[var(--radius-xl)] border transition-all duration-250 cursor-pointer",
+                "hover:shadow-[var(--shadow-md)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus-ring)]",
                 isSelected
-                  ? cn(elementBgSelected[element], "shadow-[var(--shadow-md)] scale-105")
-                  : cn(elementBg[element], "hover:scale-[1.02]")
+                  ? cn(elementBgSelected[element], "shadow-[var(--shadow-lg)] scale-105 ring-2 ring-offset-2 ring-[var(--champagne-gold)]/30")
+                  : cn(elementBg[element], "hover:scale-[1.04] hover:-translate-y-0.5")
               )}
               aria-pressed={isSelected}
               aria-label={`Select ${sign}`}
             >
-              <span className="text-lg">{ZODIAC_SYMBOLS[sign]}</span>
-              <span className="text-[10px] font-medium leading-tight">{sign}</span>
+              <span className={cn("text-xl transition-transform duration-200", isSelected && "scale-110")}>{ZODIAC_SYMBOLS[sign]}</span>
+              <span className="text-[10px] font-semibold leading-tight tracking-wide">{sign}</span>
             </button>
           );
         })}
