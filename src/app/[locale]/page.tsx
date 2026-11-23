@@ -103,6 +103,8 @@ const tools: Array<{
     | "/mars-sign-compatibility"
     | "/love-language-calculator"
     | "/relationship-pattern-analyzer"
+    | "/venus-mars-attraction"
+    | "/weton-jodoh"
     | "/relationship-forecast";
   icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   accent: string;
@@ -156,7 +158,7 @@ const tools: Array<{
   {
     title: "Birth Chart Compatibility",
     description:
-      "Full synastry analysis comparing two natal charts across all personal planets.",
+      "Weighted compatibility score with planet-by-planet breakdowns for emotional, romantic, and long-term dimensions.",
     href: "/birth-chart-compatibility",
     icon: Compass,
     accent: "var(--crimson-love)",
@@ -237,7 +239,7 @@ const tools: Array<{
   {
     title: "Synastry Chart",
     description:
-      "Compare two birth charts and see every planet-to-planet aspect, house overlay, and relationship theme.",
+      "Full aspect grid and biwheel from two birth charts — every planet-to-planet connection, house overlay, and relationship theme.",
     href: "/synastry-chart",
     icon: Orbit,
     accent: "var(--crimson-love)",
@@ -258,6 +260,22 @@ const tools: Array<{
     href: "/mars-sign-compatibility",
     icon: Flame,
     accent: "var(--crimson-love)",
+  },
+  {
+    title: "Venus–Mars Attraction",
+    description:
+      "Compare two charts for the Venus–Mars contacts that create romantic and physical chemistry.",
+    href: "/venus-mars-attraction",
+    icon: Flame,
+    accent: "var(--cosmic-rose)",
+  },
+  {
+    title: "Weton Jodoh",
+    description:
+      "Javanese love match from two birth dates. Each weton carries a neptu value; the total maps to one of eight traditional labels.",
+    href: "/weton-jodoh",
+    icon: Moon,
+    accent: "var(--rose-gold)",
   },
   {
     title: "Relationship Forecast",
@@ -335,7 +353,7 @@ export default async function HomePage({
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="max-w-xl">
                 <span className="text-[10px] md:text-xs uppercase tracking-[0.25em] text-[var(--cosmic-rose)] font-semibold block mb-6">
-                  Some hearts are written in the stars
+                  Written in the stars · Felt in the heart
                 </span>
                 <h1
                   className="text-[var(--moonlight-cream)] mb-6"
@@ -347,12 +365,13 @@ export default async function HomePage({
                     letterSpacing: "-0.02em",
                   }}
                 >
-                  Zodiac compatibility{" "}
-                  <em className="text-rose-gradient not-italic">for love.</em>
+                  Free Zodiac Compatibility{" "}
+                  <em className="text-rose-gradient not-italic">Calculators</em>
                 </h1>
                 <p className="text-[var(--neutral-300)] leading-relaxed text-[1.05rem] mb-10 max-w-md">
-                  Discover the celestial patterns behind your attraction,
-                  emotional connection and relationship journey.
+                  Real planetary positions calculated in your browser.
+                  Venus, Moon, Mars, and full birth-chart tools for love,
+                  soulmates, and marriage compatibility.
                 </p>
                 <div className="flex gap-4 flex-wrap">
                   <Link
@@ -617,6 +636,65 @@ export default async function HomePage({
                 </ScrollFadeIn>
               </div>
             )}
+          </Container>
+        </section>
+
+        {/* ═══════════════════════════════════════
+            Section C½ — Sign Pair Compatibility Grid
+        ═══════════════════════════════════════ */}
+        <section className="py-20 md:py-28 bg-[var(--color-bg-alt)]">
+          <Container size="standard">
+            <ScrollFadeIn>
+              <SectionHeading
+                eyebrow="78 Sign Pairings"
+                headline={
+                  <>
+                    Sign-by-Sign{" "}
+                    <em className="text-rose-gradient not-italic">
+                      Compatibility
+                    </em>
+                  </>
+                }
+                body="Pick any two zodiac signs and get a free compatibility breakdown — scores, strengths, growth areas, and links to deeper chart tools."
+              />
+            </ScrollFadeIn>
+            <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
+              {[
+                { pair: "aries-and-leo", label: "Aries & Leo", symbols: "♈ ♌" },
+                { pair: "taurus-and-cancer", label: "Taurus & Cancer", symbols: "♉ ♋" },
+                { pair: "gemini-and-libra", label: "Gemini & Libra", symbols: "♊ ♎" },
+                { pair: "cancer-and-scorpio", label: "Cancer & Scorpio", symbols: "♋ ♏" },
+                { pair: "leo-and-sagittarius", label: "Leo & Sagittarius", symbols: "♌ ♐" },
+                { pair: "virgo-and-capricorn", label: "Virgo & Capricorn", symbols: "♍ ♑" },
+                { pair: "libra-and-aquarius", label: "Libra & Aquarius", symbols: "♎ ♒" },
+                { pair: "scorpio-and-pisces", label: "Scorpio & Pisces", symbols: "♏ ♓" },
+                { pair: "aries-and-libra", label: "Aries & Libra", symbols: "♈ ♎" },
+                { pair: "taurus-and-scorpio", label: "Taurus & Scorpio", symbols: "♉ ♏" },
+                { pair: "gemini-and-sagittarius", label: "Gemini & Sagittarius", symbols: "♊ ♐" },
+                { pair: "cancer-and-capricorn", label: "Cancer & Capricorn", symbols: "♋ ♑" },
+              ].map((item) => (
+                <ScrollFadeIn key={item.pair}>
+                  <Link
+                    href={`/compatibility/${item.pair}` as never}
+                    className="group flex flex-col items-center gap-1.5 p-4 rounded-[var(--radius-lg)] border border-[var(--color-border-subtle)] bg-[var(--color-surface)] hover:border-[var(--cosmic-rose)]/40 hover:shadow-[var(--shadow-sm)] transition-all text-center"
+                  >
+                    <span className="text-lg">{item.symbols}</span>
+                    <span className="text-xs font-medium group-hover:text-[var(--crimson-love)] transition-colors">
+                      {item.label}
+                    </span>
+                  </Link>
+                </ScrollFadeIn>
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Link
+                href="/love-compatibility"
+                className="inline-flex items-center gap-2 text-sm font-medium text-[var(--crimson-love)] hover:underline"
+              >
+                View all 78 sign pairings
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </Container>
         </section>
 

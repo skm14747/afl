@@ -123,18 +123,18 @@ export default function SynastryChartPage() {
     <CalculatorShell
       title="Synastry Chart Calculator"
       subtitle="Relationship Astrology"
-      description="Compare two birth charts to see every planetary aspect between them. A synastry chart reveals the connections, tensions, and themes that shape your relationship."
+      description="Generate a free synastry biwheel with the full aspect grid between two natal charts — every planet-to-planet connection, house overlay, and relationship theme."
       icon={<Orbit className="w-8 h-8 text-[var(--champagne-gold)]" />}
     >
       {/* Intro */}
       <div className="max-w-2xl mx-auto text-center mb-10">
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
-          A synastry chart overlays two natal charts and reads the aspects
-          between one person&apos;s planets and the other&apos;s. Unlike
-          Sun-sign compatibility, synastry compares every planet — revealing
-          where the connection flows, where it rubs, and what makes this
-          particular relationship unique. This page is the aspect grid.
-          For dated stretches of the year ahead, use the{" "}
+          A synastry chart overlays two natal charts and reads every aspect
+          between one person&apos;s planets and the other&apos;s. This page
+          shows the full aspect grid, house overlays, and themed breakdowns.
+          For a quicker compatibility score with planet-by-planet reading, see{" "}
+          <Link href="/birth-chart-compatibility" className="underline">birth chart compatibility</Link>.
+          For dated windows over the next 12 months, use the{" "}
           <Link href="/relationship-forecast" className="underline">relationship forecast</Link>.
         </p>
       </div>

@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { Cormorant_Garamond, DM_Sans, Noto_Sans_Devanagari, Noto_Sans_JP, Noto_Sans_Arabic } from "next/font/google";
 import { locales, isPublishedLocale, isRtl, type Locale } from "@/i18n/locales";
@@ -62,23 +63,32 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   const messages = await getMessages();
   const published = isPublishedLocale(locale);
-  const htmlLang = published ? locale : "en";
-  const rtl = published && isRtl(locale as Locale);
+
+  // Middleware sets X-Robots-Tag only for draft-locale pages that are NOT
+  // in the translated-route allowlist. If the header is absent and the locale
+  // is not published, the page is an allowlisted translation.
+  const reqHeaders = await headers();
+  const robotsHeader = reqHeaders.get("x-robots-tag");
+  const noindex = !published && robotsHeader?.includes("noindex");
+  // For allowlisted translated pages, use the actual locale as lang.
+  const htmlLang = published || (!published && !noindex) ? locale : "en";
+  const rtl = (published || !noindex) && isRtl(locale as Locale);
 
   const fontVars = [
     cormorantGaramond.variable,
     dmSans.variable,
-    published && locale === "hi" ? notoDevanagari.variable : "",
-    published && locale === "ja" ? notoJP.variable : "",
-    published && locale === "ar" ? notoArabic.variable : "",
+    (published || !noindex) && locale === "hi" ? notoDevanagari.variable : "",
+    (published || !noindex) && locale === "ja" ? notoJP.variable : "",
+    (published || !noindex) && locale === "ar" ? notoArabic.variable : "",
   ].filter(Boolean).join(" ");
 
+  const useLocaleFont = published || !noindex;
   const bodyFontFamily =
-    published && locale === "hi"
+    useLocaleFont && locale === "hi"
       ? "var(--font-devanagari), var(--font-dm-sans), var(--font-body)"
-      : published && locale === "ja"
+      : useLocaleFont && locale === "ja"
         ? "var(--font-jp), var(--font-dm-sans), var(--font-body)"
-        : published && locale === "ar"
+        : useLocaleFont && locale === "ar"
           ? "var(--font-arabic), var(--font-dm-sans), var(--font-body)"
           : "var(--font-dm-sans), var(--font-body)";
 
@@ -89,7 +99,7 @@ export default async function LocaleLayout({
       className={`${fontVars} h-full`}
       suppressHydrationWarning
     >
-      {published ? null : <meta name="robots" content="noindex, follow" />}
+      {noindex ? <meta name="robots" content="noindex, follow" /> : null}
       <body
         className="min-h-full flex flex-col antialiased"
         style={{ fontFamily: bodyFontFamily }}

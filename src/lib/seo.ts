@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getPathname } from "@/i18n/navigation";
 import { defaultLocale, locales, localePublicationStatus } from "@/i18n/locales";
+import { translatedRoutes } from "@/i18n/translated-routes";
 
 const SITE = "https://astrologyforlove.com";
 
@@ -30,12 +31,15 @@ export function toolMetadata({
     SITE
   ).toString();
 
-  const publishedLocales = locales.filter(
-    (l) => localePublicationStatus[l] === "published"
+  // Include published locales plus draft locales that have this route translated
+  const hreflangLocales = locales.filter(
+    (l) =>
+      localePublicationStatus[l] === "published" ||
+      translatedRoutes[l]?.has(href),
   );
 
   const languages: Record<string, string> = {};
-  for (const l of publishedLocales) {
+  for (const l of hreflangLocales) {
     languages[l] = new URL(
       getPathname({ locale: l, href: href as never }),
       SITE

@@ -64,19 +64,19 @@ export default function BirthChartCompatibilityPage() {
   return (
     <CalculatorShell
       title="Birth Chart Love Compatibility"
-      subtitle="Full Synastry Analysis"
-      description="Compare two complete natal charts to reveal the full spectrum of your relationship dynamics — from Sun to Pluto."
+      subtitle="Compatibility Score & Reading"
+      description="Enter two birth dates for a weighted compatibility score with planet-by-planet breakdowns across emotional, romantic, and long-term dimensions."
       icon={<Compass className="w-8 h-8 text-[var(--champagne-gold)]" />}
     >
       <div className="max-w-2xl mx-auto text-center mb-10">
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
-          Synastry is the astrological comparison of two natal charts. By analyzing how each
-          person&apos;s planets interact with the other&apos;s, synastry reveals the unique
-          dynamics of a relationship — areas of natural harmony, points of attraction, and
-          themes that may require conscious effort. The score lives here.
-          The synastry page is the full aspect grid, and the{" "}
-          <Link href="/relationship-forecast" className="underline">relationship forecast</Link>{" "}
-          dates the next 12 months.
+          This tool scores the compatibility between two natal charts across emotional,
+          romantic, communication, shared-values, and long-term dimensions. Each planet
+          pairing gets a weighted reading so you can see exactly where you click — and where
+          growth lives. Want the full aspect grid and biwheel instead? Try the{" "}
+          <Link href="/synastry-chart" className="underline">synastry chart calculator</Link>.
+          For dated windows over the next 12 months, see the{" "}
+          <Link href="/relationship-forecast" className="underline">relationship forecast</Link>.
         </p>
       </div>
 

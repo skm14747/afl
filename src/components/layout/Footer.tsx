@@ -42,6 +42,8 @@ export function Footer() {
         { label: "Synastry Chart", href: "/synastry-chart" as const },
         { label: "Moon Phase Soulmate", href: "/moon-phase-soulmate" as const },
         { label: "Mars Sign Compatibility", href: "/mars-sign-compatibility" as const },
+        { label: "Venus–Mars Attraction", href: "/venus-mars-attraction" as const },
+        { label: "Weton Jodoh", href: "/weton-jodoh" as const },
       ],
     },
   ];
@@ -95,6 +97,9 @@ export function Footer() {
               {t("copyright")}
             </p>
             <div className="flex items-center gap-6">
+              <Link href="/about" className="text-xs text-[var(--neutral-400)] hover:text-[var(--blush-pink)] transition-colors">
+                About
+              </Link>
               <Link href="/privacy" className="text-xs text-[var(--neutral-400)] hover:text-[var(--blush-pink)] transition-colors">
                 Privacy
               </Link>

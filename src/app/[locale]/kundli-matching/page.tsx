@@ -118,6 +118,21 @@ export default function KundliMatchingPage() {
     : null;
   const bothManglik = Boolean(brideMangal?.manglik && groomMangal?.manglik && !brideMangal.cancelled && !groomMangal.cancelled);
 
+  // Dosha status summary
+  const nadiKoota = guna?.kootas.find((k) => k.name === "Nadi");
+  const bhakootKoota = guna?.kootas.find((k) => k.name === "Bhakoot");
+  const nadiActive = nadiKoota ? nadiKoota.points === 0 : false;
+  const nadiCancelled = nadiKoota ? nadiKoota.points === 8 && nadiKoota.note.includes("cancelled") : false;
+  const bhakootActive = bhakootKoota ? bhakootKoota.points === 0 : false;
+  const bhakootCancelled = bhakootKoota ? bhakootKoota.points === 7 && bhakootKoota.note.includes("cancelled") : false;
+  const brideMangalActive = brideMangal?.manglik && !brideMangal.cancelled;
+  const groomMangalActive = groomMangal?.manglik && !groomMangal.cancelled;
+  const mangalActive = Boolean(brideMangalActive || groomMangalActive) && !bothManglik;
+  const mangalCancelled = Boolean(
+    (brideMangal?.cancelled || groomMangal?.cancelled || bothManglik) &&
+    (brideMangal?.manglik || groomMangal?.manglik),
+  );
+
   return (
     <CalculatorShell
       title="Kundli Matching"
@@ -181,6 +196,98 @@ export default function KundliMatchingPage() {
               <p className="text-sm text-[var(--color-muted-fg)]">{groomMangal.note}</p>
             </Card>
           </div>
+          {/* Dosha status summary */}
+          <div className="max-w-3xl mx-auto mt-8">
+            <h3 className="mb-3" style={{ fontFamily: "var(--font-display)" }}>Dosha status</h3>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-[var(--color-border-subtle)]">
+                  <th className="text-left py-2">Dosha</th>
+                  <th className="text-left py-2">Status</th>
+                  <th className="text-left py-2 pl-4">Detail</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-[var(--color-border-subtle)]">
+                  <td className="py-2">Nadi</td>
+                  <td className="py-2">
+                    {nadiActive && !nadiCancelled ? (
+                      <span className="text-[var(--cosmic-rose)] font-medium">Active</span>
+                    ) : nadiCancelled ? (
+                      <span className="text-[var(--champagne-gold)] font-medium">Cancelled</span>
+                    ) : (
+                      <span className="text-[var(--color-muted-fg)]">Not present</span>
+                    )}
+                  </td>
+                  <td className="py-2 pl-4 text-[var(--color-muted-fg)]">{nadiKoota?.note}</td>
+                </tr>
+                <tr className="border-b border-[var(--color-border-subtle)]">
+                  <td className="py-2">Bhakoot</td>
+                  <td className="py-2">
+                    {bhakootActive ? (
+                      <span className="text-[var(--cosmic-rose)] font-medium">Active</span>
+                    ) : bhakootCancelled ? (
+                      <span className="text-[var(--champagne-gold)] font-medium">Cancelled</span>
+                    ) : (
+                      <span className="text-[var(--color-muted-fg)]">Not present</span>
+                    )}
+                  </td>
+                  <td className="py-2 pl-4 text-[var(--color-muted-fg)]">{bhakootKoota?.note}</td>
+                </tr>
+                <tr className="border-b border-[var(--color-border-subtle)]">
+                  <td className="py-2">Mangal</td>
+                  <td className="py-2">
+                    {mangalActive ? (
+                      <span className="text-[var(--cosmic-rose)] font-medium">Active</span>
+                    ) : mangalCancelled ? (
+                      <span className="text-[var(--champagne-gold)] font-medium">Cancelled</span>
+                    ) : (brideMangal?.manglik || groomMangal?.manglik) ? (
+                      <span className="text-[var(--color-muted-fg)]">Not present in exposed house</span>
+                    ) : (
+                      <span className="text-[var(--color-muted-fg)]">Not present</span>
+                    )}
+                  </td>
+                  <td className="py-2 pl-4 text-[var(--color-muted-fg)]">
+                    {bothManglik
+                      ? "Both charts carry Mangal dosha — cancels for the match."
+                      : brideMangal?.manglik && groomMangal?.manglik
+                        ? "Both have Mars in a Mangal house."
+                        : brideMangal?.manglik
+                          ? `Bride: ${brideMangal.note}`
+                          : groomMangal?.manglik
+                            ? `Groom: ${groomMangal.note}`
+                            : "Neither chart has Mangal dosha."}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Love-marriage reading */}
+          <div className="max-w-3xl mx-auto mt-8 p-5 rounded-lg bg-[var(--color-surface-raised)]">
+            <h3 className="mb-2" style={{ fontFamily: "var(--font-display)" }}>For couples who already chose each other</h3>
+            <p className="text-sm text-[var(--color-muted-fg)] leading-relaxed">
+              {guna.total >= 25
+                ? "The guna total is strong. Most kootas align, and married life is likely to feel natural in its daily rhythms. Focus any discussion on the kootas that scored low — they name the specific adjustments, not a general warning."
+                : guna.total >= 18
+                  ? "The guna total is in the acceptable range. This is the most common band for real marriages. Some kootas will score well and others will not. Read the low-scoring kootas as the areas where communication and compromise matter most."
+                  : "The guna total is below the traditional minimum. That is not a verdict. It means several kootas are strained, which names where the couple will need to invest effort — emotional rhythm, temperament, or compatibility of values. Dosha cancellations and the broader chart can shift the picture."
+              }
+              {nadiActive && !nadiCancelled
+                ? " Nadi dosha is active and is the heaviest single koota. Many families treat it as a strong caution. Check whether a broader chart consultation with a jyotishi identifies a cancellation this tool does not cover."
+                : ""
+              }
+              {bhakootActive
+                ? " Bhakoot dosha is active. The Moon-sign lords are not friends, which can mean the two temperaments pull in different directions under stress."
+                : ""
+              }
+              {mangalActive
+                ? " Mangal dosha is active on one side and not the other. This is a common concern for families. It does not mean the marriage cannot work — it names where impatience or assertiveness may need attention."
+                : ""
+              }
+            </p>
+          </div>
+
           <div className="max-w-3xl mx-auto mt-8">
             <h3 className="mb-3" style={{ fontFamily: "var(--font-display)" }}>Ten poruthams</h3>
             <ul className="text-sm space-y-1">

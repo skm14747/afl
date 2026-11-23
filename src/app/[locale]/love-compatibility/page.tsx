@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import type { ZodiacSign } from "@/lib/astrology-data";
 import { getSignCompatibilityScore, type CompatibilityResult } from "@/lib/astro-engine";
 import { Heart, MessageCircle, Flame, Shield, Star, AlertTriangle } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 
 export default function LoveCompatibilityPage() {
   const [sign1, setSign1] = useState<ZodiacSign | undefined>();
@@ -184,6 +185,40 @@ export default function LoveCompatibilityPage() {
           </div>
         </>
       )}
+
+      {/* Sign Pair Pages */}
+      <div className="mt-12 mb-8">
+        <h2
+          className="text-center mb-6"
+          style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
+        >
+          Explore Every Sign Pairing
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-w-2xl mx-auto">
+          {[
+            "aries-and-taurus", "aries-and-gemini", "aries-and-cancer", "aries-and-leo",
+            "aries-and-virgo", "aries-and-libra", "aries-and-scorpio", "aries-and-sagittarius",
+            "taurus-and-cancer", "taurus-and-virgo", "taurus-and-scorpio", "taurus-and-capricorn",
+            "gemini-and-leo", "gemini-and-libra", "gemini-and-sagittarius", "gemini-and-aquarius",
+            "cancer-and-scorpio", "cancer-and-pisces", "leo-and-sagittarius", "leo-and-aquarius",
+            "virgo-and-capricorn", "libra-and-aquarius", "scorpio-and-pisces", "sagittarius-and-aquarius",
+          ].map((pair) => {
+            const [a, b] = pair.split("-and-");
+            return (
+              <Link
+                key={pair}
+                href={`/compatibility/${pair}` as never}
+                className="text-xs text-center py-2 px-3 rounded-lg border border-[var(--color-border-subtle)] hover:border-[var(--cosmic-rose)]/40 hover:text-[var(--crimson-love)] transition-colors"
+              >
+                {a.charAt(0).toUpperCase() + a.slice(1)} & {b.charAt(0).toUpperCase() + b.slice(1)}
+              </Link>
+            );
+          })}
+        </div>
+        <p className="text-center mt-4 text-xs text-[var(--color-muted-fg)]">
+          All 78 sign combinations available — search any two signs above.
+        </p>
+      </div>
 
       {/* FAQ */}
       <FAQSection
