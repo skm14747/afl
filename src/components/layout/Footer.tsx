@@ -34,7 +34,6 @@ export function Footer() {
         { label: t("zodiacGuide"), href: "/zodiac-love" as const },
         { label: t("risingSign"), href: "/rising-sign-compatibility" as const },
         { label: t("exCompat"), href: "/ex-compatibility" as const },
-        { label: t("designSystem"), href: "/design-system" as const },
       ],
     },
   ];

@@ -35,7 +35,6 @@
     "zodiacGuide": "Guía del Amor del Zodíaco",
     "risingSign": "Compatibilidad Ascendente",
     "exCompat": "Compatibilidad Ex",
-    "designSystem": "Sistema de Diseño",
     "copyright": "© 2026 AstrologyForLove. Todos los derechos reservados.",
     "tagline": "Escrito en las Estrellas. Sentido en el Corazón.",
     "description": "Descubre tu historia de amor cósmica a través de la sabiduría de las estrellas."
@@ -126,10 +125,36 @@
       "Aquarius": "Acuario",
       "Pisces": "Piscis"
     },
-    "elements": { "Fire": "Fuego", "Earth": "Tierra", "Air": "Aire", "Water": "Agua" },
-    "planets": { "Sun": "Sol", "Moon": "Luna", "Mercury": "Mercurio", "Venus": "Venus", "Mars": "Marte", "Jupiter": "Júpiter", "Saturn": "Saturno", "Uranus": "Urano", "Neptune": "Neptuno", "Pluto": "Plutón" },
-    "aspects": { "Conjunction": "Conjunción", "Sextile": "Sextil", "Square": "Cuadratura", "Trine": "Trígono", "Opposition": "Oposición" },
-    "modalities": { "Cardinal": "Cardinal", "Fixed": "Fijo", "Mutable": "Mutable" },
+    "elements": {
+      "Fire": "Fuego",
+      "Earth": "Tierra",
+      "Air": "Aire",
+      "Water": "Agua"
+    },
+    "planets": {
+      "Sun": "Sol",
+      "Moon": "Luna",
+      "Mercury": "Mercurio",
+      "Venus": "Venus",
+      "Mars": "Marte",
+      "Jupiter": "Júpiter",
+      "Saturn": "Saturno",
+      "Uranus": "Urano",
+      "Neptune": "Neptuno",
+      "Pluto": "Plutón"
+    },
+    "aspects": {
+      "Conjunction": "Conjunción",
+      "Sextile": "Sextil",
+      "Square": "Cuadratura",
+      "Trine": "Trígono",
+      "Opposition": "Oposición"
+    },
+    "modalities": {
+      "Cardinal": "Cardinal",
+      "Fixed": "Fijo",
+      "Mutable": "Mutable"
+    },
     "retrograde": "Retrógrado",
     "degree": "grado",
     "element": "Elemento",
@@ -140,5 +165,8 @@
     "invalidDate": "Por favor, introduce una fecha válida.",
     "birthTimeRequired": "La hora de nacimiento es esencial para este cálculo."
   },
-  "language": { "switchLanguage": "Cambiar Idioma", "currentLanguage": "Español" }
+  "language": {
+    "switchLanguage": "Cambiar Idioma",
+    "currentLanguage": "Español"
+  }
 }
