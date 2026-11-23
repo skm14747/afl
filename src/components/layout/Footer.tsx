@@ -6,30 +6,30 @@ import { Container } from "./Container";
 
 const footerLinks = [
   {
-    title: "Astrology",
+    title: "Astrology Tools",
     links: [
-      { label: "Love Compatibility", href: "/compatibility" },
-      { label: "Daily Horoscope", href: "/horoscope" },
-      { label: "Soulmate Finder", href: "/soulmate" },
-      { label: "Venus Sign", href: "/venus-sign" },
+      { label: "Love Compatibility", href: "/love-compatibility" },
+      { label: "Venus Sign Calculator", href: "/venus-sign-calculator" },
+      { label: "Moon Sign Compatibility", href: "/moon-sign-compatibility" },
+      { label: "Soulmate Calculator", href: "/soulmate-calculator" },
     ],
   },
   {
-    title: "Tools",
+    title: "More Tools",
     links: [
-      { label: "Birth Chart", href: "/tools/birth-chart" },
-      { label: "Synastry Chart", href: "/tools/synastry" },
-      { label: "Moon Sign", href: "/tools/moon-sign" },
-      { label: "Compatibility", href: "/tools/compatibility" },
+      { label: "Marriage Compatibility", href: "/marriage-compatibility" },
+      { label: "Birth Chart Compatibility", href: "/birth-chart-compatibility" },
+      { label: "Twin Flame Calculator", href: "/twin-flame-calculator" },
+      { label: "Relationship Numerology", href: "/relationship-numerology" },
     ],
   },
   {
-    title: "Company",
+    title: "Explore",
     links: [
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
-      { label: "Privacy", href: "/privacy" },
-      { label: "Terms", href: "/terms" },
+      { label: "Zodiac Love Guide", href: "/zodiac-love" },
+      { label: "Rising Sign Compatibility", href: "/rising-sign-compatibility" },
+      { label: "Ex-Compatibility", href: "/ex-compatibility" },
+      { label: "Design System", href: "/design-system" },
     ],
   },
 ];

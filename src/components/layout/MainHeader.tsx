@@ -14,19 +14,23 @@ interface NavItem {
 }
 
 const defaultNav: NavItem[] = [
-  { label: "Compatibility", href: "/compatibility" },
-  { label: "Love Horoscope", href: "/love-horoscope" },
-  { label: "Soulmate", href: "/soulmate" },
+  { label: "Compatibility", href: "/love-compatibility" },
+  { label: "Venus Sign", href: "/venus-sign-calculator" },
+  { label: "Soulmate", href: "/soulmate-calculator" },
   {
-    label: "Tools",
-    href: "/tools",
+    label: "More Tools",
+    href: "/zodiac-love",
     children: [
-      { label: "Birth Chart", href: "/tools/birth-chart" },
-      { label: "Synastry", href: "/tools/synastry" },
-      { label: "Venus Sign", href: "/tools/venus-sign" },
+      { label: "Moon Compatibility", href: "/moon-sign-compatibility" },
+      { label: "Marriage", href: "/marriage-compatibility" },
+      { label: "Birth Chart", href: "/birth-chart-compatibility" },
+      { label: "Twin Flame", href: "/twin-flame-calculator" },
+      { label: "Numerology", href: "/relationship-numerology" },
+      { label: "Rising Sign", href: "/rising-sign-compatibility" },
+      { label: "Ex-Compatibility", href: "/ex-compatibility" },
     ],
   },
-  { label: "Articles", href: "/articles" },
+  { label: "Zodiac Guide", href: "/zodiac-love" },
 ];
 
 interface MainHeaderProps {
