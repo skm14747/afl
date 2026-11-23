@@ -12,6 +12,7 @@
     "astronomy-engine": "^2.1.19",
     "lucide-react": "^1.78.0",
     "next": "16.4.6",
+    "next-intl": "^4.16.0",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

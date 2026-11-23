@@ -19,24 +19,9 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "AstrologyForLove — Written in the Stars. Felt in the Heart.",
   description:
-    "Premium love astrology, zodiac compatibility, soulmate discovery, and relationship insights. Two souls connected through the universe.",
+    "Premium love astrology, zodiac compatibility, soulmate discovery, and relationship insights.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html
-      lang="en"
-      className={`${cormorantGaramond.variable} ${dmSans.variable} h-full`}
-      suppressHydrationWarning
-    >
-      <body
-        className="min-h-full flex flex-col antialiased"
-        style={{
-          fontFamily: "var(--font-dm-sans), var(--font-body)",
-        }}
-      >
-        {children}
-      </body>
-    </html>
-  );
+  return children;
 }

@@ -1,40 +1,44 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import { Logo } from "@/components/branding/Logo";
 import { Container } from "./Container";
-
-const footerLinks = [
-  {
-    title: "Astrology Tools",
-    links: [
-      { label: "Love Compatibility", href: "/love-compatibility" },
-      { label: "Venus Sign Calculator", href: "/venus-sign-calculator" },
-      { label: "Moon Sign Compatibility", href: "/moon-sign-compatibility" },
-      { label: "Soulmate Calculator", href: "/soulmate-calculator" },
-    ],
-  },
-  {
-    title: "More Tools",
-    links: [
-      { label: "Marriage Compatibility", href: "/marriage-compatibility" },
-      { label: "Birth Chart Compatibility", href: "/birth-chart-compatibility" },
-      { label: "Twin Flame Calculator", href: "/twin-flame-calculator" },
-      { label: "Relationship Numerology", href: "/relationship-numerology" },
-    ],
-  },
-  {
-    title: "Explore",
-    links: [
-      { label: "Zodiac Love Guide", href: "/zodiac-love" },
-      { label: "Rising Sign Compatibility", href: "/rising-sign-compatibility" },
-      { label: "Ex-Compatibility", href: "/ex-compatibility" },
-      { label: "Design System", href: "/design-system" },
-    ],
-  },
-];
+import { Link } from "@/i18n/navigation";
 
 export function Footer() {
+  const t = useTranslations("footer");
+
+  const footerLinks = [
+    {
+      title: t("astrologyTools"),
+      links: [
+        { label: t("loveCompatibility"), href: "/love-compatibility" as const },
+        { label: t("venusSign"), href: "/venus-sign-calculator" as const },
+        { label: t("moonCompat"), href: "/moon-sign-compatibility" as const },
+        { label: t("soulmate"), href: "/soulmate-calculator" as const },
+      ],
+    },
+    {
+      title: t("moreTools"),
+      links: [
+        { label: t("marriage"), href: "/marriage-compatibility" as const },
+        { label: t("birthChart"), href: "/birth-chart-compatibility" as const },
+        { label: t("twinFlame"), href: "/twin-flame-calculator" as const },
+        { label: t("numerology"), href: "/relationship-numerology" as const },
+      ],
+    },
+    {
+      title: t("explore"),
+      links: [
+        { label: t("zodiacGuide"), href: "/zodiac-love" as const },
+        { label: t("risingSign"), href: "/rising-sign-compatibility" as const },
+        { label: t("exCompat"), href: "/ex-compatibility" as const },
+        { label: t("designSystem"), href: "/design-system" as const },
+      ],
+    },
+  ];
+
   return (
     <footer className="bg-[var(--cosmic-navy)] text-[var(--ivory)] mt-auto">
       <Container size="wide" className="py-16">
@@ -42,7 +46,7 @@ export function Footer() {
           <div className="md:col-span-1">
             <Logo variant="horizontal" theme="gold" size="sm" showTagline />
             <p className="mt-4 text-sm text-[var(--neutral-400)] leading-relaxed max-w-xs">
-              Discover your cosmic love story through the wisdom of the stars.
+              {t("description")}
             </p>
           </div>
           {footerLinks.map((section) => (
@@ -53,12 +57,12 @@ export function Footer() {
               <ul className="space-y-2.5">
                 {section.links.map((link) => (
                   <li key={link.href}>
-                    <a
+                    <Link
                       href={link.href}
                       className="text-sm text-[var(--neutral-400)] hover:text-[var(--ivory)] transition-colors"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -67,10 +71,10 @@ export function Footer() {
         </div>
         <div className="mt-12 pt-8 border-t border-[var(--primary-600)] flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[var(--neutral-500)]">
-            © 2026 AstrologyForLove. All rights reserved.
+            {t("copyright")}
           </p>
           <p className="text-xs text-[var(--neutral-500)] italic" style={{ fontFamily: "var(--font-display)" }}>
-            Written in the Stars. Felt in the Heart.
+            {t("tagline")}
           </p>
         </div>
       </Container>
