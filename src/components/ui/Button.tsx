@@ -80,7 +80,7 @@ export function Button({
         "rounded-[var(--radius-md)]",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus-ring)]",
         "disabled:cursor-not-allowed disabled:opacity-70",
-        "cursor-pointer",
+        "cursor-pointer sparkle-hover heart-click",
         variantStyles[variant],
         isIcon ? iconSizeStyles[size] : sizeStyles[size],
         className

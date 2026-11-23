@@ -38,7 +38,7 @@ export function Card({
         "rounded-[var(--radius-lg)] transition-all",
         variantStyles[variant],
         paddingStyles[padding],
-        hover && "hover:shadow-[var(--shadow-lg)] hover:-translate-y-0.5 cursor-pointer",
+        hover && "hover:shadow-[var(--shadow-lg)] hover:-translate-y-0.5 cursor-pointer sparkle-hover shimmer-gold",
         className
       )}
     >

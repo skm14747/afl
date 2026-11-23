@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Cormorant_Garamond, DM_Sans, Noto_Sans_Devanagari, Noto_Sans_JP, Noto_Sans_Arabic } from "next/font/google";
 import { locales, isRtl, type Locale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
+import { LoveSparkles } from "@/components/effects/LoveSparkles";
+import { SparkleTrail } from "@/components/effects/SparkleTrail";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -89,6 +91,8 @@ export default async function LocaleLayout({
         className="min-h-full flex flex-col antialiased"
         style={{ fontFamily: bodyFontFamily }}
       >
+        <LoveSparkles />
+        <SparkleTrail />
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
