@@ -3,6 +3,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/Card";
+import { Link } from "@/i18n/navigation";
 import { Star } from "lucide-react";
 
 interface ResultsSectionProps {
@@ -123,16 +124,16 @@ export function RelatedTools({ tools, className }: RelatedToolsProps) {
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {tools.map((tool) => (
-          <a
+          <Link
             key={tool.href}
-            href={tool.href}
+            href={tool.href as any}
             className="block p-5 rounded-[var(--radius-lg)] border border-[var(--color-border-subtle)] hover:border-[var(--champagne-gold)] hover:shadow-[var(--shadow-md)] transition-all group"
           >
             <h4 className="font-medium mb-1 group-hover:text-[var(--champagne-gold)] transition-colors">
               {tool.title}
             </h4>
             <p className="text-sm text-[var(--color-muted-fg)]">{tool.description}</p>
-          </a>
+          </Link>
         ))}
       </div>
     </section>

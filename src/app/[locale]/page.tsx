@@ -16,9 +16,16 @@ import {
   Star,
   BookOpen,
 } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { setRequestLocale } from "next-intl/server";
 
-const tools = [
+const tools: Array<{
+  title: string;
+  description: string;
+  href: "/" | "/love-compatibility" | "/venus-sign-calculator" | "/moon-sign-compatibility" | "/soulmate-calculator" | "/marriage-compatibility" | "/birth-chart-compatibility" | "/twin-flame-calculator" | "/relationship-numerology" | "/rising-sign-compatibility" | "/ex-compatibility" | "/zodiac-love";
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  accent: string;
+}> = [
   {
     title: "Love Compatibility",
     description: "Discover how your zodiac signs connect in love, communication, and romance.",
@@ -98,7 +105,13 @@ const tools = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <>
       <MainHeader />

@@ -228,7 +228,7 @@ export function LoveSparkles() {
     const setSize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const w = window.innerWidth;
-      const h = document.documentElement.scrollHeight;
+      const h = window.innerHeight;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       canvas.style.width = `${w}px`;
