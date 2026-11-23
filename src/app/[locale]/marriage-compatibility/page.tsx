@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { CalculatorShell } from "@/components/calculators/CalculatorShell";
 import { BirthDetailsForm } from "@/components/calculators/BirthDetailsForm";
 import { ResultsSection, InsightBlock, ScoreSummary, RelatedTools, FAQSection, ShareResult } from "@/components/calculators/ResultsSection";
@@ -22,6 +23,7 @@ import { Link } from "@/i18n/navigation";
 import { Heart, Shield, MessageCircle, Sparkles, AlertTriangle, Star } from "lucide-react";
 
 export default function MarriageCompatibilityPage() {
+  const t = useTranslations("marriage");
   const [personA, setPersonA] = useState<Partial<BirthDetails>>({});
   const [personB, setPersonB] = useState<Partial<BirthDetails>>({});
   const [chartA, setChartA] = useState<NatalChart | null>(null);
@@ -49,20 +51,15 @@ export default function MarriageCompatibilityPage() {
 
   return (
     <CalculatorShell
-      title="Marriage Compatibility"
-      subtitle="Long-term Partnership"
-      description="Explore the astrological dynamics of a long-term partnership. This tool compares natal charts to reveal emotional, romantic, and commitment-related compatibility themes."
+      title={t("title")}
+      subtitle={t("subtitle")}
+      description={t("description")}
       icon={<Shield className="w-8 h-8 text-[var(--champagne-gold)]" />}
     >
       <div className="max-w-2xl mx-auto text-center mb-10">
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
-          Marriage compatibility in astrology examines how two charts interact across
-          the dimensions most relevant to long-term partnership: emotional bonding, communication
-          harmony, romantic attraction, shared values, and commitment potential.
-          No astrological score can predict marriage success — but understanding your dynamics
-          can support better communication and self-awareness. This page is a tropical Western
-          reading. For Ashtakoota, Mangal dosha, and porutham, use the{" "}
-          <Link href="/kundli-matching" className="underline">Vedic kundli match</Link>.
+          {t("intro")}{" "}
+          <Link href="/kundli-matching" className="underline">{t("introKundliLink")}</Link>.
         </p>
       </div>
 
@@ -71,7 +68,7 @@ export default function MarriageCompatibilityPage() {
         <Card variant="default" padding="lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <BirthDetailsForm
-              label="Person A"
+              label={t("personA")}
               value={personA}
               onChange={setPersonA}
               showTime
@@ -79,7 +76,7 @@ export default function MarriageCompatibilityPage() {
               errors={errors.a}
             />
             <BirthDetailsForm
-              label="Person B"
+              label={t("personB")}
               value={personB}
               onChange={setPersonB}
               showTime
@@ -94,7 +91,7 @@ export default function MarriageCompatibilityPage() {
               onClick={handleCalculate}
               icon={<Shield className="w-4 h-4" />}
             >
-              Analyze Marriage Compatibility
+              {t("calculate")}
             </Button>
           </div>
         </Card>
@@ -103,18 +100,18 @@ export default function MarriageCompatibilityPage() {
       {/* Results */}
       {result && chartA && chartB && (
         <>
-          <ResultsSection title="Partnership Analysis">
+          <ResultsSection title={t("resultsTitle")}>
             {/* Planetary overview */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3 max-w-3xl mx-auto mb-10">
               {(["sun", "moon", "venus", "mars", "saturn"] as const).map((planet) => {
                 const a = chartA[planet];
                 const b = chartB[planet];
                 const labels: Record<string, string> = {
-                  sun: "Identity",
-                  moon: "Emotions",
-                  venus: "Love",
-                  mars: "Passion",
-                  saturn: "Commitment",
+                  sun: t("identity"),
+                  moon: t("emotions"),
+                  venus: t("love"),
+                  mars: t("passion"),
+                  saturn: t("commitment"),
                 };
                 return (
                   <div key={planet} className="text-center">
@@ -136,12 +133,12 @@ export default function MarriageCompatibilityPage() {
             {/* Scores */}
             <ScoreSummary
               scores={[
-                { label: "Overall", value: result.overall },
-                { label: "Emotional Bond", value: result.emotional },
-                { label: "Communication", value: result.communication },
-                { label: "Romance", value: result.romance },
-                { label: "Shared Values", value: result.values },
-                { label: "Long-term", value: result.longTerm },
+                { label: t("overall"), value: result.overall },
+                { label: t("emotionalBond"), value: result.emotional },
+                { label: t("communication"), value: result.communication },
+                { label: t("romance"), value: result.romance },
+                { label: t("sharedValues"), value: result.values },
+                { label: t("longTerm"), value: result.longTerm },
               ]}
             />
 
@@ -156,8 +153,8 @@ export default function MarriageCompatibilityPage() {
             </div>
 
             <ShareResult
-              title="Marriage Compatibility"
-              text={`Our marriage compatibility: ${result.overall}% overall`}
+              title={t("shareTitle")}
+              text={t("shareText", { score: result.overall })}
             />
           </ResultsSection>
 
@@ -169,7 +166,7 @@ export default function MarriageCompatibilityPage() {
                 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h4)", fontWeight: 600 }}
               >
                 <Star className="w-4 h-4 text-[var(--champagne-gold)]" />
-                Partnership Strengths
+                {t("strengthsTitle")}
               </h3>
               <div className="space-y-3">
                 {result.strengths.map((s, i) => (
@@ -183,7 +180,7 @@ export default function MarriageCompatibilityPage() {
                 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h4)", fontWeight: 600 }}
               >
                 <AlertTriangle className="w-4 h-4 text-[var(--romantic-rose)]" />
-                Areas for Growth
+                {t("challengesTitle")}
               </h3>
               <div className="space-y-3">
                 {result.challenges.map((c, i) => (
@@ -200,7 +197,7 @@ export default function MarriageCompatibilityPage() {
                 className="text-center mb-6"
                 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
               >
-                Planetary Aspects Between Charts
+                {t("aspectsTitle")}
               </h3>
               <Card variant="default" padding="md">
                 <div className="divide-y divide-[var(--color-border-subtle)]">
@@ -213,7 +210,7 @@ export default function MarriageCompatibilityPage() {
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-xs text-[var(--color-muted-fg)]">
-                          Orb: {a.orb.toFixed(1)}°
+                          {t("orb")} {a.orb.toFixed(1)}°
                         </span>
                         <Badge
                           variant={a.nature === "harmonious" ? "success" : a.nature === "challenging" ? "warning" : "default"}
@@ -234,17 +231,17 @@ export default function MarriageCompatibilityPage() {
               className="text-center mb-6"
               style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
             >
-              Love Language Comparison
+              {t("loveLangTitle")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card variant="default" padding="md">
-                <div className="text-xs uppercase tracking-wider text-[var(--champagne-gold)] mb-2">Person A — Venus in {chartA.venus.sign}</div>
+                <div className="text-xs uppercase tracking-wider text-[var(--champagne-gold)] mb-2">{t("personAVenus", { sign: chartA.venus.sign })}</div>
                 <p className="text-sm text-[var(--color-muted-fg)] leading-relaxed">
                   {VENUS_SIGN_INTERPRETATIONS[chartA.venus.sign].expression}
                 </p>
               </Card>
               <Card variant="default" padding="md">
-                <div className="text-xs uppercase tracking-wider text-[var(--champagne-gold)] mb-2">Person B — Venus in {chartB.venus.sign}</div>
+                <div className="text-xs uppercase tracking-wider text-[var(--champagne-gold)] mb-2">{t("personBVenus", { sign: chartB.venus.sign })}</div>
                 <p className="text-sm text-[var(--color-muted-fg)] leading-relaxed">
                   {VENUS_SIGN_INTERPRETATIONS[chartB.venus.sign].expression}
                 </p>
@@ -258,19 +255,11 @@ export default function MarriageCompatibilityPage() {
               className="text-center mb-4"
               style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
             >
-              How This Score Is Calculated
+              {t("howTitle")}
             </h3>
             <div className="text-sm text-[var(--color-muted-fg)] leading-relaxed space-y-3">
-              <p>
-                This compatibility analysis compares the actual planetary positions in both birth charts
-                using precise ephemeris calculations. It evaluates major aspects between all ten planets,
-                from the Sun through Pluto. Houses, when a city and time are given, are whole sign.
-              </p>
-              <p>
-                Scores are weighted by relevance: Venus-Mars aspects influence romance scores,
-                Moon contacts affect emotional scores, Mercury aspects shape communication scores,
-                and Sun-Saturn contacts inform long-term indicators.
-              </p>
+              <p>{t("howP1")}</p>
+              <p>{t("howP2")}</p>
             </div>
           </div>
           {chartA && chartB && result && (
@@ -287,47 +276,19 @@ export default function MarriageCompatibilityPage() {
 
       <FAQSection
         items={[
-          {
-            question: "Can astrology predict if a marriage will work?",
-            answer: "No. Astrology can illuminate the dynamics, strengths, and growth areas of a partnership, but no chart comparison can predict the success or failure of a marriage. Human choices, communication, and effort are always the determining factors.",
-          },
-          {
-            question: "What's the difference between this and Sun sign compatibility?",
-            answer: "Sun sign compatibility compares only one placement. This tool compares the actual positions of Sun, Moon, Mercury, Venus, and Mars in both charts, analyzing the specific aspects (angles) between them for a much more detailed picture.",
-          },
-          {
-            question: "Is this Vedic (Guna Milan) or Western astrology?",
-            answer: "This tool uses Western tropical astrology. Vedic astrology's Guna Milan system uses a different zodiac and scoring methodology. Both traditions offer valid perspectives but should not be mixed in a single analysis.",
-          },
-          {
-            question: "Do I need exact birth times?",
-            answer: "Birth times improve accuracy, especially for Moon sign (which moves quickly). Without times, Moon placement may be approximate. All other planet positions remain accurate for date-based calculation.",
-          },
+          { question: t("faq1q"), answer: t("faq1a") },
+          { question: t("faq2q"), answer: t("faq2a") },
+          { question: t("faq3q"), answer: t("faq3a") },
+          { question: t("faq4q"), answer: t("faq4a") },
         ]}
       />
 
       <RelatedTools
         tools={[
-          {
-            title: "Relationship Forecast",
-            description: "See the next 12 months of this bond.",
-            href: "/relationship-forecast",
-          },
-          {
-            title: "Love Compatibility",
-            description: "Quick zodiac sign comparison.",
-            href: "/love-compatibility",
-          },
-          {
-            title: "Moon Sign Compatibility",
-            description: "Focus on emotional compatibility.",
-            href: "/moon-sign-compatibility",
-          },
-          {
-            title: "Birth Chart Compatibility",
-            description: "Full synastry analysis.",
-            href: "/birth-chart-compatibility",
-          },
+          { title: t("relatedForecast"), description: t("relatedForecastDesc"), href: "/relationship-forecast" },
+          { title: t("relatedLove"), description: t("relatedLoveDesc"), href: "/love-compatibility" },
+          { title: t("relatedMoon"), description: t("relatedMoonDesc"), href: "/moon-sign-compatibility" },
+          { title: t("relatedBirthChart"), description: t("relatedBirthChartDesc"), href: "/birth-chart-compatibility" },
         ]}
       />
     </CalculatorShell>

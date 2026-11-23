@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { CalculatorShell } from "@/components/calculators/CalculatorShell";
 import { BirthDetailsForm } from "@/components/calculators/BirthDetailsForm";
 import { ResultsSection, InsightBlock, ScoreSummary, RelatedTools, FAQSection, ShareResult } from "@/components/calculators/ResultsSection";
@@ -37,6 +38,7 @@ const PLANET_LABELS: Record<string, { symbol: string; label: string }> = {
 };
 
 export default function BirthChartCompatibilityPage() {
+  const t = useTranslations("birthChartCompat");
   const [personA, setPersonA] = useState<Partial<BirthDetails>>({});
   const [personB, setPersonB] = useState<Partial<BirthDetails>>({});
   const [chartA, setChartA] = useState<NatalChart | null>(null);
@@ -63,20 +65,17 @@ export default function BirthChartCompatibilityPage() {
 
   return (
     <CalculatorShell
-      title="Birth Chart Love Compatibility"
-      subtitle="Compatibility Score & Reading"
-      description="Enter two birth dates for a weighted compatibility score with planet-by-planet breakdowns across emotional, romantic, and long-term dimensions."
+      title={t("title")}
+      subtitle={t("subtitle")}
+      description={t("description")}
       icon={<Compass className="w-8 h-8 text-[var(--champagne-gold)]" />}
     >
       <div className="max-w-2xl mx-auto text-center mb-10">
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
-          This tool scores the compatibility between two natal charts across emotional,
-          romantic, communication, shared-values, and long-term dimensions. Each planet
-          pairing gets a weighted reading so you can see exactly where you click — and where
-          growth lives. Want the full aspect grid and biwheel instead? Try the{" "}
-          <Link href="/synastry-chart" className="underline">synastry chart calculator</Link>.
-          For dated windows over the next 12 months, see the{" "}
-          <Link href="/relationship-forecast" className="underline">relationship forecast</Link>.
+          {t("intro")}{" "}
+          <Link href="/synastry-chart" className="underline">{t("introSynastryLink")}</Link>.
+          {" "}{t("introForecastPrefix")}{" "}
+          <Link href="/relationship-forecast" className="underline">{t("introForecastLink")}</Link>.
         </p>
       </div>
 
@@ -86,16 +85,16 @@ export default function BirthChartCompatibilityPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="flex flex-col gap-4">
               <SavedChartsBar details={personA as BirthDetails} onLoad={setPersonA} />
-              <BirthDetailsForm label="Person A" value={personA} onChange={setPersonA} showTime showLocation errors={errors.a} />
+              <BirthDetailsForm label={t("personA")} value={personA} onChange={setPersonA} showTime showLocation errors={errors.a} />
             </div>
             <div className="flex flex-col gap-4">
               <SavedChartsBar details={personB as BirthDetails} onLoad={setPersonB} />
-              <BirthDetailsForm label="Person B" value={personB} onChange={setPersonB} showTime showLocation errors={errors.b} />
+              <BirthDetailsForm label={t("personB")} value={personB} onChange={setPersonB} showTime showLocation errors={errors.b} />
             </div>
           </div>
           <div className="flex justify-center mt-8">
             <Button variant="secondary" size="lg" onClick={handleCalculate} icon={<Compass className="w-4 h-4" />}>
-              Analyze Charts
+              {t("calculate")}
             </Button>
           </div>
         </Card>
@@ -103,16 +102,16 @@ export default function BirthChartCompatibilityPage() {
 
       {result && chartA && chartB && (
         <>
-          <ResultsSection title="Synastry Results">
+          <ResultsSection title={t("resultsTitle")}>
             {/* Full chart comparison table */}
             <div className="max-w-3xl mx-auto mb-10">
               <Card variant="default" padding="md" className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-[var(--color-border-subtle)]">
-                      <th className="text-left py-2 px-3 text-[var(--color-muted-fg)] font-medium">Planet</th>
-                      <th className="text-center py-2 px-3 text-[var(--color-muted-fg)] font-medium">Person A</th>
-                      <th className="text-center py-2 px-3 text-[var(--color-muted-fg)] font-medium">Person B</th>
+                      <th className="text-left py-2 px-3 text-[var(--color-muted-fg)] font-medium">{t("planet")}</th>
+                      <th className="text-center py-2 px-3 text-[var(--color-muted-fg)] font-medium">{t("personA")}</th>
+                      <th className="text-center py-2 px-3 text-[var(--color-muted-fg)] font-medium">{t("personB")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -147,12 +146,12 @@ export default function BirthChartCompatibilityPage() {
             {/* Scores */}
             <ScoreSummary
               scores={[
-                { label: "Overall", value: result.overall },
-                { label: "Emotional", value: result.emotional },
-                { label: "Communication", value: result.communication },
-                { label: "Romance", value: result.romance },
-                { label: "Values", value: result.values },
-                { label: "Long-term", value: result.longTerm },
+                { label: t("overall"), value: result.overall },
+                { label: t("emotional"), value: result.emotional },
+                { label: t("communication"), value: result.communication },
+                { label: t("romance"), value: result.romance },
+                { label: t("values"), value: result.values },
+                { label: t("longTerm"), value: result.longTerm },
               ]}
             />
 
@@ -162,14 +161,14 @@ export default function BirthChartCompatibilityPage() {
               </p>
             </div>
 
-            <ShareResult title="Synastry Analysis" text={`Our birth chart compatibility: ${result.overall}%`} />
+            <ShareResult title={t("shareTitle")} text={t("shareText", { score: result.overall })} />
           </ResultsSection>
 
           {/* Aspects */}
           {result.aspects.length > 0 && (
             <div className="mt-10 max-w-3xl mx-auto">
               <h3 className="text-center mb-6" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}>
-                Inter-chart Aspects ({result.aspects.length})
+                {t("aspectsTitle", { count: result.aspects.length })}
               </h3>
               <Card variant="default" padding="sm">
                 <div className="divide-y divide-[var(--color-border-subtle)] max-h-96 overflow-y-auto">
@@ -197,7 +196,7 @@ export default function BirthChartCompatibilityPage() {
           <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <div>
               <h3 className="mb-4 flex items-center gap-2" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h4)", fontWeight: 600 }}>
-                <Star className="w-4 h-4 text-[var(--champagne-gold)]" /> Synastry Strengths
+                <Star className="w-4 h-4 text-[var(--champagne-gold)]" /> {t("strengthsTitle")}
               </h3>
               {result.strengths.map((s, i) => (
                 <InsightBlock key={i} title="" content={s} variant="gold" className="mb-3" />
@@ -205,7 +204,7 @@ export default function BirthChartCompatibilityPage() {
             </div>
             <div>
               <h3 className="mb-4 flex items-center gap-2" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h4)", fontWeight: 600 }}>
-                <AlertTriangle className="w-4 h-4 text-[var(--romantic-rose)]" /> Growth Areas
+                <AlertTriangle className="w-4 h-4 text-[var(--romantic-rose)]" /> {t("challengesTitle")}
               </h3>
               {result.challenges.map((c, i) => (
                 <InsightBlock key={i} title="" content={c} variant="rose" className="mb-3" />
@@ -224,29 +223,20 @@ export default function BirthChartCompatibilityPage() {
 
       <FAQSection
         items={[
-          {
-            question: "What is synastry?",
-            answer: "Synastry is the astrological technique of comparing two natal charts by overlaying them and analyzing the aspects (angular relationships) between each person's planets.",
-          },
-          {
-            question: "Which aspects matter most?",
-            answer: "Venus-Mars connections indicate romantic and physical chemistry. Moon contacts reveal emotional compatibility. Sun aspects show core identity harmony. Saturn contacts suggest longevity and commitment.",
-          },
-          {
-            question: "Is this more accurate than Sun sign compatibility?",
-            answer: "Yes. This reading uses all ten planets from Sun through Pluto. Houses are whole sign and appear when both a birth time and a city are given.",
-          },
+          { question: t("faq1q"), answer: t("faq1a") },
+          { question: t("faq2q"), answer: t("faq2a") },
+          { question: t("faq3q"), answer: t("faq3a") },
         ]}
       />
 
       <RelatedTools
         tools={[
-          { title: "Relationship Forecast", description: "See the next 12 months of this bond.", href: "/relationship-forecast" },
-          { title: "Synastry Chart", description: "Visual biwheel chart with every aspect.", href: "/synastry-chart" },
-          { title: "Composite Chart", description: "The relationship as its own chart.", href: "/composite-chart" },
-          { title: "Mars Sign Compatibility", description: "Compare passion, drive, and conflict styles.", href: "/mars-sign-compatibility" },
-          { title: "Moon Phase Soulmate", description: "Do your birth moons make a full moon?", href: "/moon-phase-soulmate" },
-          { title: "Venus Sign Calculator", description: "Discover your love planet.", href: "/venus-sign-calculator" },
+          { title: t("relatedForecast"), description: t("relatedForecastDesc"), href: "/relationship-forecast" },
+          { title: t("relatedSynastry"), description: t("relatedSynastryDesc"), href: "/synastry-chart" },
+          { title: t("relatedComposite"), description: t("relatedCompositeDesc"), href: "/composite-chart" },
+          { title: t("relatedMars"), description: t("relatedMarsDesc"), href: "/mars-sign-compatibility" },
+          { title: t("relatedMoonPhase"), description: t("relatedMoonPhaseDesc"), href: "/moon-phase-soulmate" },
+          { title: t("relatedVenus"), description: t("relatedVenusDesc"), href: "/venus-sign-calculator" },
         ]}
       />
     </CalculatorShell>

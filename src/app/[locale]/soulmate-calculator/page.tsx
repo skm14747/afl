@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { CalculatorShell } from "@/components/calculators/CalculatorShell";
 import { BirthDetailsForm } from "@/components/calculators/BirthDetailsForm";
 import { ResultsSection, InsightBlock, RelatedTools, FAQSection, ShareResult } from "@/components/calculators/ResultsSection";
@@ -34,7 +35,6 @@ function getPartnerTraits(chart: NatalChart): {
   const venusElement = ZODIAC_ELEMENTS[venusSign];
   const moonElement = ZODIAC_ELEMENTS[moonSign];
 
-  // Compatible signs: same element + complementary element for Venus and Moon
   const compatibleElements = new Set<string>();
   compatibleElements.add(venusElement);
   compatibleElements.add(moonElement);
@@ -67,6 +67,7 @@ function getPartnerTraits(chart: NatalChart): {
 }
 
 export default function SoulmateCalculatorPage() {
+  const t = useTranslations("soulmate");
   const [birthDetails, setBirthDetails] = useState<Partial<BirthDetails>>({});
   const [chart, setChart] = useState<NatalChart | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -87,17 +88,17 @@ export default function SoulmateCalculatorPage() {
 
   return (
     <CalculatorShell
-      title="Soulmate Calculator"
-      subtitle="Romantic Destiny"
-      description="Explore your astrological profile to understand your romantic tendencies, what you're drawn to in a partner, and the cosmic patterns that shape your love life."
+      title={t("title")}
+      subtitle={t("subtitle")}
+      description={t("description")}
       icon={<Sparkles className="w-8 h-8 text-[var(--champagne-gold)]" />}
     >
       <div className="max-w-2xl mx-auto text-center mb-10">
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
-          This is one birth chart. Venus, Moon, and Mars describe how you love and what you look for in a partner. It is not a prediction of a named soulmate. For two people, use the{" "}
-          <Link href="/synastry-chart" className="underline">synastry chart</Link>
-          {" "}or the{" "}
-          <Link href="/moon-phase-soulmate" className="underline">moon-phase soulmate test</Link>.
+          {t("intro")}{" "}
+          <Link href="/synastry-chart" className="underline">{t("introSynastryLink")}</Link>
+          {" "}{t("introOr")}{" "}
+          <Link href="/moon-phase-soulmate" className="underline">{t("introMoonLink")}</Link>.
         </p>
       </div>
 
@@ -105,7 +106,7 @@ export default function SoulmateCalculatorPage() {
       <div className="max-w-lg mx-auto">
         <Card variant="default" padding="lg">
           <BirthDetailsForm
-            label="Your Birth Details"
+            label={t("formLabel")}
             value={birthDetails}
             onChange={setBirthDetails}
             showTime
@@ -119,7 +120,7 @@ export default function SoulmateCalculatorPage() {
               onClick={handleCalculate}
               icon={<Sparkles className="w-4 h-4" />}
             >
-              Discover Your Profile
+              {t("calculate")}
             </Button>
           </div>
         </Card>
@@ -128,44 +129,44 @@ export default function SoulmateCalculatorPage() {
       {/* Results */}
       {chart && traits && (
         <>
-          <ResultsSection title="Your Romantic Astrology Profile">
+          <ResultsSection title={t("resultsTitle")}>
             <div className="max-w-md mx-auto mb-10">
-              <ChartWheel chart={chart} caption="Your natal wheel" />
+              <ChartWheel chart={chart} caption={t("chartCaption")} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-10">
               <Card variant="feature" padding="md" className="text-center">
                 <div className="flex justify-center mb-2">
                   <ZodiacIcon sign={chart.venus.sign} size="md" showElement />
                 </div>
-                <div className="text-xs uppercase tracking-wider text-[var(--champagne-gold)] mb-1">Venus</div>
+                <div className="text-xs uppercase tracking-wider text-[var(--champagne-gold)] mb-1">{t("venusLabel")}</div>
                 <div className="font-semibold" style={{ fontFamily: "var(--font-display)" }}>
                   {chart.venus.sign}
                 </div>
-                <div className="text-xs text-[var(--color-muted-fg)] mt-1">Love & Attraction</div>
-                {chart.venus.retrograde && <Badge variant="rose" className="mt-2">Retrograde</Badge>}
+                <div className="text-xs text-[var(--color-muted-fg)] mt-1">{t("loveAttraction")}</div>
+                {chart.venus.retrograde && <Badge variant="rose" className="mt-2">{t("retrograde", { ns: "venus" })}</Badge>}
               </Card>
 
               <Card variant="feature" padding="md" className="text-center">
                 <div className="flex justify-center mb-2">
                   <ZodiacIcon sign={chart.moon.sign} size="md" showElement />
                 </div>
-                <div className="text-xs uppercase tracking-wider text-[var(--romantic-rose)] mb-1">Moon</div>
+                <div className="text-xs uppercase tracking-wider text-[var(--romantic-rose)] mb-1">{t("moonLabel")}</div>
                 <div className="font-semibold" style={{ fontFamily: "var(--font-display)" }}>
                   {chart.moon.sign}
                 </div>
-                <div className="text-xs text-[var(--color-muted-fg)] mt-1">Emotional Needs</div>
-                {chart.moonUncertain && <Badge variant="default" className="mt-2">Time-sensitive</Badge>}
+                <div className="text-xs text-[var(--color-muted-fg)] mt-1">{t("emotionalNeeds")}</div>
+                {chart.moonUncertain && <Badge variant="default" className="mt-2">{t("timeSensitive")}</Badge>}
               </Card>
 
               <Card variant="feature" padding="md" className="text-center">
                 <div className="flex justify-center mb-2">
                   <ZodiacIcon sign={chart.mars.sign} size="md" showElement />
                 </div>
-                <div className="text-xs uppercase tracking-wider text-[var(--color-error)] mb-1">Mars</div>
+                <div className="text-xs uppercase tracking-wider text-[var(--color-error)] mb-1">{t("marsLabel")}</div>
                 <div className="font-semibold" style={{ fontFamily: "var(--font-display)" }}>
                   {chart.mars.sign}
                 </div>
-                <div className="text-xs text-[var(--color-muted-fg)] mt-1">Passion & Drive</div>
+                <div className="text-xs text-[var(--color-muted-fg)] mt-1">{t("passionDrive")}</div>
               </Card>
             </div>
 
@@ -175,14 +176,14 @@ export default function SoulmateCalculatorPage() {
                 className="text-center mb-6"
                 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
               >
-                What Draws You to a Partner
+                {t("drawsTitle")}
               </h3>
               <div className="space-y-4">
-                {traits.attractedTo.map((t, i) => (
+                {traits.attractedTo.map((item, i) => (
                   <InsightBlock
                     key={i}
-                    title={i === 0 ? "Romantic Attraction" : "Physical Chemistry"}
-                    content={t}
+                    title={i === 0 ? t("romanticAttraction") : t("physicalChemistry")}
+                    content={item}
                     icon={i === 0 ? <Heart className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     variant="gold"
                   />
@@ -196,14 +197,14 @@ export default function SoulmateCalculatorPage() {
                 className="text-center mb-6"
                 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
               >
-                Your Emotional Needs in Love
+                {t("emotionalNeedsTitle")}
               </h3>
               <div className="space-y-4">
-                {traits.emotionalNeeds.map((t, i) => (
+                {traits.emotionalNeeds.map((item, i) => (
                   <InsightBlock
                     key={i}
-                    title={i === 0 ? "Core Emotional Need" : "Nurturing Style"}
-                    content={t}
+                    title={i === 0 ? t("coreNeed") : t("nurturingStyle")}
+                    content={item}
                     icon={<Moon className="w-4 h-4" />}
                     variant="rose"
                   />
@@ -217,7 +218,7 @@ export default function SoulmateCalculatorPage() {
                 className="text-center mb-6"
                 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
               >
-                Qualities in a Compatible Partner
+                {t("partnerTitle")}
               </h3>
               <Card variant="elevated" padding="lg">
                 <ul className="space-y-3">
@@ -237,7 +238,7 @@ export default function SoulmateCalculatorPage() {
                 className="text-center mb-6"
                 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
               >
-                Signs with Natural Affinity
+                {t("affinityTitle")}
               </h3>
               <div className="flex justify-center gap-4 flex-wrap">
                 {traits.compatibleSigns.map((sign) => (
@@ -248,14 +249,13 @@ export default function SoulmateCalculatorPage() {
                 ))}
               </div>
               <p className="text-xs text-[var(--color-muted-fg)] text-center mt-4">
-                These signs share elemental affinity with your Venus and Moon placements.
-                This does not mean other signs are incompatible — full chart comparison reveals much more.
+                {t("affinityNote")}
               </p>
             </div>
 
             <ShareResult
-              title="My Soulmate Profile"
-              text={`Venus in ${chart.venus.sign}, Moon in ${chart.moon.sign}, Mars in ${chart.mars.sign}`}
+              title={t("shareTitle")}
+              text={t("shareText", { venus: chart.venus.sign, moon: chart.moon.sign, mars: chart.mars.sign })}
             />
           </ResultsSection>
 
@@ -265,15 +265,15 @@ export default function SoulmateCalculatorPage() {
               className="text-center mb-6"
               style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
             >
-              Your Love Planets
+              {t("planetsTitle")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <PlanetBadge name="Sun" symbol="☉" meaning={chart.sun.sign} influence={`Core identity: Your fundamental self in relationships.`} />
-              <PlanetBadge name="Moon" symbol="☽" meaning={chart.moon.sign} influence={`Emotional needs and nurturing style.`} />
-              <PlanetBadge name="Venus" symbol="♀" meaning={chart.venus.sign} influence={`How you love and what attracts you.`} />
-              <PlanetBadge name="Mars" symbol="♂" meaning={chart.mars.sign} influence={`Passion, desire, and pursuit style.`} />
-              <PlanetBadge name="Jupiter" symbol="♃" meaning={chart.jupiter.sign} influence={`Growth, generosity, and shared beliefs.`} />
-              <PlanetBadge name="Saturn" symbol="♄" meaning={chart.saturn.sign} influence={`Commitment, responsibility, and longevity.`} />
+              <PlanetBadge name="Sun" symbol="☉" meaning={chart.sun.sign} influence={t("sunInfluence")} />
+              <PlanetBadge name="Moon" symbol="☽" meaning={chart.moon.sign} influence={t("moonInfluence")} />
+              <PlanetBadge name="Venus" symbol="♀" meaning={chart.venus.sign} influence={t("venusInfluence")} />
+              <PlanetBadge name="Mars" symbol="♂" meaning={chart.mars.sign} influence={t("marsInfluence")} />
+              <PlanetBadge name="Jupiter" symbol="♃" meaning={chart.jupiter.sign} influence={t("jupiterInfluence")} />
+              <PlanetBadge name="Saturn" symbol="♄" meaning={chart.saturn.sign} influence={t("saturnInfluence")} />
             </div>
           </div>
         </>
@@ -281,48 +281,19 @@ export default function SoulmateCalculatorPage() {
 
       <FAQSection
         items={[
-          {
-            question: "Can astrology really find my soulmate?",
-            answer: "Astrology cannot identify a specific person as your soulmate. What it can do is illuminate your romantic patterns, emotional needs, and what you're naturally drawn to — helping you understand yourself and your relationships more deeply.",
-          },
-          {
-            question: "What planets are most important for love?",
-            answer: "Venus (love style and attraction), Moon (emotional needs), Mars (passion and desire), and the 7th house ruler (partnerships) are the most significant placements for understanding your romantic nature.",
-          },
-          {
-            question: "Why do I need my birth time?",
-            answer: "Birth time makes Moon sign calculations more precise and allows for Ascendant and house calculations. Without birth time, Venus and Mars are still accurate, but Moon may have some uncertainty.",
-          },
+          { question: t("faq1q"), answer: t("faq1a") },
+          { question: t("faq2q"), answer: t("faq2a") },
+          { question: t("faq3q"), answer: t("faq3a") },
         ]}
       />
 
       <RelatedTools
         tools={[
-          {
-            title: "Moon Phase Soulmate",
-            description: "Do your birth moon phases make a full moon?",
-            href: "/moon-phase-soulmate",
-          },
-          {
-            title: "Synastry Chart",
-            description: "Full synastry biwheel with all aspects.",
-            href: "/synastry-chart",
-          },
-          {
-            title: "Venus Sign Calculator",
-            description: "Deep dive into your Venus sign.",
-            href: "/venus-sign-calculator",
-          },
-          {
-            title: "Mars Sign Compatibility",
-            description: "Compare passion, desire, and conflict styles.",
-            href: "/mars-sign-compatibility",
-          },
-          {
-            title: "Marriage Compatibility",
-            description: "Explore long-term partnership potential.",
-            href: "/marriage-compatibility",
-          },
+          { title: t("relatedMoonPhase"), description: t("relatedMoonPhaseDesc"), href: "/moon-phase-soulmate" },
+          { title: t("relatedSynastry"), description: t("relatedSynastryDesc"), href: "/synastry-chart" },
+          { title: t("relatedVenus"), description: t("relatedVenusDesc"), href: "/venus-sign-calculator" },
+          { title: t("relatedMars"), description: t("relatedMarsDesc"), href: "/mars-sign-compatibility" },
+          { title: t("relatedMarriage"), description: t("relatedMarriageDesc"), href: "/marriage-compatibility" },
         ]}
       />
     </CalculatorShell>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { CalculatorShell } from "@/components/calculators/CalculatorShell";
 import { BirthDetailsForm } from "@/components/calculators/BirthDetailsForm";
 import { ResultsSection, InsightBlock, ScoreSummary, RelatedTools, FAQSection, ShareResult } from "@/components/calculators/ResultsSection";
@@ -24,6 +25,7 @@ interface PersonResult {
 }
 
 export default function MoonSignCompatibilityPage() {
+  const t = useTranslations("moonCompat");
   const [personA, setPersonA] = useState<Partial<BirthDetails>>({});
   const [personB, setPersonB] = useState<Partial<BirthDetails>>({});
   const [resultA, setResultA] = useState<PersonResult | null>(null);
@@ -55,16 +57,14 @@ export default function MoonSignCompatibilityPage() {
 
   return (
     <CalculatorShell
-      title="Moon Sign Compatibility"
-      subtitle="Emotional Connection"
-      description="Your Moon signs reveal your deepest emotional needs. Compare Moon placements to understand your emotional compatibility and nurturing styles."
+      title={t("title")}
+      subtitle={t("subtitle")}
+      description={t("description")}
       icon={<Moon className="w-8 h-8 text-[var(--champagne-gold)]" />}
     >
       <div className="max-w-2xl mx-auto text-center mb-10">
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
-          While Sun signs describe your outward personality, Moon signs govern your inner emotional world.
-          Moon sign compatibility reveals how two people connect at the deepest emotional level — how they
-          nurture each other, process feelings, and create emotional safety in a relationship.
+          {t("intro")}
         </p>
       </div>
 
@@ -73,14 +73,14 @@ export default function MoonSignCompatibilityPage() {
         <Card variant="default" padding="lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <BirthDetailsForm
-              label="Person A"
+              label={t("personA")}
               value={personA}
               onChange={setPersonA}
               showTime
               errors={errors.a}
             />
             <BirthDetailsForm
-              label="Person B"
+              label={t("personB")}
               value={personB}
               onChange={setPersonB}
               showTime
@@ -94,7 +94,7 @@ export default function MoonSignCompatibilityPage() {
               onClick={handleCalculate}
               icon={<Moon className="w-4 h-4" />}
             >
-              Compare Moon Signs
+              {t("calculate")}
             </Button>
           </div>
         </Card>
@@ -103,17 +103,16 @@ export default function MoonSignCompatibilityPage() {
       {/* Results */}
       {moonA && moonB && compat && interpA && interpB && (
         <>
-          <ResultsSection title="Moon Sign Compatibility">
+          <ResultsSection title={t("resultsTitle")}>
             {/* Uncertainty warnings */}
             {(resultA?.chart.moonUncertain || resultB?.chart.moonUncertain) && (
               <div className="max-w-2xl mx-auto mb-6">
                 <div className="text-xs text-[var(--color-warning)] bg-[var(--color-warning-bg)] px-4 py-3 rounded-[var(--radius-md)]">
-                  <strong>Note:</strong>{" "}
-                  {resultA?.chart.moonUncertain && "Person A's"}{" "}
-                  {resultA?.chart.moonUncertain && resultB?.chart.moonUncertain && "and"}{" "}
-                  {resultB?.chart.moonUncertain && "Person B's"}{" "}
-                  Moon may have been in a different sign on this date. The Moon moves quickly through
-                  the zodiac (~12–14° per day). Providing exact birth times gives a definitive result.
+                  <strong>{t("uncertainNote")}</strong>{" "}
+                  {resultA?.chart.moonUncertain && t("uncertainA")}{" "}
+                  {resultA?.chart.moonUncertain && resultB?.chart.moonUncertain && t("uncertainAnd")}{" "}
+                  {resultB?.chart.moonUncertain && t("uncertainB")}{" "}
+                  {t("uncertainMsg")}
                 </div>
               </div>
             )}
@@ -122,8 +121,8 @@ export default function MoonSignCompatibilityPage() {
             <div className="flex items-center justify-center gap-8 md:gap-16 mb-8">
               <div className="text-center">
                 <ZodiacIcon sign={moonA.sign} size="lg" showElement />
-                <div className="mt-2 text-sm font-medium">Person A</div>
-                <div className="text-xs text-[var(--color-muted-fg)]">Moon in {moonA.sign}</div>
+                <div className="mt-2 text-sm font-medium">{t("personA")}</div>
+                <div className="text-xs text-[var(--color-muted-fg)]">{t("moonIn", { sign: moonA.sign })}</div>
                 <Badge variant="gold" className="mt-1">{moonA.degree.toFixed(1)}°</Badge>
               </div>
 
@@ -131,8 +130,8 @@ export default function MoonSignCompatibilityPage() {
 
               <div className="text-center">
                 <ZodiacIcon sign={moonB.sign} size="lg" showElement />
-                <div className="mt-2 text-sm font-medium">Person B</div>
-                <div className="text-xs text-[var(--color-muted-fg)]">Moon in {moonB.sign}</div>
+                <div className="mt-2 text-sm font-medium">{t("personB")}</div>
+                <div className="text-xs text-[var(--color-muted-fg)]">{t("moonIn", { sign: moonB.sign })}</div>
                 <Badge variant="gold" className="mt-1">{moonB.degree.toFixed(1)}°</Badge>
               </div>
             </div>
@@ -144,16 +143,16 @@ export default function MoonSignCompatibilityPage() {
               overallScore={compat.emotional}
               summary={compat.summary}
               categories={[
-                { label: "Emotional Bond", score: compat.emotional },
-                { label: "Communication", score: compat.communication },
-                { label: "Nurturing Match", score: compat.values },
-                { label: "Long-term Stability", score: compat.longTerm },
+                { label: t("emotionalBond"), score: compat.emotional },
+                { label: t("communication"), score: compat.communication },
+                { label: t("nurturingMatch"), score: compat.values },
+                { label: t("longTermStability"), score: compat.longTerm },
               ]}
             />
 
             <ShareResult
-              title="Moon Sign Compatibility"
-              text={`Moon in ${moonA.sign} & Moon in ${moonB.sign} — ${compat.emotional}% emotional compatibility!`}
+              title={t("shareTitle")}
+              text={t("shareText", { signA: moonA.sign, signB: moonB.sign, score: compat.emotional })}
             />
           </ResultsSection>
 
@@ -163,14 +162,14 @@ export default function MoonSignCompatibilityPage() {
               <div className="flex items-center gap-2 mb-4">
                 <Moon className="w-4 h-4 text-[var(--champagne-gold)]" />
                 <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h4)", fontWeight: 600 }}>
-                  Person A — Moon in {moonA.sign}
+                  {t("personAMoon", { sign: moonA.sign })}
                 </h3>
               </div>
               <div className="space-y-3 text-sm text-[var(--color-muted-fg)] leading-relaxed">
-                <p><strong>Emotional nature:</strong> {interpA.emotionalNature}</p>
-                <p><strong>Needs:</strong> {interpA.needs}</p>
-                <p><strong>In relationships:</strong> {interpA.inRelationships}</p>
-                <p><strong>Nurturing style:</strong> {interpA.nurturingStyle}</p>
+                <p><strong>{t("emotionalNature")}</strong> {interpA.emotionalNature}</p>
+                <p><strong>{t("needs")}</strong> {interpA.needs}</p>
+                <p><strong>{t("inRelationships")}</strong> {interpA.inRelationships}</p>
+                <p><strong>{t("nurturingStyle")}</strong> {interpA.nurturingStyle}</p>
               </div>
             </Card>
 
@@ -178,14 +177,14 @@ export default function MoonSignCompatibilityPage() {
               <div className="flex items-center gap-2 mb-4">
                 <Moon className="w-4 h-4 text-[var(--romantic-rose)]" />
                 <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h4)", fontWeight: 600 }}>
-                  Person B — Moon in {moonB.sign}
+                  {t("personBMoon", { sign: moonB.sign })}
                 </h3>
               </div>
               <div className="space-y-3 text-sm text-[var(--color-muted-fg)] leading-relaxed">
-                <p><strong>Emotional nature:</strong> {interpB.emotionalNature}</p>
-                <p><strong>Needs:</strong> {interpB.needs}</p>
-                <p><strong>In relationships:</strong> {interpB.inRelationships}</p>
-                <p><strong>Nurturing style:</strong> {interpB.nurturingStyle}</p>
+                <p><strong>{t("emotionalNature")}</strong> {interpB.emotionalNature}</p>
+                <p><strong>{t("needs")}</strong> {interpB.needs}</p>
+                <p><strong>{t("inRelationships")}</strong> {interpB.inRelationships}</p>
+                <p><strong>{t("nurturingStyle")}</strong> {interpB.nurturingStyle}</p>
               </div>
             </Card>
           </div>
@@ -194,43 +193,18 @@ export default function MoonSignCompatibilityPage() {
 
       <FAQSection
         items={[
-          {
-            question: "Why is Moon sign compatibility important?",
-            answer: "The Moon governs your emotional needs, instincts, and how you feel safe. When two people's Moon signs are compatible, they naturally understand each other's emotional language and can provide the comfort each person needs.",
-          },
-          {
-            question: "Do I need an exact birth time for my Moon sign?",
-            answer: "The Moon changes signs every 2–2.5 days. If you were born on a day when the Moon changed signs, your exact birth time determines which Moon sign is correct. Without a birth time, there is some uncertainty, which we flag in results.",
-          },
-          {
-            question: "Can two incompatible Moon signs still work?",
-            answer: "Yes. Awareness of different emotional needs is the first step to meeting them. Many couples with challenging Moon sign combinations thrive because they learn to communicate and respect each other's emotional styles.",
-          },
+          { question: t("faq1q"), answer: t("faq1a") },
+          { question: t("faq2q"), answer: t("faq2a") },
+          { question: t("faq3q"), answer: t("faq3a") },
         ]}
       />
 
       <RelatedTools
         tools={[
-          {
-            title: "Moon Phase Soulmate",
-            description: "Do your birth moon phases complete a full moon?",
-            href: "/moon-phase-soulmate",
-          },
-          {
-            title: "Venus Sign Calculator",
-            description: "Discover how you express and receive love.",
-            href: "/venus-sign-calculator",
-          },
-          {
-            title: "Synastry Chart",
-            description: "Visual biwheel chart with every aspect.",
-            href: "/synastry-chart",
-          },
-          {
-            title: "Birth Chart Compatibility",
-            description: "Full natal chart comparison for deeper insights.",
-            href: "/birth-chart-compatibility",
-          },
+          { title: t("relatedMoonPhase"), description: t("relatedMoonPhaseDesc"), href: "/moon-phase-soulmate" },
+          { title: t("relatedVenus"), description: t("relatedVenusDesc"), href: "/venus-sign-calculator" },
+          { title: t("relatedSynastry"), description: t("relatedSynastryDesc"), href: "/synastry-chart" },
+          { title: t("relatedBirthChart"), description: t("relatedBirthChartDesc"), href: "/birth-chart-compatibility" },
         ]}
       />
     </CalculatorShell>

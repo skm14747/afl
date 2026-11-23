@@ -9,8 +9,13 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale = routing.defaultLocale;
   }
 
+  const common = (await import(`../../messages/${locale}/common.json`)).default;
+  const tools = await import(`../../messages/${locale}/tools.json`)
+    .then((m) => m.default)
+    .catch(() => ({}));
+
   return {
     locale,
-    messages: (await import(`../../messages/${locale}/common.json`)).default,
+    messages: { ...common, ...tools },
   };
 });

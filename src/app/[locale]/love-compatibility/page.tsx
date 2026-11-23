@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { CalculatorShell } from "@/components/calculators/CalculatorShell";
 import { ZodiacSelector } from "@/components/calculators/ZodiacSelector";
 import { ResultsSection, InsightBlock, ScoreSummary, RelatedTools, FAQSection, ShareResult } from "@/components/calculators/ResultsSection";
@@ -12,6 +13,7 @@ import { Heart, MessageCircle, Flame, Shield, Star, AlertTriangle } from "lucide
 import { Link } from "@/i18n/navigation";
 
 export default function LoveCompatibilityPage() {
+  const t = useTranslations("loveCompat");
   const [sign1, setSign1] = useState<ZodiacSign | undefined>();
   const [sign2, setSign2] = useState<ZodiacSign | undefined>();
   const [result, setResult] = useState<CompatibilityResult | null>(null);
@@ -30,18 +32,15 @@ export default function LoveCompatibilityPage() {
 
   return (
     <CalculatorShell
-      title="Love Compatibility Calculator"
-      subtitle="Zodiac Compatibility"
-      description="Discover how your zodiac signs connect in love. Select both signs to reveal your emotional, romantic, and long-term compatibility."
+      title={t("title")}
+      subtitle={t("subtitle")}
+      description={t("description")}
       icon={<Heart className="w-8 h-8 text-[var(--champagne-gold)]" />}
     >
       {/* Introduction */}
       <div className="max-w-2xl mx-auto text-center mb-10">
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
-          Zodiac compatibility examines the astrological relationship between two signs based on their
-          elemental nature, modality, and position in the zodiac wheel. While Sun sign compatibility
-          is just one layer of a complex astrological picture, it provides meaningful insight into
-          the fundamental dynamics of a relationship.
+          {t("intro")}
         </p>
       </div>
 
@@ -50,12 +49,12 @@ export default function LoveCompatibilityPage() {
         <div className="bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-xl)] p-6 md:p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <ZodiacSelector
-              label="Your Zodiac Sign"
+              label={t("yourSign")}
               value={sign1}
               onChange={setSign1}
             />
             <ZodiacSelector
-              label="Partner's Zodiac Sign"
+              label={t("partnerSign")}
               value={sign2}
               onChange={setSign2}
             />
@@ -69,11 +68,11 @@ export default function LoveCompatibilityPage() {
               disabled={!sign1 || !sign2}
               icon={<Heart className="w-4 h-4" />}
             >
-              Calculate Compatibility
+              {t("calculate")}
             </Button>
             {result && (
               <Button variant="outline" size="lg" onClick={handleReset}>
-                Start Over
+                {t("startOver")}
               </Button>
             )}
           </div>
@@ -83,24 +82,24 @@ export default function LoveCompatibilityPage() {
       {/* Results */}
       {result && sign1 && sign2 && (
         <>
-          <ResultsSection title="Your Compatibility Results">
+          <ResultsSection title={t("resultsTitle")}>
             <CompatibilityScore
               sign1={sign1}
               sign2={sign2}
               overallScore={result.overall}
               summary={result.summary}
               categories={[
-                { label: "Emotional Connection", score: result.emotional },
-                { label: "Communication", score: result.communication },
-                { label: "Romantic Chemistry", score: result.romance },
-                { label: "Shared Values", score: result.values },
-                { label: "Long-term Potential", score: result.longTerm },
+                { label: t("emotional"), score: result.emotional },
+                { label: t("communication"), score: result.communication },
+                { label: t("romance"), score: result.romance },
+                { label: t("values"), score: result.values },
+                { label: t("longTerm"), score: result.longTerm },
               ]}
             />
 
             <ShareResult
-              title={`${sign1} & ${sign2} Love Compatibility`}
-              text={`${sign1} and ${sign2} have ${result.overall}% compatibility!`}
+              title={t("shareTitle", { sign1, sign2 })}
+              text={t("shareText", { sign1, sign2, score: result.overall })}
             />
           </ResultsSection>
 
@@ -108,12 +107,12 @@ export default function LoveCompatibilityPage() {
           <div className="mt-10">
             <ScoreSummary
               scores={[
-                { label: "Overall", value: result.overall },
-                { label: "Emotional", value: result.emotional },
-                { label: "Communication", value: result.communication },
-                { label: "Romance", value: result.romance },
-                { label: "Values", value: result.values },
-                { label: "Long-term", value: result.longTerm },
+                { label: t("overall"), value: result.overall },
+                { label: t("emotional"), value: result.emotional },
+                { label: t("communication"), value: result.communication },
+                { label: t("romance"), value: result.romance },
+                { label: t("values"), value: result.values },
+                { label: t("longTerm"), value: result.longTerm },
               ]}
             />
           </div>
@@ -124,13 +123,13 @@ export default function LoveCompatibilityPage() {
               className="text-center mb-6"
               style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
             >
-              Relationship Strengths
+              {t("strengthsTitle")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
               {result.strengths.map((s, i) => (
                 <InsightBlock
                   key={i}
-                  title={`Strength ${i + 1}`}
+                  title={t("strengthLabel", { n: i + 1 })}
                   content={s}
                   icon={<Star className="w-4 h-4" />}
                   variant="gold"
@@ -145,13 +144,13 @@ export default function LoveCompatibilityPage() {
               className="text-center mb-6"
               style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
             >
-              Growth Areas
+              {t("challengesTitle")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
               {result.challenges.map((c, i) => (
                 <InsightBlock
                   key={i}
-                  title={`Growth Area ${i + 1}`}
+                  title={t("challengeLabel", { n: i + 1 })}
                   content={c}
                   icon={<AlertTriangle className="w-4 h-4" />}
                   variant="rose"
@@ -166,21 +165,11 @@ export default function LoveCompatibilityPage() {
               className="text-center mb-4"
               style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
             >
-              How Zodiac Compatibility Works
+              {t("howTitle")}
             </h3>
             <div className="text-sm text-[var(--color-muted-fg)] leading-relaxed space-y-3">
-              <p>
-                Zodiac compatibility is based on the angular relationship (aspect) between two signs in the zodiac wheel.
-                Signs that are 120° apart (trine) share the same element and naturally harmonize.
-                Signs that are 60° apart (sextile) have complementary elements.
-                Signs that are 90° apart (square) create dynamic tension that can fuel growth.
-                Opposite signs (180°) are magnetically attracted through their complementary qualities.
-              </p>
-              <p>
-                This calculator evaluates the fundamental sign-to-sign relationship. For a more detailed
-                analysis considering Moon, Venus, Mars, and other planetary placements, try our
-                advanced birth chart compatibility tool.
-              </p>
+              <p>{t("howP1")}</p>
+              <p>{t("howP2")}</p>
             </div>
           </div>
         </>
@@ -192,7 +181,7 @@ export default function LoveCompatibilityPage() {
           className="text-center mb-6"
           style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", fontWeight: 500 }}
         >
-          Explore Every Sign Pairing
+          {t("pairsTitle")}
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-w-2xl mx-auto">
           {[
@@ -216,29 +205,17 @@ export default function LoveCompatibilityPage() {
           })}
         </div>
         <p className="text-center mt-4 text-xs text-[var(--color-muted-fg)]">
-          All 78 sign combinations available — search any two signs above.
+          {t("pairsNote")}
         </p>
       </div>
 
       {/* FAQ */}
       <FAQSection
         items={[
-          {
-            question: "How accurate is zodiac sign compatibility?",
-            answer: "Sun sign compatibility provides a broad overview of relationship dynamics. For a more nuanced picture, a full synastry chart comparing Moon, Venus, Mars, and other planetary placements is recommended.",
-          },
-          {
-            question: "Can incompatible signs have a good relationship?",
-            answer: "Absolutely. Sun sign compatibility is just one factor. Many thriving relationships exist between signs that are traditionally considered challenging. Personal growth, communication, and effort matter more than any astrological factor.",
-          },
-          {
-            question: "What makes two zodiac signs compatible?",
-            answer: "Signs of the same element (Fire, Earth, Air, Water) naturally understand each other. Complementary elements (Fire-Air, Earth-Water) also tend to harmonize well. The angular aspect between signs in the zodiac wheel determines the type of energy in the connection.",
-          },
-          {
-            question: "Should I avoid dating incompatible signs?",
-            answer: "No. Astrology offers insight and self-awareness, not rigid rules. Every sign combination has strengths and growth areas. What matters most is how both people communicate, respect each other, and grow together.",
-          },
+          { question: t("faq1q"), answer: t("faq1a") },
+          { question: t("faq2q"), answer: t("faq2a") },
+          { question: t("faq3q"), answer: t("faq3a") },
+          { question: t("faq4q"), answer: t("faq4a") },
         ]}
       />
 
@@ -246,18 +223,18 @@ export default function LoveCompatibilityPage() {
       <RelatedTools
         tools={[
           {
-            title: "Venus Sign Calculator",
-            description: "Discover your Venus sign and how you express love.",
+            title: t("relatedVenus"),
+            description: t("relatedVenusDesc"),
             href: "/venus-sign-calculator",
           },
           {
-            title: "Moon Sign Compatibility",
-            description: "Compare emotional compatibility through Moon signs.",
+            title: t("relatedMoon"),
+            description: t("relatedMoonDesc"),
             href: "/moon-sign-compatibility",
           },
           {
-            title: "Marriage Compatibility",
-            description: "Explore long-term relationship potential.",
+            title: t("relatedMarriage"),
+            description: t("relatedMarriageDesc"),
             href: "/marriage-compatibility",
           },
         ]}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { CalculatorShell } from "@/components/calculators/CalculatorShell";
 import { BirthDetailsForm } from "@/components/calculators/BirthDetailsForm";
 import {
@@ -70,6 +71,7 @@ function categorizAspect(a: AspectInfo): string {
 }
 
 export default function SynastryChartPage() {
+  const t = useTranslations("synastry");
   const [personA, setPersonA] = useState<Partial<BirthDetails>>({});
   const [personB, setPersonB] = useState<Partial<BirthDetails>>({});
   const [chartA, setChartA] = useState<NatalChart | null>(null);
@@ -121,21 +123,18 @@ export default function SynastryChartPage() {
 
   return (
     <CalculatorShell
-      title="Synastry Chart Calculator"
-      subtitle="Relationship Astrology"
-      description="Generate a free synastry biwheel with the full aspect grid between two natal charts — every planet-to-planet connection, house overlay, and relationship theme."
+      title={t("title")}
+      subtitle={t("subtitle")}
+      description={t("description")}
       icon={<Orbit className="w-8 h-8 text-[var(--champagne-gold)]" />}
     >
       {/* Intro */}
       <div className="max-w-2xl mx-auto text-center mb-10">
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
-          A synastry chart overlays two natal charts and reads every aspect
-          between one person&apos;s planets and the other&apos;s. This page
-          shows the full aspect grid, house overlays, and themed breakdowns.
-          For a quicker compatibility score with planet-by-planet reading, see{" "}
-          <Link href="/birth-chart-compatibility" className="underline">birth chart compatibility</Link>.
-          For dated windows over the next 12 months, use the{" "}
-          <Link href="/relationship-forecast" className="underline">relationship forecast</Link>.
+          {t("intro")}{" "}
+          <Link href="/birth-chart-compatibility" className="underline">{t("introBccLink")}</Link>.
+          {" "}{t("introForecastPrefix")}{" "}
+          <Link href="/relationship-forecast" className="underline">{t("introForecastLink")}</Link>.
         </p>
       </div>
 
@@ -149,7 +148,7 @@ export default function SynastryChartPage() {
                 onLoad={setPersonA}
               />
               <BirthDetailsForm
-                label="Person A"
+                label={t("personA")}
                 value={personA}
                 onChange={setPersonA}
                 showTime
@@ -163,7 +162,7 @@ export default function SynastryChartPage() {
                 onLoad={setPersonB}
               />
               <BirthDetailsForm
-                label="Person B"
+                label={t("personB")}
                 value={personB}
                 onChange={setPersonB}
                 showTime
@@ -179,7 +178,7 @@ export default function SynastryChartPage() {
               onClick={handleCalculate}
               icon={<Orbit className="w-4 h-4" />}
             >
-              Generate Synastry Chart
+              {t("calculate")}
             </Button>
           </div>
         </Card>
@@ -189,24 +188,22 @@ export default function SynastryChartPage() {
       {chartA && chartB && aspects.length > 0 && (
         <>
           {/* Visual biwheel */}
-          <ResultsSection title="Synastry Chart">
+          <ResultsSection title={t("resultsTitle")}>
             <div className="max-w-2xl mx-auto mb-8 flex flex-col md:flex-row gap-6 justify-center items-center">
-              <ChartWheel chart={chartA} caption="Person A" />
-              <ChartWheel chart={chartB} caption="Person B" />
+              <ChartWheel chart={chartA} caption={t("personA")} />
+              <ChartWheel chart={chartB} caption={t("personB")} />
             </div>
 
             {/* Summary badges */}
             <div className="flex flex-wrap justify-center gap-3 mb-8">
-              <Badge variant="cosmic">{aspects.length} Aspects Found</Badge>
-              <Badge variant="gold">
-                {harmonious.length} Harmonious (△ ⚹)
-              </Badge>
-              <Badge variant="rose">{tense.length} Tense (□ ☍)</Badge>
+              <Badge variant="cosmic">{t("aspectsFound", { count: aspects.length })}</Badge>
+              <Badge variant="gold">{t("harmoniousCount", { count: harmonious.length })}</Badge>
+              <Badge variant="rose">{t("tenseCount", { count: tense.length })}</Badge>
             </div>
           </ResultsSection>
 
           {/* Aspect table grouped by theme */}
-          <ResultsSection title="Aspects by Theme">
+          <ResultsSection title={t("aspectsByTheme")}>
             <div className="max-w-3xl mx-auto space-y-6">
               {Object.entries(groupedAspects).map(([category, catAspects]) => (
                 <Card key={category} variant="default" padding="md">
@@ -225,16 +222,16 @@ export default function SynastryChartPage() {
                       <thead>
                         <tr className="border-b border-[var(--color-border-subtle)]">
                           <th className="text-left py-2 px-2 text-[var(--color-muted-fg)]">
-                            Person A
+                            {t("personA")}
                           </th>
                           <th className="text-center py-2 px-2 text-[var(--color-muted-fg)]">
                             Aspect
                           </th>
                           <th className="text-left py-2 px-2 text-[var(--color-muted-fg)]">
-                            Person B
+                            {t("personB")}
                           </th>
                           <th className="text-right py-2 px-2 text-[var(--color-muted-fg)]">
-                            Orb
+                            {t("orb")}
                           </th>
                         </tr>
                       </thead>
@@ -288,11 +285,10 @@ export default function SynastryChartPage() {
 
           {/* House overlays (when birth times known) */}
           {overlays.length > 0 && (
-            <ResultsSection title="House Overlays">
+            <ResultsSection title={t("houseOverlays")}>
               <div className="max-w-2xl mx-auto">
                 <p className="text-[var(--color-muted-fg)] text-sm text-center mb-4">
-                  Where one person&apos;s planets land in the other&apos;s
-                  houses — showing which life areas the relationship activates.
+                  {t("houseOverlaysDesc")}
                 </p>
                 <Card variant="default" padding="md">
                   <div className="overflow-x-auto">
@@ -303,10 +299,10 @@ export default function SynastryChartPage() {
                             Planet
                           </th>
                           <th className="text-center py-2 px-2 text-[var(--color-muted-fg)]">
-                            In House
+                            {t("inHouse")}
                           </th>
                           <th className="text-left py-2 px-2 text-[var(--color-muted-fg)]">
-                            Sign
+                            {t("sign")}
                           </th>
                         </tr>
                       </thead>
@@ -341,23 +337,23 @@ export default function SynastryChartPage() {
 
           {/* Compatibility overview from the full engine */}
           {compat && (
-            <ResultsSection title="Relationship Overview">
+            <ResultsSection title={t("overviewTitle")}>
               <SynastryReport result={compat} chartA={chartA} chartB={chartB} detailsA={personA as BirthDetails} detailsB={personB as BirthDetails} />
             </ResultsSection>
           )}
 
           <ShareResult
-            title="Synastry Chart"
-            text={`Our synastry chart has ${aspects.length} aspects (${harmonious.length} harmonious, ${tense.length} tense). Generated at AstrologyForLove.`}
+            title={t("shareTitle")}
+            text={t("shareText", { total: aspects.length, harmonious: harmonious.length, tense: tense.length })}
           />
 
           <RelatedTools
             tools={[
-              { title: "Relationship Forecast", description: "See the next 12 months of this bond.", href: "/relationship-forecast" },
-              { title: "Composite Chart", description: "The relationship as its own chart.", href: "/composite-chart" },
-              { title: "Birth Chart Compatibility", description: "Full natal chart comparison.", href: "/birth-chart-compatibility" },
-              { title: "Mars Sign Compatibility", description: "Compare passion, desire, and conflict styles.", href: "/mars-sign-compatibility" },
-              { title: "Moon Phase Soulmate", description: "Do your birth moons make a full moon?", href: "/moon-phase-soulmate" },
+              { title: t("relatedForecast"), description: t("relatedForecastDesc"), href: "/relationship-forecast" },
+              { title: t("relatedComposite"), description: t("relatedCompositeDesc"), href: "/composite-chart" },
+              { title: t("relatedBirthChart"), description: t("relatedBirthChartDesc"), href: "/birth-chart-compatibility" },
+              { title: t("relatedMars"), description: t("relatedMarsDesc"), href: "/mars-sign-compatibility" },
+              { title: t("relatedMoonPhase"), description: t("relatedMoonPhaseDesc"), href: "/moon-phase-soulmate" },
             ]}
           />
         </>
@@ -374,16 +370,10 @@ export default function SynastryChartPage() {
               marginBottom: "0.75rem",
             }}
           >
-            What is a synastry chart?
+            {t("whatIsTitle")}
           </h2>
           <p className="text-[var(--color-muted-fg)] leading-relaxed">
-            A synastry chart compares two natal charts planet by planet. The
-            angles between your planets and theirs — called aspects — show
-            where the connection flows naturally and where it creates friction.
-            Sun-sign compatibility compares one point in each chart. A synastry
-            chart compares every planet with every planet, which is why two
-            people with &ldquo;incompatible&rdquo; Sun signs can still have a
-            strong connection.
+            {t("whatIsP1")}
           </p>
         </div>
         <div>
@@ -395,59 +385,24 @@ export default function SynastryChartPage() {
               marginBottom: "0.75rem",
             }}
           >
-            How to read your synastry chart
+            {t("howToReadTitle")}
           </h2>
           <ol className="text-[var(--color-muted-fg)] leading-relaxed list-decimal pl-6 space-y-2">
-            <li>
-              <strong>Start with the tightest aspects</strong> — the smaller
-              the orb, the stronger the contact. Anything under 2° is felt
-              strongly by both people.
-            </li>
-            <li>
-              <strong>Look at Venus and Mars contacts first</strong> — these
-              describe attraction and chemistry. Venus-Mars aspects between two
-              charts are the classic indicator of romantic spark.
-            </li>
-            <li>
-              <strong>Check Moon contacts</strong> — Moon-to-Moon and
-              Moon-to-Sun aspects reveal whether you feel emotionally safe and
-              understood with each other.
-            </li>
-            <li>
-              <strong>Note Saturn aspects</strong> — Saturn brings commitment
-              but also friction. A Saturn trine to Venus is long-lasting love;
-              a Saturn square can feel limiting.
-            </li>
-            <li>
-              <strong>Count harmonious vs tense</strong> — a healthy
-              relationship chart usually has both. Trines and sextiles provide
-              ease; squares and oppositions create growth.
-            </li>
+            <li><strong>{t("howToRead1").split(" — ")[0]}</strong> — {t("howToRead1").split(" — ")[1]}</li>
+            <li><strong>{t("howToRead2").split(" — ")[0]}</strong> — {t("howToRead2").split(" — ")[1]}</li>
+            <li><strong>{t("howToRead3").split(" — ")[0]}</strong> — {t("howToRead3").split(" — ")[1]}</li>
+            <li><strong>{t("howToRead4").split(" — ")[0]}</strong> — {t("howToRead4").split(" — ")[1]}</li>
+            <li><strong>{t("howToRead5").split(" — ")[0]}</strong> — {t("howToRead5").split(" — ")[1]}</li>
           </ol>
         </div>
 
         <FAQSection
           items={[
-            {
-              question: "Do I need an exact birth time for a synastry chart?",
-              answer: "Planet-to-planet aspects work without a birth time. House overlays, the Rising sign, and the exact Moon position need a known time. Without a time, positions are calculated at noon and the Moon is marked as approximate.",
-            },
-            {
-              question: "How is synastry different from a composite chart?",
-              answer: "Synastry compares the two charts directly — planet to planet. A composite chart blends them into one midpoint chart for the relationship. Synastry shows how you interact; a composite shows what the relationship itself is like.",
-            },
-            {
-              question: "What are the most important synastry aspects?",
-              answer: "Venus-Mars cross-aspects (romantic attraction), Moon-Moon and Sun-Moon (emotional bond), and Saturn contacts (long-term staying power) are what most astrologers look at first.",
-            },
-            {
-              question: "Is this synastry chart calculator free?",
-              answer: "Yes. The full synastry chart, aspects, house overlays, and compatibility themes are free. No signup, no account, no payment required.",
-            },
-            {
-              question: "Can I use this for friendships or family?",
-              answer: "Absolutely. Synastry works for any two people. The same aspects that show romantic chemistry also reveal communication patterns, friction points, and areas of natural support in any relationship.",
-            },
+            { question: t("faq1q"), answer: t("faq1a") },
+            { question: t("faq2q"), answer: t("faq2a") },
+            { question: t("faq3q"), answer: t("faq3a") },
+            { question: t("faq4q"), answer: t("faq4a") },
+            { question: t("faq5q"), answer: t("faq5a") },
           ]}
         />
       </div>
