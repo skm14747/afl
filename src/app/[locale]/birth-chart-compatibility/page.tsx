@@ -20,6 +20,7 @@ import {
 import { SynastryReport } from "@/components/calculators/SynastryReport";
 import { SavedChartsBar } from "@/components/calculators/SavedChartsBar";
 import { Compass, Star, AlertTriangle } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 
 const PLANET_LIST = ["sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto"] as const;
 const PLANET_LABELS: Record<string, { symbol: string; label: string }> = {
@@ -72,7 +73,10 @@ export default function BirthChartCompatibilityPage() {
           Synastry is the astrological comparison of two natal charts. By analyzing how each
           person&apos;s planets interact with the other&apos;s, synastry reveals the unique
           dynamics of a relationship — areas of natural harmony, points of attraction, and
-          themes that may require conscious effort.
+          themes that may require conscious effort. The score lives here.
+          The synastry page is the full aspect grid, and the{" "}
+          <Link href="/relationship-forecast" className="underline">relationship forecast</Link>{" "}
+          dates the next 12 months.
         </p>
       </div>
 
@@ -237,9 +241,11 @@ export default function BirthChartCompatibilityPage() {
 
       <RelatedTools
         tools={[
+          { title: "Relationship Forecast", description: "See the next 12 months of this bond.", href: "/relationship-forecast" },
+          { title: "Synastry Chart", description: "Visual biwheel chart with every aspect.", href: "/synastry-chart" },
           { title: "Composite Chart", description: "The relationship as its own chart.", href: "/composite-chart" },
-          { title: "Marriage Compatibility", description: "Partnership-focused analysis.", href: "/marriage-compatibility" },
-          { title: "Twin Flame Calculator", description: "Explore intense soul connections.", href: "/twin-flame-calculator" },
+          { title: "Mars Sign Compatibility", description: "Compare passion, drive, and conflict styles.", href: "/mars-sign-compatibility" },
+          { title: "Moon Phase Soulmate", description: "Do your birth moons make a full moon?", href: "/moon-phase-soulmate" },
           { title: "Venus Sign Calculator", description: "Discover your love planet.", href: "/venus-sign-calculator" },
         ]}
       />

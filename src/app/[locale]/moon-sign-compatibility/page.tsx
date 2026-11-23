@@ -212,14 +212,19 @@ export default function MoonSignCompatibilityPage() {
       <RelatedTools
         tools={[
           {
+            title: "Moon Phase Soulmate",
+            description: "Do your birth moon phases complete a full moon?",
+            href: "/moon-phase-soulmate",
+          },
+          {
             title: "Venus Sign Calculator",
             description: "Discover how you express and receive love.",
             href: "/venus-sign-calculator",
           },
           {
-            title: "Love Compatibility",
-            description: "Compare Sun signs for overall compatibility.",
-            href: "/love-compatibility",
+            title: "Synastry Chart",
+            description: "Visual biwheel chart with every aspect.",
+            href: "/synastry-chart",
           },
           {
             title: "Birth Chart Compatibility",

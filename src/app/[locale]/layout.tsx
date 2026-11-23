@@ -4,20 +4,20 @@ import { notFound } from "next/navigation";
 import { Cormorant_Garamond, DM_Sans, Noto_Sans_Devanagari, Noto_Sans_JP, Noto_Sans_Arabic } from "next/font/google";
 import { locales, isRtl, type Locale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
-import { LoveSparkles } from "@/components/effects/LoveSparkles";
-import { SparkleTrail } from "@/components/effects/SparkleTrail";
 
+/** Root locale layout must read params for <html lang>, dir, fonts, and i18n messages. */
+export const instant = false;
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -66,10 +66,10 @@ export default async function LocaleLayout({
   const fontVars = [
     cormorantGaramond.variable,
     dmSans.variable,
-    notoDevanagari.variable,
-    notoJP.variable,
-    notoArabic.variable,
-  ].join(" ");
+    locale === "hi" ? notoDevanagari.variable : "",
+    locale === "ja" ? notoJP.variable : "",
+    locale === "ar" ? notoArabic.variable : "",
+  ].filter(Boolean).join(" ");
 
   const bodyFontFamily =
     locale === "hi"
@@ -91,8 +91,6 @@ export default async function LocaleLayout({
         className="min-h-full flex flex-col antialiased"
         style={{ fontFamily: bodyFontFamily }}
       >
-        <LoveSparkles />
-        <SparkleTrail />
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

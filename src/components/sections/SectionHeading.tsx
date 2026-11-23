@@ -27,7 +27,7 @@ export function SectionHeading({
         <span
           className={cn(
             "text-xs uppercase tracking-[0.2em] font-semibold block mb-4",
-            isDark ? "text-[var(--champagne-gold)]" : "text-[var(--gold-600)]"
+            isDark ? "text-[var(--cosmic-rose)]" : "text-[var(--crimson-love)]"
           )}
         >
           {eyebrow}
@@ -36,7 +36,7 @@ export function SectionHeading({
       <h2
         className={cn(
           "underline-gold",
-          isDark ? "text-[var(--ivory)]" : "text-[var(--color-fg)]"
+          isDark ? "text-[var(--moonlight-cream)]" : "text-[var(--color-fg)]"
         )}
         style={{
           fontFamily: "var(--font-display)",

@@ -271,7 +271,6 @@ export default function LoveLanguageCalculatorPage() {
                 <li><strong>Astronomical:</strong> Planet positions via astronomy-engine ephemeris (real calculations, not tables).</li>
                 <li><strong>Traditional astrology:</strong> Sign-to-love-language mapping based on element and sign associations.</li>
                 <li><strong>Scoring model:</strong> Weighted blend (Venus 40%, Moon 40%, Mars 20%) — product-specific, not scientifically proven.</li>
-                <li><strong>Disclaimer:</strong> This tool offers astrological perspective for self-reflection. It does not scientifically determine your love language.</li>
               </ul>
             </div>
           </div>

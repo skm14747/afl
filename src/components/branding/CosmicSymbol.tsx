@@ -10,9 +10,9 @@ interface CosmicSymbolProps {
 
 export function CosmicSymbol({ size = 48, variant = "gold", className = "" }: CosmicSymbolProps) {
   const colors = {
-    gold: { star: "#D8AF79", line: "#D8AF79", orbit: "#B9A9C9", glow: "#D8AF79" },
-    light: { star: "#17152D", line: "#17152D", orbit: "#392544", glow: "#B9A9C9" },
-    dark: { star: "#F6F0E9", line: "#F6F0E9", orbit: "#B9A9C9", glow: "#D8AF79" },
+    gold: { star: "#E45D91", line: "#DDA5A0", orbit: "#F2A9C4", glow: "#E45D91" },
+    light: { star: "#B52D52", line: "#310D25", orbit: "#E45D91", glow: "#F2A9C4" },
+    dark: { star: "#F2A9C4", line: "#FFF5F5", orbit: "#E45D91", glow: "#E45D91" },
     mono: { star: "currentColor", line: "currentColor", orbit: "currentColor", glow: "currentColor" },
   };
 
@@ -29,37 +29,18 @@ export function CosmicSymbol({ size = 48, variant = "gold", className = "" }: Co
       aria-hidden="true"
     >
       {/* Outer orbital ring */}
-      <ellipse
-        cx="32"
-        cy="32"
-        rx="28"
-        ry="28"
-        stroke={c.orbit}
-        strokeWidth="0.5"
-        opacity="0.4"
-      />
-      {/* Inner orbital arc */}
-      <path
-        d="M12 32 C12 20, 20 12, 32 12"
-        stroke={c.orbit}
-        strokeWidth="0.5"
-        opacity="0.3"
-        fill="none"
-      />
-      <path
-        d="M52 32 C52 44, 44 52, 32 52"
-        stroke={c.orbit}
-        strokeWidth="0.5"
-        opacity="0.3"
-        fill="none"
-      />
+      <ellipse cx="32" cy="32" rx="28" ry="28" stroke={c.orbit} strokeWidth="0.5" opacity="0.35" />
 
-      {/* Constellation lines forming subtle heart */}
+      {/* Inner orbital arc */}
+      <path d="M12 32 C12 20, 20 12, 32 12" stroke={c.orbit} strokeWidth="0.5" opacity="0.25" fill="none" />
+      <path d="M52 32 C52 44, 44 52, 32 52" stroke={c.orbit} strokeWidth="0.5" opacity="0.25" fill="none" />
+
+      {/* Heart constellation lines */}
       <path
         d="M22 26 L28 22 L32 28 L36 22 L42 26"
         stroke={c.line}
         strokeWidth="0.75"
-        opacity="0.6"
+        opacity="0.5"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -68,36 +49,28 @@ export function CosmicSymbol({ size = 48, variant = "gold", className = "" }: Co
         d="M22 26 L26 34 L32 40 L38 34 L42 26"
         stroke={c.line}
         strokeWidth="0.75"
-        opacity="0.6"
+        opacity="0.5"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
 
-      {/* Connecting line between two main stars */}
-      <line
-        x1="22"
-        y1="26"
-        x2="42"
-        y2="26"
-        stroke={c.line}
-        strokeWidth="0.5"
-        opacity="0.3"
-        strokeDasharray="2 2"
-      />
+      {/* Connecting dashed line between two soul stars */}
+      <line x1="22" y1="26" x2="42" y2="26" stroke={c.line} strokeWidth="0.5" opacity="0.25" strokeDasharray="2 2" />
 
-      {/* Star 1 — left soul */}
+      {/* Soul Star 1 — left */}
       <circle cx="22" cy="26" r="2.5" fill={c.star} />
-      <circle cx="22" cy="26" r="4" fill={c.glow} opacity="0.15" />
+      <circle cx="22" cy="26" r="5" fill={c.glow} opacity="0.12" />
 
-      {/* Star 2 — right soul */}
+      {/* Soul Star 2 — right */}
       <circle cx="42" cy="26" r="2.5" fill={c.star} />
-      <circle cx="42" cy="26" r="4" fill={c.glow} opacity="0.15" />
+      <circle cx="42" cy="26" r="5" fill={c.glow} opacity="0.12" />
 
       {/* Heart bottom point */}
-      <circle cx="32" cy="40" r="1.5" fill={c.star} opacity="0.8" />
+      <circle cx="32" cy="40" r="1.8" fill={c.star} opacity="0.9" />
+      <circle cx="32" cy="40" r="4" fill={c.glow} opacity="0.1" />
 
-      {/* Small constellation stars */}
+      {/* Constellation stars */}
       <circle cx="28" cy="22" r="1" fill={c.star} opacity="0.7" />
       <circle cx="36" cy="22" r="1" fill={c.star} opacity="0.7" />
       <circle cx="26" cy="34" r="0.8" fill={c.star} opacity="0.5" />

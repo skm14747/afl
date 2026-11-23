@@ -163,13 +163,6 @@ export default function RelationshipPatternAnalyzerPage() {
                 <p className="text-sm text-[var(--color-muted-fg)] leading-relaxed">
                   {result.attachmentDescription}
                 </p>
-                <div className="mt-4 p-3 bg-[var(--color-muted)] rounded-[var(--radius-md)]">
-                  <p className="text-xs text-[var(--color-muted-fg)]">
-                    <strong>Important:</strong> Attachment style is shaped by life experience,
-                    not just astrology. This reflects your natal tendencies, not a fixed trait.
-                    Everyone can develop secure attachment through self-awareness and effort.
-                  </p>
-                </div>
               </div>
             </div>
 
@@ -317,7 +310,6 @@ export default function RelationshipPatternAnalyzerPage() {
                 <li><strong>Astronomical:</strong> Real planetary positions via astronomy-engine ephemeris.</li>
                 <li><strong>Traditional astrology:</strong> Venus attraction patterns, Moon-Saturn dynamics, element relationships.</li>
                 <li><strong>Scoring model:</strong> Attachment tendency from weighted element analysis — product-specific, not clinical.</li>
-                <li><strong>Disclaimer:</strong> This is not therapy or psychological assessment. For attachment or relationship concerns, consult a qualified professional.</li>
               </ul>
             </div>
           </div>

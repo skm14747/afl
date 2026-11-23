@@ -66,8 +66,8 @@ export function MainHeader({ className, theme = "light" }: MainHeaderProps) {
                 className={cn(
                   "px-3.5 py-2 text-[13px] font-medium transition-colors duration-200 rounded-[var(--radius-md)] tracking-wide",
                   isDarkMode
-                    ? "text-[var(--ivory)]/80 hover:text-[var(--champagne-gold)]"
-                    : "text-[var(--color-fg)] hover:text-[var(--champagne-gold)]"
+                    ? "text-[var(--moonlight-cream)]/80 hover:text-[var(--cosmic-rose)]"
+                    : "text-[var(--color-fg)] hover:text-[var(--crimson-love)]"
                 )}
               >
                 {item.label}
@@ -84,7 +84,7 @@ export function MainHeader({ className, theme = "light" }: MainHeaderProps) {
             size="sm"
             className={cn(
               "md:hidden",
-              isDarkMode && "text-[var(--ivory)]"
+              isDarkMode && "text-[var(--moonlight-cream)]"
             )}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -102,15 +102,13 @@ export function MainHeader({ className, theme = "light" }: MainHeaderProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="px-3 py-2.5 text-sm text-[var(--color-fg)] hover:text-[var(--champagne-gold)] hover:bg-[var(--color-muted)] rounded-[var(--radius-md)] transition-colors"
+                  className="px-3 py-2.5 text-sm text-[var(--color-fg)] hover:text-[var(--crimson-love)] hover:bg-[var(--color-muted)] rounded-[var(--radius-md)] transition-colors"
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-[var(--color-border-subtle)]">
-                <LanguageSwitcher />
-              </div>
+              <LanguageSwitcher className="mt-4 pt-4 border-t border-[var(--color-border-subtle)]" />
             </nav>
           </Container>
         </div>

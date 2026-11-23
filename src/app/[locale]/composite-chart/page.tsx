@@ -95,6 +95,7 @@ export default function CompositeChartPage() {
       />
       <RelatedTools
         tools={[
+          { title: "Relationship Forecast", description: "See the next 12 months of this bond.", href: "/relationship-forecast" },
           { title: "Birth Chart Compatibility", description: "Synastry of the two charts.", href: "/birth-chart-compatibility" },
           { title: "Kundli Matching", description: "Vedic marriage match.", href: "/kundli-matching" },
         ]}

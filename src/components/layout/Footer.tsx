@@ -34,21 +34,29 @@ export function Footer() {
         { label: t("zodiacGuide"), href: "/zodiac-love" as const },
         { label: t("risingSign"), href: "/rising-sign-compatibility" as const },
         { label: t("exCompat"), href: "/ex-compatibility" as const },
+        { label: "Love Language", href: "/love-language-calculator" as const },
+        { label: "Relationship Patterns", href: "/relationship-pattern-analyzer" as const },
+        { label: "Relationship Forecast", href: "/relationship-forecast" as const },
+        { label: "Composite Chart", href: "/composite-chart" as const },
+        { label: "Kundli Matching", href: "/kundli-matching" as const },
+        { label: "Synastry Chart", href: "/synastry-chart" as const },
+        { label: "Moon Phase Soulmate", href: "/moon-phase-soulmate" as const },
+        { label: "Mars Sign Compatibility", href: "/mars-sign-compatibility" as const },
       ],
     },
   ];
 
   return (
-    <footer className="bg-cosmic-gradient text-[var(--ivory)] mt-auto bg-stars relative overflow-hidden">
-      {/* Soft ambient glow */}
+    <footer className="bg-cosmic-gradient text-[var(--moonlight-cream)] mt-auto bg-stars relative overflow-hidden">
+      {/* Pink nebula atmospheric glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div
-          className="absolute w-[400px] h-[400px] rounded-full opacity-[0.03] blur-[80px]"
-          style={{ background: "var(--champagne-gold)", bottom: "-20%", left: "20%" }}
+          className="absolute w-[400px] h-[400px] rounded-full opacity-[0.05] blur-[80px]"
+          style={{ background: "var(--cosmic-rose)", bottom: "-20%", left: "20%" }}
         />
         <div
-          className="absolute w-[300px] h-[300px] rounded-full opacity-[0.025] blur-[60px]"
-          style={{ background: "var(--romantic-rose)", top: "10%", right: "15%" }}
+          className="absolute w-[300px] h-[300px] rounded-full opacity-[0.04] blur-[60px]"
+          style={{ background: "var(--blush-pink)", top: "10%", right: "15%" }}
         />
       </div>
       <Container size="wide" className="py-20 relative">
@@ -61,7 +69,7 @@ export function Footer() {
           </div>
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--champagne-gold)] mb-5">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--cosmic-rose)] mb-5">
                 {section.title}
               </h3>
               <ul className="space-y-3">
@@ -69,7 +77,7 @@ export function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-[var(--neutral-400)] hover:text-[var(--champagne-gold)] transition-colors duration-200"
+                      className="text-sm text-[var(--neutral-400)] hover:text-[var(--blush-pink)] transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -81,24 +89,24 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 pt-8 border-t border-[var(--primary-600)]/40">
+        <div className="mt-16 pt-8 border-t border-[var(--crimson-love)]/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-[var(--neutral-500)]">
+            <p className="text-xs text-[var(--neutral-400)]">
               {t("copyright")}
             </p>
             <div className="flex items-center gap-6">
-              <span className="text-xs text-[var(--neutral-500)] hover:text-[var(--neutral-400)] transition-colors cursor-pointer">
+              <Link href="/privacy" className="text-xs text-[var(--neutral-400)] hover:text-[var(--blush-pink)] transition-colors">
                 Privacy
-              </span>
-              <span className="text-xs text-[var(--neutral-500)] hover:text-[var(--neutral-400)] transition-colors cursor-pointer">
+              </Link>
+              <Link href="/terms" className="text-xs text-[var(--neutral-400)] hover:text-[var(--blush-pink)] transition-colors">
                 Terms
-              </span>
-              <span className="text-xs text-[var(--neutral-500)] hover:text-[var(--neutral-400)] transition-colors cursor-pointer">
+              </Link>
+              <Link href="/contact" className="text-xs text-[var(--neutral-400)] hover:text-[var(--blush-pink)] transition-colors">
                 Contact
-              </span>
+              </Link>
             </div>
             <p
-              className="text-xs text-[var(--neutral-500)] italic"
+              className="text-xs text-[var(--neutral-400)] italic"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {t("tagline")}

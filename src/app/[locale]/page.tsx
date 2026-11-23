@@ -3,7 +3,10 @@ import { MainHeader } from "@/components/layout/MainHeader";
 import { Footer } from "@/components/layout/Footer";
 import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "@/components/sections/SectionHeading";
-import { CelestialArtwork } from "@/components/sections/CelestialArtwork";
+import { CosmicHeartBackground, CosmicHeartMark } from "@/components/cosmic/CosmicHeartBackground";
+import { ConstellationDecoration } from "@/components/cosmic/ConstellationDecoration";
+import { ConnectedStars } from "@/components/cosmic/ConnectedStars";
+import { RomanticGradient } from "@/components/cosmic/RomanticGradient";
 import { ScrollIndicator } from "@/components/sections/ScrollIndicator";
 import { ScrollFadeIn } from "@/components/effects/ScrollFadeIn";
 import {
@@ -23,10 +26,16 @@ import {
   Globe,
   ArrowRight,
   Orbit,
+  Eye,
+  Zap,
+  CalendarDays,
 } from "lucide-react";
 import { getPathname, Link } from "@/i18n/navigation";
 import { defaultLocale, type Locale } from "@/i18n/locales";
 import { setRequestLocale } from "next-intl/server";
+
+/** Page component reads params for setRequestLocale + JSON-LD canonical. */
+export const instant = false;
 
 const SITE = "https://astrologyforlove.com";
 
@@ -35,42 +44,32 @@ const HOME_TITLE = "Love Astrology & Zodiac Compatibility | AstrologyForLove";
 const HOME_DESCRIPTION =
   "Check zodiac compatibility for love, a soulmate, or marriage. Free Venus, Moon, and birth-chart tools calculate real planetary positions in your browser.";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  const canonical = new URL(
-    getPathname({ locale: defaultLocale, href: "/" }),
-    SITE
-  ).toString();
+const HOME_CANONICAL = new URL(
+  getPathname({ locale: defaultLocale, href: "/" }),
+  SITE
+).toString();
 
-  return {
-    title: { absolute: HOME_TITLE },
+export const metadata: Metadata = {
+  title: { absolute: HOME_TITLE },
+  description: HOME_DESCRIPTION,
+  alternates: {
+    canonical: HOME_CANONICAL,
+    languages: { en: HOME_CANONICAL, "x-default": HOME_CANONICAL },
+  },
+  openGraph: {
+    title: HOME_TITLE,
     description: HOME_DESCRIPTION,
-    alternates: {
-      canonical,
-      languages:
-        locale === defaultLocale
-          ? { en: canonical, "x-default": canonical }
-          : undefined,
-    },
-    openGraph: {
-      title: HOME_TITLE,
-      description: HOME_DESCRIPTION,
-      url: canonical,
-      siteName: "AstrologyForLove",
-      type: "website",
-      locale: "en_US",
-    },
-    twitter: {
-      card: "summary",
-      title: HOME_TITLE,
-      description: HOME_DESCRIPTION,
-    },
-  };
-}
+    url: HOME_CANONICAL,
+    siteName: "AstrologyForLove",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+  },
+};
 
 const tools: Array<{
   title: string;
@@ -89,7 +88,13 @@ const tools: Array<{
     | "/ex-compatibility"
     | "/zodiac-love"
     | "/composite-chart"
-    | "/kundli-matching";
+    | "/kundli-matching"
+    | "/synastry-chart"
+    | "/moon-phase-soulmate"
+    | "/mars-sign-compatibility"
+    | "/love-language-calculator"
+    | "/relationship-pattern-analyzer"
+    | "/relationship-forecast";
   icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   accent: string;
   featured?: boolean;
@@ -100,7 +105,7 @@ const tools: Array<{
       "Zodiac compatibility for two Sun signs: romance, communication, and long-term potential.",
     href: "/love-compatibility",
     icon: Heart,
-    accent: "var(--romantic-rose)",
+    accent: "var(--crimson-love)",
     featured: true,
   },
   {
@@ -109,7 +114,7 @@ const tools: Array<{
       "Find your Venus sign and understand your romantic nature and love language.",
     href: "/venus-sign-calculator",
     icon: Sparkles,
-    accent: "var(--champagne-gold)",
+    accent: "var(--cosmic-rose)",
     featured: true,
   },
   {
@@ -118,16 +123,16 @@ const tools: Array<{
       "Compare Moon placements to reveal emotional compatibility and nurturing styles.",
     href: "/moon-sign-compatibility",
     icon: Moon,
-    accent: "var(--lavender-mist)",
+    accent: "var(--blush-pink)",
     featured: true,
   },
   {
     title: "Soulmate Calculator",
     description:
-      "Soulmate synastry from two birth charts, including aspects and the composite chart.",
+      "Discover your romantic tendencies through Venus, Moon, and Mars. A one-person soulmate profile from your natal chart.",
     href: "/soulmate-calculator",
     icon: Star,
-    accent: "var(--champagne-gold)",
+    accent: "var(--cosmic-rose)",
     featured: true,
   },
   {
@@ -136,7 +141,7 @@ const tools: Array<{
       "Tropical marriage astrology from both birth charts. Kundli matching is the Vedic reading.",
     href: "/marriage-compatibility",
     icon: Shield,
-    accent: "var(--lavender-mist)",
+    accent: "var(--rose-gold)",
     featured: true,
   },
   {
@@ -145,8 +150,24 @@ const tools: Array<{
       "Full synastry analysis comparing two natal charts across all personal planets.",
     href: "/birth-chart-compatibility",
     icon: Compass,
-    accent: "var(--champagne-gold)",
+    accent: "var(--crimson-love)",
     featured: true,
+  },
+  {
+    title: "Love Language Calculator",
+    description:
+      "Discover your astrological love language through Venus, Moon, and Mars placements.",
+    href: "/love-language-calculator",
+    icon: Zap,
+    accent: "var(--cosmic-rose)",
+  },
+  {
+    title: "Relationship Pattern Analyzer",
+    description:
+      "Uncover recurring attraction patterns and growth edges in your natal chart.",
+    href: "/relationship-pattern-analyzer",
+    icon: Eye,
+    accent: "var(--rose-gold)",
   },
   {
     title: "Twin Flame Calculator",
@@ -154,7 +175,7 @@ const tools: Array<{
       "Examine synastry indicators traditionally associated with deep soul connections.",
     href: "/twin-flame-calculator",
     icon: Flame,
-    accent: "var(--romantic-rose)",
+    accent: "var(--crimson-love)",
   },
   {
     title: "Relationship Numerology",
@@ -162,7 +183,7 @@ const tools: Array<{
       "Compare Life Path numbers for numerological relationship insights.",
     href: "/relationship-numerology",
     icon: Hash,
-    accent: "var(--lavender-mist)",
+    accent: "var(--blush-pink)",
   },
   {
     title: "Rising Sign Compatibility",
@@ -170,7 +191,7 @@ const tools: Array<{
       "Compare Ascendants for first-impression and partnership dynamics.",
     href: "/rising-sign-compatibility",
     icon: Sunrise,
-    accent: "var(--champagne-gold)",
+    accent: "var(--cosmic-rose)",
   },
   {
     title: "Ex-Relationship Insights",
@@ -178,7 +199,7 @@ const tools: Array<{
       "Reflect on past relationship dynamics through an astrological lens.",
     href: "/ex-compatibility",
     icon: RotateCcw,
-    accent: "var(--romantic-rose)",
+    accent: "var(--rose-gold)",
   },
   {
     title: "Zodiac Love Guide",
@@ -186,7 +207,7 @@ const tools: Array<{
       "Explore how each zodiac sign expresses love, with strengths and best matches.",
     href: "/zodiac-love",
     icon: BookOpen,
-    accent: "var(--lavender-mist)",
+    accent: "var(--blush-pink)",
   },
   {
     title: "Composite Chart",
@@ -194,7 +215,7 @@ const tools: Array<{
       "The midpoint chart of two people, plus a Davison chart when both birth places are known.",
     href: "/composite-chart",
     icon: Orbit,
-    accent: "var(--champagne-gold)",
+    accent: "var(--cosmic-rose)",
   },
   {
     title: "Kundli Matching",
@@ -202,7 +223,40 @@ const tools: Array<{
       "Vedic marriage match: 36 guna, Mangal dosha, and ten poruthams on the Lahiri zodiac.",
     href: "/kundli-matching",
     icon: Moon,
-    accent: "var(--lavender-mist)",
+    accent: "var(--rose-gold)",
+  },
+  {
+    title: "Synastry Chart",
+    description:
+      "Compare two birth charts and see every planet-to-planet aspect, house overlay, and relationship theme.",
+    href: "/synastry-chart",
+    icon: Orbit,
+    accent: "var(--crimson-love)",
+    featured: true,
+  },
+  {
+    title: "Moon Phase Soulmate",
+    description:
+      "Find each person's birth moon phase and see if your moons make one full moon together.",
+    href: "/moon-phase-soulmate",
+    icon: Moon,
+    accent: "var(--blush-pink)",
+  },
+  {
+    title: "Mars Sign Compatibility",
+    description:
+      "Compare two Mars signs for passion, sexual chemistry, drive, and conflict style.",
+    href: "/mars-sign-compatibility",
+    icon: Flame,
+    accent: "var(--crimson-love)",
+  },
+  {
+    title: "Relationship Forecast",
+    description:
+      "A score for how two charts meet, then dated windows for the next 12 months. Not a marriage or breakup prediction.",
+    href: "/relationship-forecast",
+    icon: CalendarDays,
+    accent: "var(--crimson-love)",
   },
 ];
 
@@ -263,46 +317,19 @@ export default async function HomePage({
       <MainHeader theme="dark" />
       <main className="flex-1">
         {/* ═══════════════════════════════════════
-            Section A — Immersive Hero
+            Section A — COSMIC HEARTS Hero
         ═══════════════════════════════════════ */}
-        <section className="bg-immersive text-[var(--ivory)] min-h-[85vh] relative overflow-hidden flex items-center">
-          {/* Atmospheric glow orbs */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div
-              className="absolute w-[600px] h-[600px] rounded-full opacity-[0.06] blur-[100px]"
-              style={{
-                background: "var(--champagne-gold)",
-                top: "-10%",
-                left: "10%",
-              }}
-            />
-            <div
-              className="absolute w-[500px] h-[500px] rounded-full opacity-[0.05] blur-[80px]"
-              style={{
-                background: "var(--romantic-rose)",
-                bottom: "-5%",
-                right: "5%",
-              }}
-            />
-            <div
-              className="absolute w-[300px] h-[300px] rounded-full opacity-[0.04] blur-[60px]"
-              style={{
-                background: "var(--lavender-mist)",
-                top: "40%",
-                right: "25%",
-              }}
-            />
-          </div>
+        <section className="bg-immersive text-[var(--moonlight-cream)] min-h-[85vh] relative overflow-hidden flex items-center">
+          <CosmicHeartBackground />
 
           <Container size="wide" className="relative py-28 md:py-0">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Left — Editorial text */}
               <div className="max-w-xl">
-                <span className="text-[10px] md:text-xs uppercase tracking-[0.25em] text-[var(--champagne-gold)] font-semibold block mb-6">
-                  AstrologyForLove · Love astrology
+                <span className="text-[10px] md:text-xs uppercase tracking-[0.25em] text-[var(--cosmic-rose)] font-semibold block mb-6">
+                  Some hearts are written in the stars
                 </span>
                 <h1
-                  className="text-[var(--ivory)] mb-6"
+                  className="text-[var(--moonlight-cream)] mb-6"
                   style={{
                     fontFamily: "var(--font-display)",
                     fontSize: "var(--text-display-1)",
@@ -311,38 +338,33 @@ export default async function HomePage({
                     letterSpacing: "-0.02em",
                   }}
                 >
-                  Zodiac compatibility,{" "}
-                  <em className="text-gold-gradient not-italic">
-                    written in the stars.
-                  </em>
+                  Zodiac compatibility{" "}
+                  <em className="text-rose-gradient not-italic">for love.</em>
                 </h1>
                 <p className="text-[var(--neutral-300)] leading-relaxed text-[1.05rem] mb-10 max-w-md">
-                  Check two signs for love, a soulmate chart, or a marriage
-                  match. Venus, Moon, rising, and birth-chart tools calculate
-                  Sun through Pluto in your browser. Western readings use the
-                  tropical zodiac. Kundli matching is the Lahiri Vedic reading.
+                  Discover the celestial patterns behind your attraction,
+                  emotional connection and relationship journey.
                 </p>
                 <div className="flex gap-4 flex-wrap">
                   <Link
                     href="/love-compatibility"
-                    className="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-[var(--champagne-gold)] text-[var(--cosmic-navy)] font-semibold rounded-[var(--radius-xl)] hover:bg-[var(--gold-300)] transition-all hover:shadow-[0_8px_30px_rgba(216,175,121,0.3)] hover:-translate-y-0.5"
+                    className="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-[var(--crimson-love)] text-white font-semibold rounded-[var(--radius-xl)] hover:bg-[var(--primary-600)] transition-all hover:shadow-[0_8px_30px_rgba(181,45,82,0.4)] hover:-translate-y-0.5"
                   >
                     <Heart className="w-4.5 h-4.5 group-hover:scale-110 transition-transform" />
                     Explore Love Compatibility
                   </Link>
                   <Link
-                    href="/venus-sign-calculator"
-                    className="group inline-flex items-center gap-2.5 px-7 py-3.5 border border-[var(--ivory)]/20 text-[var(--ivory)] font-medium rounded-[var(--radius-xl)] hover:border-[var(--champagne-gold)] hover:text-[var(--champagne-gold)] transition-all glass-dark"
+                    href="/love-language-calculator"
+                    className="group inline-flex items-center gap-2.5 px-7 py-3.5 border border-[var(--cosmic-rose)]/30 text-[var(--moonlight-cream)] font-medium rounded-[var(--radius-xl)] hover:border-[var(--cosmic-rose)] hover:text-[var(--cosmic-rose)] transition-all glass-dark"
                   >
                     <Sparkles className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                    Discover Your Venus Sign
+                    Discover Your Love Language
                   </Link>
                 </div>
               </div>
 
-              {/* Right — Celestial artwork */}
-              <div className="hidden lg:block">
-                <CelestialArtwork variant="hero" />
+              <div className="relative mx-auto h-64 w-64 sm:h-80 sm:w-80 lg:h-[460px] lg:w-[460px]">
+                <CosmicHeartMark />
               </div>
             </div>
           </Container>
@@ -354,30 +376,32 @@ export default async function HomePage({
         </section>
 
         {/* ═══════════════════════════════════════
-            Section B — "Every connection has a story"
+            Section B — Discovery (blush/cream)
         ═══════════════════════════════════════ */}
-        <section className="bg-editorial py-24 md:py-32 relative section-glow">
-          <Container size="standard">
+        <section className="relative py-24 md:py-32 section-glow overflow-hidden">
+          <RomanticGradient className="absolute inset-0" />
+          <ConstellationDecoration className="absolute top-8 right-6 hidden md:block opacity-80" />
+          <Container size="standard" className="relative">
             <ScrollFadeIn>
               <SectionHeading
-                eyebrow="Discover Your Connection"
+                eyebrow="Your Cosmic Story"
                 headline={
                   <>
-                    Every connection has a{" "}
-                    <em className="text-serif-italic">story.</em>
+                    Every{" "}
+                    <em className="text-serif-italic">heart</em> has its own universe.
                   </>
                 }
-                body="A Venus sign, a Moon comparison, and a birth-chart synastry each answer a different question about the same relationship."
+                body="Your Venus sign, Moon compatibility, and birth-chart synastry each answer a different question about the same relationship."
               />
             </ScrollFadeIn>
 
             <div className="mt-20 space-y-16 md:space-y-20">
-              {/* Pillar 1 — Left aligned */}
+              {/* Pillar 1 — Discover Yourself */}
               <ScrollFadeIn delay={100} direction="left">
                 <div className="max-w-lg">
                   <div className="flex items-start gap-6">
                     <span
-                      className="text-gold-gradient flex-shrink-0"
+                      className="text-rose-gradient flex-shrink-0"
                       style={{
                         fontFamily: "var(--font-display)",
                         fontSize: "var(--text-display-2)",
@@ -399,21 +423,21 @@ export default async function HomePage({
                         Discover Yourself
                       </h3>
                       <p className="text-[var(--color-muted-fg)] leading-relaxed">
-                        Understand your Venus sign, emotional needs, romantic
-                        personality, and the love language written in your birth
-                        chart.
+                        Explore your romantic personality and emotional needs.
+                        Understand your Venus sign, the love language written
+                        in your chart, and your deepest attraction patterns.
                       </p>
                     </div>
                   </div>
                 </div>
               </ScrollFadeIn>
 
-              {/* Pillar 2 — Centered */}
+              {/* Pillar 2 — Understand Your Connection */}
               <ScrollFadeIn delay={200}>
                 <div className="max-w-lg mx-auto md:ms-auto md:me-16">
                   <div className="flex items-start gap-6">
                     <span
-                      className="text-rose-gradient flex-shrink-0"
+                      className="text-cosmic-gradient flex-shrink-0"
                       style={{
                         fontFamily: "var(--font-display)",
                         fontSize: "var(--text-display-2)",
@@ -432,24 +456,24 @@ export default async function HomePage({
                           fontWeight: 500,
                         }}
                       >
-                        Understand Your Connection
+                        Understand Your <em className="text-serif-italic">Connection</em>
                       </h3>
                       <p className="text-[var(--color-muted-fg)] leading-relaxed">
-                        Explore compatibility, attraction patterns,
-                        communication dynamics, and the celestial chemistry
-                        between two people.
+                        Discover the cosmic patterns between two birth charts.
+                        Explore compatibility, attraction dynamics, and the
+                        celestial chemistry that draws two people together.
                       </p>
                     </div>
                   </div>
                 </div>
               </ScrollFadeIn>
 
-              {/* Pillar 3 — Right aligned */}
+              {/* Pillar 3 — Explore Your Journey */}
               <ScrollFadeIn delay={300} direction="right">
                 <div className="max-w-lg ms-auto">
                   <div className="flex items-start gap-6">
                     <span
-                      className="text-cosmic-gradient flex-shrink-0"
+                      className="text-crimson-gradient flex-shrink-0"
                       style={{
                         fontFamily: "var(--font-display)",
                         fontSize: "var(--text-display-2)",
@@ -471,8 +495,9 @@ export default async function HomePage({
                         Explore Your Journey
                       </h3>
                       <p className="text-[var(--color-muted-fg)] leading-relaxed">
-                        Discover relationship patterns, cosmic timing, and the
-                        meaningful milestones that shape your romantic path.
+                        Understand relationship patterns, celestial timing,
+                        and the meaningful milestones that shape your
+                        romantic path through the stars.
                       </p>
                     </div>
                   </div>
@@ -483,24 +508,24 @@ export default async function HomePage({
         </section>
 
         {/* ═══════════════════════════════════════
-            Section C — Featured Love Tools
+            Section C — Featured Love Tools (warm gradient)
         ═══════════════════════════════════════ */}
         <section className="py-24 md:py-32 bg-warm-gradient">
           <Container size="wide">
             <ScrollFadeIn>
               <SectionHeading
-                eyebrow="Love astrology tools"
+                eyebrow="Cosmic connection tools"
                 headline={
                   <>
-                    Zodiac compatibility,{" "}
-                    <em className="text-serif-italic">real positions.</em>
+                    Unlock the secrets of your cosmic{" "}
+                    <em className="text-serif-italic">connection.</em>
                   </>
                 }
                 body="Sun through Pluto come from the astronomy-engine ephemeris. Each tool explains its score. Birth data stays in your browser."
               />
             </ScrollFadeIn>
 
-            {/* Bento grid — first tool large */}
+            {/* Bento grid */}
             <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {featuredTools.map((tool, i) => {
                 const Icon = tool.icon;
@@ -516,12 +541,12 @@ export default async function HomePage({
                       className="group block h-full"
                     >
                       <div
-                        className={`h-full rounded-[var(--radius-xl)] border border-[var(--color-border-subtle)] bg-[var(--color-surface)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(23,21,45,0.08)] hover:-translate-y-1 hover:border-[var(--gold-200)] card-glow relative ${isLarge ? "p-8 md:p-10" : "p-7"}`}
+                        className={`h-full rounded-[var(--radius-xl)] border border-[var(--color-border-subtle)] bg-[var(--color-surface)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(49,13,37,0.08)] hover:-translate-y-1 hover:border-[var(--cosmic-rose)]/40 card-glow relative ${isLarge ? "p-8 md:p-10" : "p-7"}`}
                       >
                         <div
                           className="w-12 h-12 rounded-[var(--radius-lg)] flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
                           style={{
-                            backgroundColor: `color-mix(in srgb, ${tool.accent} 12%, var(--color-surface))`,
+                            backgroundColor: `color-mix(in srgb, ${tool.accent} 10%, var(--color-surface))`,
                           }}
                         >
                           <Icon
@@ -530,7 +555,7 @@ export default async function HomePage({
                           />
                         </div>
                         <h3
-                          className="font-semibold mb-2.5 group-hover:text-[var(--champagne-gold)] transition-colors duration-300"
+                          className="font-semibold mb-2.5 group-hover:text-[var(--crimson-love)] transition-colors duration-300"
                           style={{
                             fontFamily: "var(--font-display)",
                             fontSize: isLarge
@@ -545,7 +570,7 @@ export default async function HomePage({
                         >
                           {tool.description}
                         </p>
-                        <div className="mt-5 flex items-center gap-1.5 text-xs font-medium text-[var(--champagne-gold)] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="mt-5 flex items-center gap-1.5 text-xs font-medium text-[var(--crimson-love)] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <span>Explore</span>
                           <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
                         </div>
@@ -567,13 +592,13 @@ export default async function HomePage({
                         <Link
                           key={tool.href}
                           href={tool.href}
-                          className="group flex items-center gap-3 p-4 rounded-[var(--radius-lg)] border border-[var(--color-border-subtle)] bg-[var(--color-surface)] hover:border-[var(--gold-200)] hover:shadow-[var(--shadow-sm)] transition-all"
+                          className="group flex items-center gap-3 p-4 rounded-[var(--radius-lg)] border border-[var(--color-border-subtle)] bg-[var(--color-surface)] hover:border-[var(--cosmic-rose)]/40 hover:shadow-[var(--shadow-sm)] transition-all"
                         >
                           <Icon
                             className="w-4.5 h-4.5 flex-shrink-0"
                             style={{ color: tool.accent }}
                           />
-                          <span className="text-sm font-medium group-hover:text-[var(--champagne-gold)] transition-colors">
+                          <span className="text-sm font-medium group-hover:text-[var(--crimson-love)] transition-colors">
                             {tool.title}
                           </span>
                         </Link>
@@ -587,43 +612,27 @@ export default async function HomePage({
         </section>
 
         {/* ═══════════════════════════════════════
-            Section D — Editorial Storytelling
+            Section D — Storytelling (dark cosmic)
         ═══════════════════════════════════════ */}
-        <section className="bg-immersive text-[var(--ivory)] py-24 md:py-32 relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div
-              className="absolute w-[400px] h-[400px] rounded-full opacity-[0.05] blur-[80px]"
-              style={{
-                background: "var(--champagne-gold)",
-                top: "10%",
-                left: "5%",
-              }}
-            />
-            <div
-              className="absolute w-[300px] h-[300px] rounded-full opacity-[0.04] blur-[60px]"
-              style={{
-                background: "var(--romantic-rose)",
-                bottom: "10%",
-                right: "10%",
-              }}
-            />
-          </div>
+        <section className="bg-immersive text-[var(--moonlight-cream)] py-24 md:py-32 relative overflow-hidden">
+          <CosmicHeartBackground intensity="quiet" />
 
           <Container size="wide" className="relative">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              {/* Left — Celestial artwork */}
               <ScrollFadeIn direction="left">
-                <CelestialArtwork variant="compact" />
+                <div className="relative mx-auto h-64 w-64 lg:h-80 lg:w-80">
+                  <CosmicHeartMark />
+                </div>
               </ScrollFadeIn>
 
               {/* Right — Editorial text */}
               <ScrollFadeIn direction="right">
                 <div className="max-w-lg">
-                  <span className="text-xs uppercase tracking-[0.2em] text-[var(--champagne-gold)] font-semibold block mb-5">
-                    Beyond the Sun Sign
+                  <span className="text-xs uppercase tracking-[0.2em] text-[var(--cosmic-rose)] font-semibold block mb-5">
+                    Beyond Attraction. Beyond the Stars.
                   </span>
                   <h2
-                    className="text-[var(--ivory)] mb-6"
+                    className="text-[var(--moonlight-cream)] mb-6"
                     style={{
                       fontFamily: "var(--font-display)",
                       fontSize: "var(--text-h2)",
@@ -631,29 +640,26 @@ export default async function HomePage({
                       fontWeight: 500,
                     }}
                   >
-                    Love is more than{" "}
-                    <em className="text-gold-gradient not-italic">
-                      a sun sign.
-                    </em>
+                    Your Venus reveals how you{" "}
+                    <em className="text-rose-gradient not-italic">love.</em>
                   </h2>
                   <div className="space-y-4 text-[var(--neutral-300)] leading-relaxed">
                     <p>
-                      A Sun sign is one part of love astrology. The Moon
-                      describes emotional needs, Venus describes how you love,
-                      and Mars describes chemistry.
+                      Your Venus reveals how you love. Your Moon reveals what
+                      your heart needs. Mars reveals the spark of attraction.
                     </p>
                     <p>
                       Birth-chart tools calculate those positions from the
-                      astronomy-engine ephemeris and show the method behind the
-                      score.
+                      astronomy-engine ephemeris and show the method behind
+                      every score.
                     </p>
                   </div>
                   <div className="mt-8">
                     <Link
                       href="/birth-chart-compatibility"
-                      className="group inline-flex items-center gap-2.5 px-6 py-3 bg-[var(--champagne-gold)] text-[var(--cosmic-navy)] font-semibold rounded-[var(--radius-lg)] hover:bg-[var(--gold-300)] transition-all hover:shadow-[0_6px_24px_rgba(216,175,121,0.25)]"
+                      className="group inline-flex items-center gap-2.5 px-6 py-3 bg-[var(--crimson-love)] text-white font-semibold rounded-[var(--radius-lg)] hover:bg-[var(--primary-600)] transition-all hover:shadow-[0_6px_24px_rgba(181,45,82,0.35)]"
                     >
-                      Explore Your Birth Chart
+                      Explore Your Cosmic Blueprint
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                     </Link>
                   </div>
@@ -664,7 +670,7 @@ export default async function HomePage({
         </section>
 
         {/* ═══════════════════════════════════════
-            Section E — How It Works
+            Section E — How It Works (light editorial)
         ═══════════════════════════════════════ */}
         <section className="py-24 md:py-32 bg-editorial relative section-glow">
           <Container size="standard">
@@ -681,29 +687,31 @@ export default async function HomePage({
 
             <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 relative">
               {/* Connecting line (desktop only) */}
-              <div className="hidden md:block absolute top-10 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[var(--champagne-gold)]/20 to-transparent" />
+              <div className="hidden md:block absolute top-4 left-[12%] right-[12%] h-16">
+                <ConnectedStars />
+              </div>
 
               {[
                 {
                   num: "01",
-                  title: "Enter your birth details",
+                  title: "Share your birth details",
                   desc: "Date, time, and location. Everything stays private in your browser.",
                 },
                 {
                   num: "02",
-                  title: "Explore your celestial patterns",
+                  title: "Discover your celestial patterns",
                   desc: "Real astronomical calculations reveal your planetary placements and aspects.",
                 },
                 {
                   num: "03",
-                  title: "Discover what they reveal",
-                  desc: "Understand your compatibility, romantic nature, and relationship dynamics.",
+                  title: "Understand your cosmic connection",
+                  desc: "Explore compatibility, romantic nature, and the relationship dynamics written in the stars.",
                 },
               ].map((step, i) => (
                 <ScrollFadeIn key={step.num} delay={i * 150}>
                   <div className="text-center relative">
                     <div
-                      className="text-gold-gradient mb-4 inline-block"
+                      className="text-rose-gradient mb-4 inline-block"
                       style={{
                         fontFamily: "var(--font-display)",
                         fontSize: "var(--text-display-2)",
@@ -734,31 +742,14 @@ export default async function HomePage({
         </section>
 
         {/* ═══════════════════════════════════════
-            Section F — Final CTA
+            Section F — Final CTA (dark burgundy)
         ═══════════════════════════════════════ */}
-        <section className="bg-cosmic-gradient text-[var(--ivory)] py-24 md:py-32 bg-stars relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div
-              className="absolute w-[500px] h-[500px] rounded-full opacity-[0.05] blur-[90px]"
-              style={{
-                background: "var(--champagne-gold)",
-                top: "-15%",
-                right: "10%",
-              }}
-            />
-            <div
-              className="absolute w-[400px] h-[400px] rounded-full opacity-[0.04] blur-[70px]"
-              style={{
-                background: "var(--romantic-rose)",
-                bottom: "-10%",
-                left: "15%",
-              }}
-            />
-          </div>
+        <section className="bg-cosmic-gradient text-[var(--moonlight-cream)] py-24 md:py-32 relative overflow-hidden">
+          <CosmicHeartBackground intensity="quiet" heart="corner" />
           <Container size="standard" className="relative text-center">
             <ScrollFadeIn>
               <h2
-                className="text-[var(--ivory)] mb-6 max-w-2xl mx-auto"
+                className="text-[var(--moonlight-cream)] mb-6 max-w-2xl mx-auto"
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: "var(--text-h1)",
@@ -766,8 +757,8 @@ export default async function HomePage({
                   fontWeight: 500,
                 }}
               >
-                Your next discovery might be{" "}
-                <em className="text-gold-gradient not-italic">
+                Perhaps your story was{" "}
+                <em className="text-rose-gradient not-italic">
                   written in the stars.
                 </em>
               </h2>
@@ -777,34 +768,34 @@ export default async function HomePage({
               </p>
               <Link
                 href="/love-compatibility"
-                className="group inline-flex items-center gap-2.5 px-8 py-4 bg-[var(--champagne-gold)] text-[var(--cosmic-navy)] font-semibold rounded-[var(--radius-xl)] hover:bg-[var(--gold-300)] transition-all hover:shadow-[0_8px_30px_rgba(216,175,121,0.3)] hover:-translate-y-0.5 text-base"
+                className="group inline-flex items-center gap-2.5 px-8 py-4 bg-[var(--crimson-love)] text-white font-semibold rounded-[var(--radius-xl)] hover:bg-[var(--primary-600)] transition-all hover:shadow-[0_8px_30px_rgba(181,45,82,0.4)] hover:-translate-y-0.5 text-base"
               >
                 <Heart className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                Explore Your Love Compatibility
+                Discover Your Connection
               </Link>
             </ScrollFadeIn>
           </Container>
         </section>
 
         {/* ═══════════════════════════════════════
-            Section G — Trust Bar (compact)
+            Section G — Trust Bar
         ═══════════════════════════════════════ */}
         <section className="py-10 border-t border-[var(--color-border-subtle)]">
           <Container size="wide">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
               {[
                 {
-                  icon: <Globe className="w-5 h-5" style={{ color: "var(--champagne-gold)" }} />,
+                  icon: <Globe className="w-5 h-5" style={{ color: "var(--crimson-love)" }} />,
                   title: "Precise Ephemeris",
                   text: "Sun through Pluto from the astronomy-engine ephemeris.",
                 },
                 {
-                  icon: <Lock className="w-5 h-5" style={{ color: "var(--romantic-rose)" }} />,
+                  icon: <Lock className="w-5 h-5" style={{ color: "var(--cosmic-rose)" }} />,
                   title: "Privacy First",
                   text: "All calculations run in your browser. Data never leaves your device.",
                 },
                 {
-                  icon: <FileText className="w-5 h-5" style={{ color: "var(--lavender-mist)" }} />,
+                  icon: <FileText className="w-5 h-5" style={{ color: "var(--rose-gold)" }} />,
                   title: "Transparent Method",
                   text: "Scoring methodology explained on every tool.",
                 },

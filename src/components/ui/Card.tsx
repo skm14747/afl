@@ -12,11 +12,11 @@ interface CardProps {
 }
 
 const variantStyles = {
-  default: "bg-[var(--color-surface)] border border-[var(--color-border-subtle)] hover:border-[var(--color-border)]",
+  default: "bg-[var(--color-surface)] border border-[var(--color-border-subtle)] hover:border-[var(--rose-gold)]",
   elevated: "bg-[var(--color-surface-elevated)] shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)]",
-  outlined: "bg-transparent border border-[var(--color-border)] hover:border-[var(--gold-200)]",
-  feature: "bg-[var(--color-surface-elevated)] border border-[var(--gold-200)] shadow-[var(--shadow-glow-gold)] hover:shadow-[0_0_30px_rgba(216,175,121,0.2)]",
-  cosmic: "bg-[var(--cosmic-navy)] text-[var(--ivory)] border border-[var(--primary-500)]/50 shadow-[0_0_20px_rgba(23,21,45,0.3)]",
+  outlined: "bg-transparent border border-[var(--color-border)] hover:border-[var(--cosmic-rose)]",
+  feature: "bg-[var(--color-surface-elevated)] border border-[var(--rose-gold)] shadow-[var(--shadow-glow-rose)] hover:shadow-[0_0_30px_rgba(228,93,145,0.15)]",
+  cosmic: "bg-[var(--cosmic-burgundy)] text-[var(--moonlight-cream)] border border-[var(--primary-500)]/50 shadow-[0_0_20px_rgba(49,13,37,0.3)]",
 };
 
 const paddingStyles = {

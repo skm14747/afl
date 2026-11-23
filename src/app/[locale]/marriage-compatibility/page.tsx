@@ -271,11 +271,6 @@ export default function MarriageCompatibilityPage() {
                 Moon contacts affect emotional scores, Mercury aspects shape communication scores,
                 and Sun-Saturn contacts inform long-term indicators.
               </p>
-              <p>
-                These scores reflect astrological dynamics — not a prediction of relationship success.
-                Every partnership requires communication, effort, and mutual respect regardless of
-                astrological compatibility.
-              </p>
             </div>
           </div>
           {chartA && chartB && result && (
@@ -313,6 +308,11 @@ export default function MarriageCompatibilityPage() {
 
       <RelatedTools
         tools={[
+          {
+            title: "Relationship Forecast",
+            description: "See the next 12 months of this bond.",
+            href: "/relationship-forecast",
+          },
           {
             title: "Love Compatibility",
             description: "Quick zodiac sign comparison.",

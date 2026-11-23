@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
-export const metadata: Metadata = {
-  title: "Ex-Relationship Compatibility — Reflective Insights | AstrologyForLove",
-  description: "Understand past relationship dynamics through astrological analysis. Gain insights into communication patterns, emotional connections, and growth areas.",
-  openGraph: {
-    title: "Ex-Relationship Compatibility — AstrologyForLove",
-    description: "Reflect on past relationships through an astrological lens.",
-    type: "website",
-  },
-};
-export default function Layout({ children }: { children: React.ReactNode }) { return children; }
+import { toolMetadata } from "@/lib/seo";
+
+export const metadata = toolMetadata({
+  title: "Ex-Relationship Compatibility — Learn from the Past",
+    description: "Reflect on past relationship dynamics through an astrological lens. Understand what worked, what didn't, and what to look for next.",
+    ogTitle: "Ex-Relationship Insights — AstrologyForLove",
+    ogDescription: "Astrological analysis of past relationship dynamics for growth.",
+    href: "/ex-compatibility",
+});
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return children;
+}

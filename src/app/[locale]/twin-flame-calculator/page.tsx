@@ -131,12 +131,6 @@ export default function TwinFlameCalculatorPage() {
       icon={<Flame className="w-8 h-8 text-[var(--champagne-gold)]" />}
     >
       <div className="max-w-2xl mx-auto text-center mb-10">
-        <div className="text-xs text-[var(--color-warning)] bg-[var(--color-warning-bg)] px-4 py-3 rounded-[var(--radius-md)] mb-6">
-          <strong>Important:</strong> This calculator cannot verify whether two people are
-          &ldquo;twin flames.&rdquo; It identifies astrological contacts traditionally associated
-          with deep, intense connections. The concept of twin flames is a spiritual belief, not
-          an astrological certainty.
-        </div>
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
           Certain planetary aspects between two natal charts have been traditionally associated
           with profound soul recognition, intense attraction, and transformative relationships.

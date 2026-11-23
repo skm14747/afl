@@ -400,6 +400,133 @@ export function transitAspects(chart: NatalChart, when = new Date()): AspectInfo
   return calculateAspects(sky, chart, { labelA: "Transit", labelB: "Natal" });
 }
 
+export type ForecastTheme = "attraction" | "emotional" | "commitment" | "tension" | "ease";
+
+export interface ForecastWindow {
+  /** YYYY-MM-DD, the day in that month when the contact is tightest. */
+  peakDate: string;
+  monthLabel: string;
+  transiting: string;
+  target: string;
+  aspect: string;
+  orb: number;
+  theme: ForecastTheme;
+}
+
+export interface RelationshipForecast {
+  windows: ForecastWindow[];
+  /** True when either birth time is missing, so the composite Moon is a noon estimate. */
+  timesApproximate: boolean;
+}
+
+const FORECAST_TRANSITS = ["Venus", "Mars", "Jupiter", "Saturn"] as const;
+const FORECAST_TARGETS = ["sun", "moon", "venus", "mars", "saturn", "jupiter"] as const;
+const TRANSIT_RANK: Record<(typeof FORECAST_TRANSITS)[number], number> = {
+  Saturn: 0,
+  Jupiter: 1,
+  Mars: 2,
+  Venus: 3,
+};
+
+function forecastTheme(
+  transiting: string,
+  target: string,
+  nature: AspectInfo["nature"],
+): ForecastTheme {
+  const saturn = transiting === "Saturn" || target === "Saturn";
+  if (nature === "challenging" && saturn) return "commitment";
+  if (nature === "challenging") return "tension";
+  if (transiting === "Jupiter" || target === "Jupiter") return "ease";
+  if (target === "Moon") return "emotional";
+  return "attraction";
+}
+
+/**
+ * Up to twelve monthly windows of transits to the composite chart.
+ * A month with no major aspect inside the usual orb is omitted.
+ * Transiting Moon is left out: it would fill every month.
+ */
+export function relationshipForecast(
+  chartA: NatalChart,
+  chartB: NatalChart,
+  from = new Date(),
+): RelationshipForecast {
+  const composite = compositeChart(chartA, chartB);
+  const start = new Date(Date.UTC(from.getUTCFullYear(), from.getUTCMonth(), 1));
+  const windows: ForecastWindow[] = [];
+
+  for (let monthOffset = 0; monthOffset < 12; monthOffset++) {
+    const monthStart = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + monthOffset, 1));
+    const year = monthStart.getUTCFullYear();
+    const month = monthStart.getUTCMonth();
+    const days = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+
+    let best: {
+      day: number;
+      transiting: (typeof FORECAST_TRANSITS)[number];
+      target: string;
+      aspect: string;
+      nature: AspectInfo["nature"];
+      orb: number;
+    } | null = null;
+
+    for (let day = 1; day <= days; day++) {
+      const when = new Date(Date.UTC(year, month, day, 12, 0, 0));
+      for (const transiting of FORECAST_TRANSITS) {
+        const sky = getPlanetPosition(transiting, when);
+        for (const targetKey of FORECAST_TARGETS) {
+          const target = composite[targetKey];
+          const diff = angleDifference(sky.longitude, target.longitude);
+          for (const aspectDef of MAJOR_ASPECTS) {
+            const orb = Math.abs(diff - aspectDef.angle);
+            if (orb > aspectDef.orb) continue;
+            const tighter = best === null || orb < best.orb - 0.001;
+            const tiedAndSlower =
+              best !== null &&
+              Math.abs(orb - best.orb) <= 0.001 &&
+              TRANSIT_RANK[transiting] < TRANSIT_RANK[best.transiting];
+            if (tighter || tiedAndSlower) {
+              best = {
+                day,
+                transiting,
+                target: target.planet,
+                aspect: aspectDef.name,
+                nature: aspectDef.nature,
+                orb,
+              };
+            }
+          }
+        }
+      }
+    }
+
+    if (!best) continue;
+    const peak = new Date(Date.UTC(year, month, best.day));
+    windows.push({
+      peakDate: peak.toISOString().slice(0, 10),
+      monthLabel: new Intl.DateTimeFormat("en-US", {
+        month: "long",
+        year: "numeric",
+        timeZone: "UTC",
+      }).format(monthStart),
+      transiting: best.transiting,
+      target: best.target,
+      aspect: best.aspect,
+      orb: Math.round(best.orb * 100) / 100,
+      theme: forecastTheme(best.transiting, best.target, best.nature),
+    });
+  }
+
+  return {
+    windows,
+    timesApproximate:
+      !chartA.birthTimeKnown ||
+      !chartB.birthTimeKnown ||
+      chartA.moonUncertain ||
+      chartB.moonUncertain,
+  };
+}
+
 // ── Compatibility Scoring ──
 
 export function getSignCompatibilityScore(sign1: ZodiacSign, sign2: ZodiacSign): CompatibilityResult {

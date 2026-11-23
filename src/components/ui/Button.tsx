@@ -17,26 +17,26 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary: [
-    "bg-[var(--cosmic-navy)] text-white",
-    "hover:bg-[var(--primary-700)] hover:shadow-[0_4px_16px_rgba(23,21,45,0.2)]",
-    "active:bg-[var(--primary-900)] active:scale-[0.98]",
+    "bg-[var(--crimson-love)] text-white",
+    "hover:bg-[var(--primary-600)] hover:shadow-[0_4px_20px_rgba(181,45,82,0.3)]",
+    "active:bg-[var(--primary-700)] active:scale-[0.98]",
     "disabled:bg-[var(--neutral-300)] disabled:text-[var(--neutral-500)]",
   ].join(" "),
   secondary: [
-    "bg-[var(--champagne-gold)] text-[var(--cosmic-navy)] font-semibold",
-    "hover:bg-[var(--gold-300)] hover:shadow-[0_4px_20px_rgba(216,175,121,0.25)]",
-    "active:bg-[var(--gold-600)] active:scale-[0.98]",
+    "bg-[var(--secondary-600)] text-white font-semibold",
+    "hover:bg-[var(--secondary-700)] hover:shadow-[0_4px_20px_rgba(209,61,115,0.25)]",
+    "active:bg-[var(--secondary-800)] active:scale-[0.98]",
     "disabled:bg-[var(--neutral-200)] disabled:text-[var(--neutral-500)]",
   ].join(" "),
   outline: [
-    "border border-[var(--color-border)] bg-transparent text-[var(--color-fg)]",
-    "hover:bg-[var(--color-muted)] hover:border-[var(--champagne-gold)]/50 hover:text-[var(--champagne-gold)]",
-    "active:bg-[var(--neutral-200)] active:scale-[0.98]",
+    "border border-[var(--rose-gold)] bg-transparent text-[var(--color-fg)]",
+    "hover:bg-[color-mix(in_srgb,var(--stardust-pink)_30%,transparent)] hover:border-[var(--cosmic-rose)] hover:text-[var(--crimson-love)]",
+    "active:bg-[var(--stardust-pink)] active:scale-[0.98]",
     "disabled:border-[var(--neutral-200)] disabled:text-[var(--neutral-400)]",
   ].join(" "),
   ghost: [
     "bg-transparent text-[var(--color-fg)]",
-    "hover:bg-[var(--color-muted)] hover:text-[var(--champagne-gold)]",
+    "hover:bg-[var(--color-muted)] hover:text-[var(--crimson-love)]",
     "active:bg-[var(--neutral-200)]",
     "disabled:text-[var(--neutral-400)]",
   ].join(" "),

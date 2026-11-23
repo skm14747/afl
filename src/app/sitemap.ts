@@ -1,66 +1,46 @@
 import type { MetadataRoute } from "next";
-import { locales, localePublicationStatus } from "@/i18n/locales";
-import { routing } from "@/i18n/routing";
+import { getPathname } from "@/i18n/navigation";
+import { defaultLocale, locales, localePublicationStatus, type Locale } from "@/i18n/locales";
 import { getSitemapTools } from "@/lib/tool-registry";
 
+const SITE = "https://astrologyforlove.com";
+
+type AppHref = Parameters<typeof getPathname>[0]["href"];
+
+function absoluteUrl(locale: Locale, href: AppHref): string {
+  return new URL(getPathname({ locale, href }), SITE).toString();
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://astrologyforlove.com";
+  const published = locales.filter(
+    (locale) => localePublicationStatus[locale] === "published"
+  );
 
-  // Build route list from the tool registry (live tools only)
-  const toolRoutes = getSitemapTools().map((tool) => ({
-    path: `/${tool.id}`,
-    priority: tool.sitemapPriority,
-    changeFrequency: "weekly" as const,
-  }));
-
-  const routes = [
-    { path: "/", priority: 1.0, changeFrequency: "weekly" as const },
-    ...toolRoutes,
+  const routes: { href: AppHref; priority: number }[] = [
+    { href: "/", priority: 1 },
+    { href: "/privacy", priority: 0.3 },
+    { href: "/terms", priority: 0.3 },
+    { href: "/contact", priority: 0.3 },
+    ...getSitemapTools().map((tool) => ({
+      href: `/${tool.id}` as AppHref,
+      priority: tool.sitemapPriority,
+    })),
   ];
 
-  const entries: MetadataRoute.Sitemap = [];
-
-  for (const route of routes) {
-    for (const locale of locales) {
-      if (localePublicationStatus[locale] !== "published") continue;
-
-      const pathnames = routing.pathnames as Record<string, string | Record<string, string>>;
-      const pathConfig = pathnames[route.path];
-      let localizedPath: string;
-
-      if (typeof pathConfig === "string") {
-        localizedPath = pathConfig;
-      } else if (pathConfig && typeof pathConfig === "object" && locale in pathConfig) {
-        localizedPath = (pathConfig as Record<string, string>)[locale];
-      } else {
-        localizedPath = route.path;
+  return routes.flatMap((route) =>
+    published.map((locale) => {
+      const languages: Record<string, string> = {};
+      for (const alternate of published) {
+        languages[alternate] = absoluteUrl(alternate, route.href);
       }
+      languages["x-default"] = absoluteUrl(defaultLocale, route.href);
 
-      entries.push({
-        url: `${baseUrl}/${locale}${localizedPath}`,
-        lastModified: new Date(),
-        changeFrequency: route.changeFrequency,
+      return {
+        url: absoluteUrl(locale, route.href),
+        changeFrequency: "weekly" as const,
         priority: route.priority,
-        alternates: {
-          languages: Object.fromEntries(
-            locales
-              .filter((l) => localePublicationStatus[l] === "published")
-              .map((l) => {
-                let lPath: string;
-                if (typeof pathConfig === "string") {
-                  lPath = pathConfig;
-                } else if (pathConfig && typeof pathConfig === "object" && l in pathConfig) {
-                  lPath = (pathConfig as Record<string, string>)[l];
-                } else {
-                  lPath = route.path;
-                }
-                return [l, `${baseUrl}/${l}${lPath}`];
-              })
-          ),
-        },
-      });
-    }
-  }
-
-  return entries;
+        alternates: { languages },
+      };
+    })
+  );
 }

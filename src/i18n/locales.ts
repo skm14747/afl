@@ -24,15 +24,20 @@ export function isRtl(locale: Locale): boolean {
 /** Publication status per locale. Only "published" locales are indexed. */
 export type PublicationStatus = "draft" | "in-review" | "published";
 
+/** Only locales with translated page copy are published. Others stay routable and noindex. */
 export const localePublicationStatus: Record<Locale, PublicationStatus> = {
   en: "published",
-  es: "published",
-  fr: "published",
-  de: "published",
-  pt: "published",
-  hi: "published",
-  it: "published",
-  ja: "published",
-  id: "published",
-  ar: "published",
+  es: "draft",
+  fr: "draft",
+  de: "draft",
+  pt: "draft",
+  hi: "draft",
+  it: "draft",
+  ja: "draft",
+  id: "draft",
+  ar: "draft",
 };
+
+export function isPublishedLocale(locale: string): locale is Locale {
+  return locales.some((item) => item === locale) && localePublicationStatus[locale as Locale] === "published";
+}

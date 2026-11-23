@@ -27,14 +27,14 @@ export function Logo({
   const s = sizes[size];
 
   const wordmarkColor = {
-    gold: "text-[var(--champagne-gold)]",
-    light: "text-[var(--cosmic-navy)]",
-    dark: "text-[var(--ivory)]",
+    gold: "text-[var(--cosmic-rose)]",
+    light: "text-[var(--crimson-love)]",
+    dark: "text-[var(--moonlight-cream)]",
     mono: "",
   }[theme];
 
   const taglineColor = {
-    gold: "text-[var(--lavender-mist)]",
+    gold: "text-[var(--blush-pink)]",
     light: "text-[var(--neutral-500)]",
     dark: "text-[var(--neutral-300)]",
     mono: "opacity-60",

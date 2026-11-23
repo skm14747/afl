@@ -91,12 +91,11 @@ export default function SoulmateCalculatorPage() {
       description="Explore your astrological profile to understand your romantic tendencies, what you're drawn to in a partner, and the cosmic patterns that shape your love life."
       icon={<Sparkles className="w-8 h-8 text-[var(--champagne-gold)]" />}
     >
-      {/* Important disclaimer */}
       <div className="max-w-2xl mx-auto text-center mb-10">
         <p className="text-[var(--color-muted-fg)] leading-relaxed">
-          This tool explores your astrological placements related to love and partnership.
-          It offers traditional astrological interpretations and reflective insights about your
-          romantic nature — not a prediction of a specific soulmate or guaranteed romantic outcome.
+          This tool explores your astrological placements related to love and partnership,
+          offering traditional astrological interpretations and reflective insights about your
+          romantic nature.
         </p>
       </div>
 
@@ -298,14 +297,24 @@ export default function SoulmateCalculatorPage() {
       <RelatedTools
         tools={[
           {
+            title: "Moon Phase Soulmate",
+            description: "Do your birth moon phases make a full moon?",
+            href: "/moon-phase-soulmate",
+          },
+          {
+            title: "Synastry Chart",
+            description: "Full synastry biwheel with all aspects.",
+            href: "/synastry-chart",
+          },
+          {
             title: "Venus Sign Calculator",
             description: "Deep dive into your Venus sign.",
             href: "/venus-sign-calculator",
           },
           {
-            title: "Love Compatibility",
-            description: "Compare two signs for compatibility.",
-            href: "/love-compatibility",
+            title: "Mars Sign Compatibility",
+            description: "Compare passion, desire, and conflict styles.",
+            href: "/mars-sign-compatibility",
           },
           {
             title: "Marriage Compatibility",

@@ -17,7 +17,7 @@ export function ResultsSection({ title, children, className }: ResultsSectionPro
     <section className={cn("mt-10", className)}>
       {title && (
         <div className="divider-celestial mb-8">
-          <Star className="w-4 h-4 text-[var(--champagne-gold)]" />
+          <Star className="w-4 h-4 text-[var(--cosmic-rose)]" />
         </div>
       )}
       {title && (
@@ -49,14 +49,14 @@ interface InsightBlockProps {
 export function InsightBlock({ title, content, icon, variant = "default", className }: InsightBlockProps) {
   const borderColor = {
     default: "border-[var(--color-border-subtle)]",
-    gold: "border-[var(--gold-200)]",
-    rose: "border-[var(--rose-200)]",
+    gold: "border-[var(--rose-gold)]",
+    rose: "border-[var(--cosmic-rose)]",
   }[variant];
 
   return (
     <Card variant="default" className={cn(borderColor, className)}>
       <div className="flex items-start gap-3">
-        {icon && <div className="text-[var(--champagne-gold)] mt-0.5 flex-shrink-0">{icon}</div>}
+        {icon && <div className="text-[var(--cosmic-rose)] mt-0.5 flex-shrink-0">{icon}</div>}
         <div>
           <h3
             className="font-semibold mb-2"
@@ -82,11 +82,11 @@ export function ScoreSummary({ scores, className }: ScoreSummaryProps) {
       {scores.map((s) => {
         const color =
           s.value >= 80
-            ? "var(--champagne-gold)"
+            ? "var(--crimson-love)"
             : s.value >= 60
-              ? "var(--lavender-mist)"
+              ? "var(--cosmic-rose)"
               : s.value >= 40
-                ? "var(--romantic-rose)"
+                ? "var(--rose-gold)"
                 : "var(--neutral-400)";
 
         return (
@@ -127,9 +127,9 @@ export function RelatedTools({ tools, className }: RelatedToolsProps) {
           <Link
             key={tool.href}
             href={tool.href as any}
-            className="block p-5 rounded-[var(--radius-lg)] border border-[var(--color-border-subtle)] hover:border-[var(--champagne-gold)] hover:shadow-[var(--shadow-md)] transition-all group"
+            className="block p-5 rounded-[var(--radius-lg)] border border-[var(--color-border-subtle)] hover:border-[var(--cosmic-rose)]/40 hover:shadow-[var(--shadow-md)] transition-all group"
           >
-            <h4 className="font-medium mb-1 group-hover:text-[var(--champagne-gold)] transition-colors">
+            <h4 className="font-medium mb-1 group-hover:text-[var(--crimson-love)] transition-colors">
               {tool.title}
             </h4>
             <p className="text-sm text-[var(--color-muted-fg)]">{tool.description}</p>

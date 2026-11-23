@@ -193,6 +193,11 @@ export default function VenusSignCalculatorPage() {
       <RelatedTools
         tools={[
           {
+            title: "Mars Sign Compatibility",
+            description: "Compare passion, desire, and conflict styles.",
+            href: "/mars-sign-compatibility",
+          },
+          {
             title: "Love Compatibility",
             description: "Check your zodiac compatibility with a partner.",
             href: "/love-compatibility",
@@ -203,9 +208,9 @@ export default function VenusSignCalculatorPage() {
             href: "/moon-sign-compatibility",
           },
           {
-            title: "Soulmate Calculator",
-            description: "Discover your astrological soulmate profile.",
-            href: "/soulmate-calculator",
+            title: "Synastry Chart",
+            description: "Full synastry biwheel with all aspects.",
+            href: "/synastry-chart",
           },
         ]}
       />

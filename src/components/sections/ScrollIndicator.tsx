@@ -17,7 +17,7 @@ export function ScrollIndicator({ className }: ScrollIndicatorProps) {
     <button
       onClick={handleClick}
       className={cn(
-        "flex flex-col items-center gap-2 text-[var(--ivory)]/50 hover:text-[var(--champagne-gold)] transition-colors duration-300 cursor-pointer",
+        "flex flex-col items-center gap-2 text-[var(--moonlight-cream)]/50 hover:text-[var(--cosmic-rose)] transition-colors duration-300 cursor-pointer",
         className
       )}
       aria-label="Scroll to content"
