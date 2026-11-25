@@ -14,6 +14,7 @@ import {
   type Element,
 } from "@/lib/sign-pairs";
 import type { Metadata } from "next";
+import { buildHreflangLanguages } from "@/lib/seo";
 
 const SITE = "https://www.astrologyforlove.com";
 
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     "Explore compatibility scores for every zodiac pair. See element harmony, aspect angles, and modality insights for all 78 sign combinations.",
   alternates: {
     canonical: `${SITE}/compatibility`,
-    languages: { en: `${SITE}/compatibility`, "x-default": `${SITE}/compatibility` },
+    languages: buildHreflangLanguages("/compatibility"),
   },
   openGraph: {
     title: "Zodiac Compatibility Guide — AstrologyForLove",

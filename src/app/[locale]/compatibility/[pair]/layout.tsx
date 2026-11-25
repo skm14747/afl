@@ -5,6 +5,7 @@ import {
   allPairSlugs,
   calculatePairScore,
 } from "@/lib/sign-pairs";
+import { locales, defaultLocale, localePublicationStatus } from "@/i18n/locales";
 
 export function generateStaticParams() {
   return allPairSlugs().map((pair) => ({ pair }));
@@ -35,13 +36,22 @@ export async function generateMetadata({
   const description = `Are ${d1.name} and ${d2.name} compatible? ${d1.element} meets ${d2.element} in a ${scores.aspectName.toLowerCase()} aspect. Overall score: ${scores.overall}%. Free compatibility breakdown with strengths, growth areas, and deeper tools.`;
 
   const canonical = `https://www.astrologyforlove.com/compatibility/${pair}`;
+  const languages: Record<string, string> = {};
+  for (const l of locales) {
+    if (localePublicationStatus[l] === "published") {
+      languages[l] = l === defaultLocale
+        ? canonical
+        : `https://www.astrologyforlove.com/${l}/compatibility/${pair}`;
+    }
+  }
+  languages["x-default"] = canonical;
 
   return {
     title,
     description,
     alternates: {
       canonical,
-      languages: { en: canonical, "x-default": canonical },
+      languages,
     },
     openGraph: {
       title: `${d1.name} ♥ ${d2.name} — ${scores.overall}% Compatible`,

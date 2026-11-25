@@ -8,17 +8,17 @@ alwaysApply: false
 
 These patterns were established to bring AFL closer to the highest-performing sister site (Astra). Follow them for all new calculators and pages.
 
-## Structured data (root layout)
+## Structured data (locale layout `<head>`)
 
-Root `src/app/layout.tsx` renders:
+The locale layout `src/app/[locale]/layout.tsx` renders in `<head>`:
 - **OrganizationJsonLd** — site identity
 - **SoftwareApplicationJsonLd** — with `featureList` (12 calculators) and `aggregateRating` (4.8/95)
+- **WebSiteJsonLd** — with `SearchAction`
 
-Both are defined in `src/components/seo/JsonLd.tsx`.
+All three are defined in `src/components/seo/JsonLd.tsx`.
 
-Homepage (`src/app/[locale]/page.tsx`) emits:
-- **WebSite** with `SearchAction`
-- **ItemList** listing all live tools
+Homepage (`src/app/[locale]/page.tsx`) additionally emits:
+- **ItemList** listing all live tools (in `<body>`)
 
 ## FAQSection emits JSON-LD
 
@@ -53,7 +53,7 @@ Hub page at `/guides` lists all articles. When `relatedEditorial` slugs are adde
 
 ## i18n publication
 
-`src/i18n/locales.ts` controls publication status. Currently published: **en, es, pt**.
+`src/i18n/locales.ts` controls publication status. All 10 locales are published.
 
 Before publishing a new locale:
 1. Verify `messages/{locale}/tools.json` has full translations (not empty `{}`)

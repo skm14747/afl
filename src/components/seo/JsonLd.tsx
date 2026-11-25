@@ -68,6 +68,28 @@ export function SoftwareApplicationJsonLd() {
   );
 }
 
+export function WebSiteJsonLd() {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": `${SITE}/#website`,
+        name: "AstrologyForLove",
+        url: SITE,
+        description:
+          "Free zodiac compatibility calculators for love, soulmates, and marriage. Real planetary positions from the astronomy-engine ephemeris.",
+        inLanguage: "en",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: `${SITE}/{search_term}`,
+          "query-input": "required name=search_term",
+        },
+      }}
+    />
+  );
+}
+
 export function FAQJsonLd({
   faqs,
 }: {

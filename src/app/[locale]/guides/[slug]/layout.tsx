@@ -3,6 +3,7 @@ import {
   getAllGuideSlugs,
   getGuideBySlug,
 } from "@/lib/editorial-content";
+import { locales, defaultLocale, localePublicationStatus } from "@/i18n/locales";
 
 const SITE = "https://www.astrologyforlove.com";
 
@@ -23,13 +24,22 @@ export async function generateMetadata({
   }
 
   const canonical = `${SITE}/guides/${guide.slug}`;
+  const languages: Record<string, string> = {};
+  for (const l of locales) {
+    if (localePublicationStatus[l] === "published") {
+      languages[l] = l === defaultLocale
+        ? `${SITE}/guides/${guide.slug}`
+        : `${SITE}/${l}/guides/${guide.slug}`;
+    }
+  }
+  languages["x-default"] = canonical;
 
   return {
     title: `${guide.title} | AstrologyForLove`,
     description: guide.metaDescription,
     alternates: {
       canonical,
-      languages: { en: canonical, "x-default": canonical },
+      languages,
     },
     openGraph: {
       title: guide.title,

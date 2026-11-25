@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
-import { OrganizationJsonLd, SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -64,11 +63,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <OrganizationJsonLd />
-      <SoftwareApplicationJsonLd />
-      {children}
-    </>
-  );
+  return children;
 }

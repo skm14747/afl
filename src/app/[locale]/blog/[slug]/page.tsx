@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { ChevronRight, Calendar, Clock } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import type { Metadata } from "next";
+import { locales, defaultLocale, localePublicationStatus } from "@/i18n/locales";
 
 const SITE = "https://www.astrologyforlove.com";
 
@@ -25,12 +26,22 @@ export async function generateMetadata({
   if (!post) return { title: "Post Not Found" };
 
   const canonical = `${SITE}/blog/${slug}`;
+  const languages: Record<string, string> = {};
+  for (const l of locales) {
+    if (localePublicationStatus[l] === "published") {
+      languages[l] = l === defaultLocale
+        ? `${SITE}/blog/${slug}`
+        : `${SITE}/${l}/blog/${slug}`;
+    }
+  }
+  languages["x-default"] = canonical;
+
   return {
     title: post.frontmatter.title,
     description: post.frontmatter.description,
     alternates: {
       canonical,
-      languages: { en: canonical, "x-default": canonical },
+      languages,
     },
     openGraph: {
       title: post.frontmatter.title,

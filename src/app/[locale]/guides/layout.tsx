@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildHreflangLanguages } from "@/lib/seo";
 
 const SITE = "https://www.astrologyforlove.com";
 
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     "Free guides on zodiac compatibility, Venus signs, synastry, Moon compatibility, marriage astrology, soulmate connections, and more. Real astrological education for love.",
   alternates: {
     canonical: `${SITE}/guides`,
-    languages: { en: `${SITE}/guides`, "x-default": `${SITE}/guides` },
+    languages: buildHreflangLanguages("/guides"),
   },
   openGraph: {
     title: "Love Astrology Guides | AstrologyForLove",

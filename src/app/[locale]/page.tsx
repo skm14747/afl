@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { getPathname, Link } from "@/i18n/navigation";
 import { defaultLocale, type Locale } from "@/i18n/locales";
+import { buildHreflangLanguages } from "@/lib/seo";
 import { setRequestLocale } from "next-intl/server";
 
 /** Page component reads params for setRequestLocale + JSON-LD canonical. */
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
   description: HOME_DESCRIPTION,
   alternates: {
     canonical: HOME_CANONICAL,
-    languages: { en: HOME_CANONICAL, "x-default": HOME_CANONICAL },
+    languages: buildHreflangLanguages("/"),
   },
   openGraph: {
     title: HOME_TITLE,
@@ -303,48 +304,30 @@ export default async function HomePage({
     SITE
   ).toString();
 
-  const jsonLd = {
+  const itemListJsonLd = {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": `${SITE}/#website`,
-        name: "AstrologyForLove",
-        url: canonical,
-        description: HOME_DESCRIPTION,
-        slogan: "Written in the Stars. Felt in the Heart.",
-        inLanguage: "en",
-        potentialAction: {
-          "@type": "SearchAction",
-          target: `${SITE}/{search_term}`,
-          "query-input": "required name=search_term",
-        },
-      },
-      {
-        "@type": "ItemList",
-        name: "Love astrology tools",
-        itemListElement: tools.map((tool, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: tool.title,
-          ...(tool.featured ? { description: tool.description } : {}),
-          url: new URL(
-            getPathname({
-              locale: locale as Locale,
-              href: tool.href,
-            }),
-            SITE
-          ).toString(),
-        })),
-      },
-    ],
+    "@type": "ItemList",
+    name: "Love astrology tools",
+    itemListElement: tools.map((tool, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: tool.title,
+      ...(tool.featured ? { description: tool.description } : {}),
+      url: new URL(
+        getPathname({
+          locale: locale as Locale,
+          href: tool.href,
+        }),
+        SITE
+      ).toString(),
+    })),
   };
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
       <MainHeader theme="dark" />
       <main id="main-content" className="flex-1">

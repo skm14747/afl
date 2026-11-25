@@ -5,6 +5,7 @@ import { Container } from "@/components/layout/Container";
 import { Link } from "@/i18n/navigation";
 import { ChevronRight, BookOpen, Calendar } from "lucide-react";
 import type { Metadata } from "next";
+import { buildHreflangLanguages } from "@/lib/seo";
 
 const SITE = "https://www.astrologyforlove.com";
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
     "Guides on zodiac compatibility, Venus signs, Moon sign emotional needs, and relationship astrology. Written to help you understand your chart.",
   alternates: {
     canonical: `${SITE}/blog`,
-    languages: { en: `${SITE}/blog`, "x-default": `${SITE}/blog` },
+    languages: buildHreflangLanguages("/blog"),
   },
   openGraph: {
     title: "Blog — AstrologyForLove",

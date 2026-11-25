@@ -6,6 +6,31 @@ import { translatedRoutes } from "@/i18n/translated-routes";
 const SITE = "https://www.astrologyforlove.com";
 
 /**
+ * Build hreflang languages map for a given internal href.
+ * Includes all published locales + draft locales with translated routes.
+ */
+export function buildHreflangLanguages(href: string): Record<string, string> {
+  const hreflangLocales = locales.filter(
+    (l) =>
+      localePublicationStatus[l] === "published" ||
+      translatedRoutes[l]?.has(href),
+  );
+
+  const languages: Record<string, string> = {};
+  for (const l of hreflangLocales) {
+    languages[l] = new URL(
+      getPathname({ locale: l, href: href as never }),
+      SITE
+    ).toString();
+  }
+  languages["x-default"] = new URL(
+    getPathname({ locale: defaultLocale, href: href as never }),
+    SITE
+  ).toString();
+  return languages;
+}
+
+/**
  * Build static Metadata with canonical, hreflang, and OpenGraph for a tool page.
  *
  * Returns a plain object — no async, no params access — so Next.js 16 Partial
@@ -26,26 +51,8 @@ export function toolMetadata({
   ogDescription: string;
   href: string;
 }): Metadata {
-  const canonical = new URL(
-    getPathname({ locale: defaultLocale, href: href as never }),
-    SITE
-  ).toString();
-
-  // Include published locales plus draft locales that have this route translated
-  const hreflangLocales = locales.filter(
-    (l) =>
-      localePublicationStatus[l] === "published" ||
-      translatedRoutes[l]?.has(href),
-  );
-
-  const languages: Record<string, string> = {};
-  for (const l of hreflangLocales) {
-    languages[l] = new URL(
-      getPathname({ locale: l, href: href as never }),
-      SITE
-    ).toString();
-  }
-  languages["x-default"] = canonical;
+  const languages = buildHreflangLanguages(href);
+  const canonical = languages["x-default"];
 
   return {
     title,

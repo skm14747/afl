@@ -16,6 +16,20 @@ function absoluteUrl(locale: Locale, href: AppHref): string {
   return new URL(getPathname({ locale, href }), SITE).toString();
 }
 
+/** Build hreflang map for a raw URL path (e.g. "/blog/my-post") that isn't in routing pathnames. */
+function buildRawHreflang(path: string): Record<string, string> {
+  const languages: Record<string, string> = {};
+  for (const loc of locales) {
+    if (localePublicationStatus[loc] === "published") {
+      languages[loc] = loc === defaultLocale
+        ? `${SITE}${path}`
+        : `${SITE}/${loc}${path}`;
+    }
+  }
+  languages["x-default"] = `${SITE}${path}`;
+  return languages;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const published = locales.filter(
     (locale) => localePublicationStatus[locale] === "published"
@@ -67,17 +81,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE}/blog`,
     changeFrequency: "weekly" as const,
     priority: 0.7,
-    alternates: { languages: { en: `${SITE}/blog`, "x-default": `${SITE}/blog` } },
+    alternates: { languages: buildRawHreflang("/blog") },
   });
 
   // Blog posts
   for (const postSlug of getAllPostSlugs()) {
-    const url = `${SITE}/blog/${postSlug}`;
     entries.push({
-      url,
+      url: `${SITE}/blog/${postSlug}`,
       changeFrequency: "monthly" as const,
       priority: 0.6,
-      alternates: { languages: { en: url, "x-default": url } },
+      alternates: { languages: buildRawHreflang(`/blog/${postSlug}`) },
     });
   }
 
@@ -86,36 +99,33 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE}/compatibility`,
     changeFrequency: "weekly" as const,
     priority: 0.8,
-    alternates: { languages: { en: `${SITE}/compatibility`, "x-default": `${SITE}/compatibility` } },
+    alternates: { languages: buildRawHreflang("/compatibility") },
   });
 
   // Editorial guide hub page
-  const guidesHubUrl = `${SITE}/guides`;
   entries.push({
-    url: guidesHubUrl,
+    url: `${SITE}/guides`,
     changeFrequency: "weekly" as const,
     priority: 0.8,
-    alternates: { languages: { en: guidesHubUrl, "x-default": guidesHubUrl } },
+    alternates: { languages: buildRawHreflang("/guides") },
   });
 
   // Individual editorial guides
   for (const guideSlug of getAllGuideSlugs()) {
-    const guideUrl = `${SITE}/guides/${guideSlug}`;
     entries.push({
-      url: guideUrl,
+      url: `${SITE}/guides/${guideSlug}`,
       changeFrequency: "monthly" as const,
       priority: 0.7,
-      alternates: { languages: { en: guideUrl, "x-default": guideUrl } },
+      alternates: { languages: buildRawHreflang(`/guides/${guideSlug}`) },
     });
   }
 
   for (const slug of allPairSlugs()) {
-    const url = `${SITE}/compatibility/${slug}`;
     entries.push({
-      url,
+      url: `${SITE}/compatibility/${slug}`,
       changeFrequency: "monthly" as const,
       priority: 0.7,
-      alternates: { languages: { en: url, "x-default": url } },
+      alternates: { languages: buildRawHreflang(`/compatibility/${slug}`) },
     });
   }
 

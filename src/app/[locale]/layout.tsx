@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { Cormorant_Garamond, DM_Sans, Noto_Sans_Devanagari, Noto_Sans_JP, Noto_Sans_Arabic } from "next/font/google";
 import { locales, isPublishedLocale, isRtl, type Locale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
-import { OrganizationJsonLd } from "@/components/seo/JsonLd";
+import { OrganizationJsonLd, SoftwareApplicationJsonLd, WebSiteJsonLd } from "@/components/seo/JsonLd";
 import { ConsentBanner } from "@/components/ui/ConsentBanner";
 
 /** Root locale layout must read params for <html lang>, dir, fonts, and i18n messages. */
@@ -103,6 +103,9 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <head>
+        <OrganizationJsonLd />
+        <SoftwareApplicationJsonLd />
+        <WebSiteJsonLd />
         <meta name="google-adsense-account" content="ca-pub-4058029196087745" />
         <Script
           async
@@ -138,7 +141,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        <OrganizationJsonLd />
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
