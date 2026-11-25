@@ -23,7 +23,21 @@ function resolveHref(locale: string, segments: string[]): string | null {
   return null;
 }
 
+const WWW_HOST = "www.astrologyforlove.com";
+
 export default function middleware(request: NextRequest) {
+  // Force non-www → www redirect (308 Permanent)
+  const host = request.headers.get("host") ?? request.nextUrl.host;
+  if (
+    host === "astrologyforlove.com" &&
+    process.env.NODE_ENV === "production"
+  ) {
+    const url = request.nextUrl.clone();
+    url.host = WWW_HOST;
+    url.port = "";
+    return NextResponse.redirect(url, 308);
+  }
+
   const response = intlMiddleware(request);
 
   const pathname = request.nextUrl.pathname;
