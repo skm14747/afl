@@ -1,0 +1,79 @@
+---
+description: SEO parity standards established Nov 2026 — structured data, i18n, content architecture, and guide requirements for AstrologyForLove.
+globs: src/app/**/*.tsx, src/lib/seo.ts, src/lib/tool-registry.ts, src/lib/editorial-content.ts, src/lib/sign-pairs.ts, src/components/seo/**, src/components/calculators/**, src/i18n/**
+alwaysApply: false
+---
+
+# SEO parity standards
+
+These patterns were established to bring AFL closer to the highest-performing sister site (Astra). Follow them for all new calculators and pages.
+
+## Structured data (root layout)
+
+Root `src/app/layout.tsx` renders:
+- **OrganizationJsonLd** — site identity
+- **SoftwareApplicationJsonLd** — with `featureList` (12 calculators) and `aggregateRating` (4.8/95)
+
+Both are defined in `src/components/seo/JsonLd.tsx`.
+
+Homepage (`src/app/[locale]/page.tsx`) emits:
+- **WebSite** with `SearchAction`
+- **ItemList** listing all live tools
+
+## FAQSection emits JSON-LD
+
+`FAQSection` in `src/components/calculators/ResultsSection.tsx` automatically emits **FAQPage** JSON-LD alongside visible FAQ content. Every calculator that passes FAQ items gets rich results. Do NOT create a visible FAQ without the JSON-LD — they are now coupled.
+
+## Calculator page requirements
+
+Every calculator using `CalculatorShell` must have:
+1. Server-rendered educational intro (not hidden behind interaction)
+2. FAQ items (rendered via `FAQSection` with auto JSON-LD)
+3. Related tools links
+4. Breadcrumb + WebApplication JSON-LD (auto from CalculatorShell)
+
+For new calculators, add i18n copy in `messages/en/tools.json` — do NOT hardcode English strings in the page component.
+
+## Zodiac-love static profiles
+
+`zodiac-love/page.tsx` renders all 12 sign profiles as static `<article>` elements with anchor IDs, always visible to crawlers. The interactive selector is kept for UX but is NOT the only way to access content.
+
+Pattern: interactive features enhance server-rendered content, they don't gate it.
+
+## Editorial guide pages
+
+`src/app/[locale]/guides/[slug]/page.tsx` serves articles from `src/lib/editorial-content.ts`. Each article has:
+- 600-1000 words of genuine astrological educational content
+- 3-5 sections with H2 headings
+- FAQPage + BreadcrumbList + Article JSON-LD
+- Links to 2-3 related calculators
+- Navigation to other guides
+
+Hub page at `/guides` lists all articles. When `relatedEditorial` slugs are added to `tool-registry.ts`, create matching content in `editorial-content.ts`.
+
+## i18n publication
+
+`src/i18n/locales.ts` controls publication status. Currently published: **en, es, pt**.
+
+Before publishing a new locale:
+1. Verify `messages/{locale}/tools.json` has full translations (not empty `{}`)
+2. Verify `messages/{locale}/common.json` matches EN key count
+3. Add translated routes in `src/i18n/translated-routes.ts`
+
+The sitemap automatically picks up published locales and generates hreflang.
+
+## Sign-pair programmatic pages
+
+78 pair pages at `/compatibility/[pair]` are AFL's strongest programmatic SEO asset. Content in `src/lib/sign-pairs.ts` (`PAIR_INSIGHTS`). Each pair page has unique scores, strengths/challenges, element analysis, and FAQ.
+
+## Security headers & consent
+
+`next.config.ts` sets full CSP, security headers, and `poweredByHeader: false`. `ConsentBanner` component handles GDPR consent with localStorage key `afl.analytics-consent`.
+
+## googleBot directives
+
+Root metadata includes `googleBot` with `max-image-preview: "large"` and `max-snippet: -1`. Do not weaken these.
+
+## Custom 404
+
+Branded not-found page at `src/app/not-found.tsx`. Maintain the design when modifying.

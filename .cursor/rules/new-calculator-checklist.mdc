@@ -1,0 +1,38 @@
+---
+description: Checklist for adding a new calculator to AstrologyForLove — covers all required files and SEO infrastructure.
+globs: src/app/[locale]/*/page.tsx, src/lib/tool-registry.ts
+alwaysApply: false
+---
+
+# New calculator checklist
+
+When adding a new calculator to AFL, complete ALL of these steps:
+
+## Required files
+
+1. **`src/lib/tool-registry.ts`** — Add tool entry with `id`, `title`, `description`, `interpretationMethod`, `relatedTools`, `relatedEditorial`, `status: "live"`
+2. **`src/app/[locale]/{slug}/page.tsx`** — Calculator page using `CalculatorShell` + form + `FAQSection` + `RelatedTools`
+3. **`src/app/[locale]/{slug}/layout.tsx`** — Metadata via `toolMetadata()` from `src/lib/seo.ts`
+4. **`messages/en/tools.json`** — Full i18n copy (intro, sections, FAQ items) — do NOT hardcode English in the component
+
+## Content requirements
+
+- Server-rendered educational intro paragraph (visible before interaction)
+- 3-4 FAQ items passed to `FAQSection` (auto-emits FAQPage JSON-LD)
+- Related tools links (3 related calculators)
+- Results must include interpretive text, not just numbers/charts
+
+## Also update
+
+- `src/i18n/routing.ts` — Add pathname for the new route
+- `src/app/sitemap.ts` — Tool auto-included via `getSitemapTools()` if `status: "live"`
+- `src/i18n/translated-routes.ts` — Add for published locales (es, pt) when translations exist
+- `messages/es/tools.json` and `messages/pt/tools.json` — Add translations
+- `src/lib/editorial-content.ts` — Consider creating a matching guide article
+- Footer and homepage — Add link if it's a primary calculator
+
+## Anti-patterns
+
+- Do NOT create a calculator with only a form and no server-rendered text
+- Do NOT hardcode English strings — use `useTranslations` from next-intl
+- Do NOT skip the FAQSection — every calculator needs FAQ rich results
