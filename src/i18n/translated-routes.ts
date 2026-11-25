@@ -17,33 +17,12 @@ import type { Locale } from "./locales";
  * Map of locale → set of internal hrefs that have been translated.
  * Use the internal href (the key in routing.pathnames), not the localized slug.
  */
-export const translatedRoutes: Partial<Record<Locale, Set<string>>> = {
-  hi: new Set(["/kundli-matching"]),
-  id: new Set(["/weton-jodoh"]),
-  de: new Set(["/synastry-chart"]),
-  es: new Set([
-    "/love-compatibility",
-    "/synastry-chart",
-    "/venus-sign-calculator",
-    "/moon-sign-compatibility",
-    "/marriage-compatibility",
-    "/soulmate-calculator",
-    "/birth-chart-compatibility",
-  ]),
-  it: new Set(["/love-compatibility", "/synastry-chart"]),
-  ar: new Set(["/love-compatibility", "/synastry-chart"]),
-  fr: new Set(["/synastry-chart"]),
-  pt: new Set([
-    "/synastry-chart",
-    "/love-compatibility",
-    "/venus-sign-calculator",
-    "/moon-sign-compatibility",
-    "/marriage-compatibility",
-    "/soulmate-calculator",
-    "/birth-chart-compatibility",
-  ]),
-  ja: new Set(["/synastry-chart"]),
-};
+/**
+ * All locales are now published with full tools.json translations.
+ * This allowlist is kept for future use if a new locale is added as draft.
+ * When a locale is "published" in locales.ts, this map is not consulted.
+ */
+export const translatedRoutes: Partial<Record<Locale, Set<string>>> = {};
 
 /** Check whether a specific href is translated for a draft locale. */
 export function isTranslatedRoute(locale: Locale, href: string): boolean {

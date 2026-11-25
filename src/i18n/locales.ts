@@ -28,14 +28,14 @@ export type PublicationStatus = "draft" | "in-review" | "published";
 export const localePublicationStatus: Record<Locale, PublicationStatus> = {
   en: "published",
   es: "published",
-  fr: "draft",
-  de: "draft",
+  fr: "published",
+  de: "published",
   pt: "published",
-  hi: "draft",
-  it: "draft",
-  ja: "draft",
-  id: "draft",
-  ar: "draft",
+  hi: "published",
+  it: "published",
+  ja: "published",
+  id: "published",
+  ar: "published",
 };
 
 export function isPublishedLocale(locale: string): locale is Locale {
