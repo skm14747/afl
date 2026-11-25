@@ -31,6 +31,8 @@ export function Footer() {
     {
       title: t("explore"),
       links: [
+        { label: "Blog", href: "/blog" as const },
+        { label: "Compatibility Guide", href: "/compatibility" as const },
         { label: t("zodiacGuide"), href: "/zodiac-love" as const },
         { label: t("risingSign"), href: "/rising-sign-compatibility" as const },
         { label: t("exCompat"), href: "/ex-compatibility" as const },
@@ -44,6 +46,17 @@ export function Footer() {
         { label: "Mars Sign Compatibility", href: "/mars-sign-compatibility" as const },
         { label: "Venus–Mars Attraction", href: "/venus-mars-attraction" as const },
         { label: "Weton Jodoh", href: "/weton-jodoh" as const },
+      ],
+    },
+    {
+      title: "Guides",
+      links: [
+        { label: "Zodiac Compatibility Guide", href: "/guides/zodiac-compatibility-guide" as never },
+        { label: "Venus in Signs Guide", href: "/guides/venus-in-signs-guide" as never },
+        { label: "Synastry Explained", href: "/guides/synastry-explained" as never },
+        { label: "Moon Signs & Emotions", href: "/guides/moon-signs-emotional-needs" as never },
+        { label: "Marriage Astrology", href: "/guides/marriage-astrology-guide" as never },
+        { label: "All Guides →", href: "/guides" as never },
       ],
     },
   ];
@@ -62,7 +75,7 @@ export function Footer() {
         />
       </div>
       <Container size="wide" className="py-20 relative">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
           <div className="md:col-span-1">
             <Logo variant="horizontal" theme="gold" size="sm" showTagline />
             <p className="mt-5 text-sm text-[var(--neutral-400)] leading-[1.7] max-w-xs">

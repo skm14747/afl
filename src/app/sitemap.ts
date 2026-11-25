@@ -4,8 +4,10 @@ import { defaultLocale, locales, localePublicationStatus, type Locale } from "@/
 import { getSitemapTools } from "@/lib/tool-registry";
 import { translatedRoutes } from "@/i18n/translated-routes";
 import { allPairSlugs } from "@/lib/sign-pairs";
+import { getAllGuideSlugs } from "@/lib/editorial-content";
+import { getAllPostSlugs } from "@/lib/blog";
 
-const SITE = "https://astrologyforlove.com";
+const SITE = "https://www.astrologyforlove.com";
 
 type AppHref = Parameters<typeof getPathname>[0]["href"];
 
@@ -18,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const published = locales.filter(
     (locale) => localePublicationStatus[locale] === "published"
   );
+  const ogImageUrl = `${SITE}/opengraph-image`;
 
   const routes: { href: AppHref; priority: number }[] = [
     { href: "/", priority: 1 },
@@ -34,7 +37,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
 
   for (const route of routes) {
-    // Which locales have this route available (published or allowlisted)?
     const availableLocales = locales.filter(
       (loc) =>
         localePublicationStatus[loc] === "published" ||
@@ -42,25 +44,71 @@ export default function sitemap(): MetadataRoute.Sitemap {
     );
     if (availableLocales.length === 0) continue;
 
-    // Build hreflang only across available locales
     const languages: Record<string, string> = {};
     for (const loc of availableLocales) {
       languages[loc] = absoluteUrl(loc, route.href);
     }
     languages["x-default"] = absoluteUrl(defaultLocale, route.href);
 
-    // Emit one entry per available locale
     for (const loc of availableLocales) {
+      const isDefault = loc === defaultLocale;
       entries.push({
         url: absoluteUrl(loc, route.href),
         changeFrequency: "weekly" as const,
         priority: route.priority,
+        images: isDefault && route.href === "/" ? [ogImageUrl] : undefined,
         alternates: { languages },
       });
     }
   }
 
-  // Sign-pair pages (78 combinations, English only for now)
+  // Blog index
+  entries.push({
+    url: `${SITE}/blog`,
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+    alternates: { languages: { en: `${SITE}/blog`, "x-default": `${SITE}/blog` } },
+  });
+
+  // Blog posts
+  for (const postSlug of getAllPostSlugs()) {
+    const url = `${SITE}/blog/${postSlug}`;
+    entries.push({
+      url,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+      alternates: { languages: { en: url, "x-default": url } },
+    });
+  }
+
+  // Compatibility hub
+  entries.push({
+    url: `${SITE}/compatibility`,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+    alternates: { languages: { en: `${SITE}/compatibility`, "x-default": `${SITE}/compatibility` } },
+  });
+
+  // Editorial guide hub page
+  const guidesHubUrl = `${SITE}/guides`;
+  entries.push({
+    url: guidesHubUrl,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+    alternates: { languages: { en: guidesHubUrl, "x-default": guidesHubUrl } },
+  });
+
+  // Individual editorial guides
+  for (const guideSlug of getAllGuideSlugs()) {
+    const guideUrl = `${SITE}/guides/${guideSlug}`;
+    entries.push({
+      url: guideUrl,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+      alternates: { languages: { en: guideUrl, "x-default": guideUrl } },
+    });
+  }
+
   for (const slug of allPairSlugs()) {
     const url = `${SITE}/compatibility/${slug}`;
     entries.push({

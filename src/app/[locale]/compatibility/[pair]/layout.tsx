@@ -34,7 +34,7 @@ export async function generateMetadata({
 
   const description = `Are ${d1.name} and ${d2.name} compatible? ${d1.element} meets ${d2.element} in a ${scores.aspectName.toLowerCase()} aspect. Overall score: ${scores.overall}%. Free compatibility breakdown with strengths, growth areas, and deeper tools.`;
 
-  const canonical = `https://astrologyforlove.com/compatibility/${pair}`;
+  const canonical = `https://www.astrologyforlove.com/compatibility/${pair}`;
 
   return {
     title,
@@ -52,7 +52,7 @@ export async function generateMetadata({
       locale: "en_US",
       images: [
         {
-          url: "https://astrologyforlove.com/opengraph-image",
+          url: "https://www.astrologyforlove.com/opengraph-image",
           width: 1200,
           height: 630,
           alt: `${d1.name} and ${d2.name} Compatibility — AstrologyForLove`,
@@ -63,7 +63,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${d1.name} & ${d2.name} Compatibility — ${scores.overall}%`,
       description,
-      images: ["https://astrologyforlove.com/opengraph-image"],
+      images: ["https://www.astrologyforlove.com/opengraph-image"],
     },
   };
 }

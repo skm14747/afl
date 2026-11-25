@@ -27,10 +27,10 @@ export type PublicationStatus = "draft" | "in-review" | "published";
 /** Only locales with translated page copy are published. Others stay routable and noindex. */
 export const localePublicationStatus: Record<Locale, PublicationStatus> = {
   en: "published",
-  es: "draft",
+  es: "published",
   fr: "draft",
   de: "draft",
-  pt: "draft",
+  pt: "published",
   hi: "draft",
   it: "draft",
   ja: "draft",

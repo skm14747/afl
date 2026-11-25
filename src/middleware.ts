@@ -40,6 +40,33 @@ export default function middleware(request: NextRequest) {
     }
   }
 
+  // next-intl adds a Link header with hreflang for ALL configured locales.
+  // Strip entries for draft locales that don't have this route translated,
+  // so Google only sees hreflang for locales that actually serve content.
+  const linkHeader = response.headers.get("link");
+  if (linkHeader) {
+    const href = resolveHref(locale, segments) ?? resolveHref(defaultLocale, ["", ...segments]);
+    const filtered = linkHeader
+      .split(",")
+      .map((part) => part.trim())
+      .filter((part) => {
+        const langMatch = part.match(/hreflang="([^"]+)"/);
+        if (!langMatch) return true;
+        const lang = langMatch[1];
+        if (lang === "x-default") return true;
+        if (isPublishedLocale(lang)) return true;
+        if (href && isTranslatedRoute(lang as Locale, href)) return true;
+        return false;
+      })
+      .join(", ");
+
+    if (filtered) {
+      response.headers.set("link", filtered);
+    } else {
+      response.headers.delete("link");
+    }
+  }
+
   return response;
 }
 

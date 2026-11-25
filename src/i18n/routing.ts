@@ -254,6 +254,9 @@ export const routing = defineRouting({
       ar: "/injithab-azzuhra-walmirrikh",
     },
 
+    "/blog": "/blog",
+    "/guides": "/guides",
+    "/compatibility": "/compatibility",
     "/relationship-forecast": "/relationship-forecast",
     "/about": "/about",
     "/privacy": "/privacy",

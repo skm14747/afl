@@ -1,13 +1,17 @@
 import type { MetadataRoute } from "next";
 
+const SITE = "https://www.astrologyforlove.com";
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
+        disallow: ["/api/", "/private/"],
       },
     ],
-    sitemap: "https://astrologyforlove.com/sitemap.xml",
+    sitemap: `${SITE}/sitemap.xml`,
+    host: SITE,
   };
 }

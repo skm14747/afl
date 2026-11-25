@@ -1,0 +1,99 @@
+# AstrologyForLove — Full Tool Reference
+
+> Free zodiac compatibility calculators for love, soulmates, and marriage. Real planetary positions from the astronomy-engine ephemeris, calculated in your browser. No data leaves your device.
+
+## Love Compatibility
+URL: https://www.astrologyforlove.com/love-compatibility
+Evaluates the angular aspect (conjunction, sextile, square, trine, opposition) between two Sun signs, combined with elemental compatibility scoring. Returns an overall compatibility percentage with breakdowns for emotional, communication, romance, values, and long-term dimensions, plus strengths and growth areas.
+
+## Venus Sign Calculator
+URL: https://www.astrologyforlove.com/venus-sign-calculator
+Calculates Venus's ecliptic longitude at birth using the astronomy-engine ephemeris, then maps to tropical zodiac sign. Returns Venus sign, degree, retrograde status, and five-dimension interpretation (love style, attraction, relationships, expression, needs).
+
+## Moon Sign Compatibility
+URL: https://www.astrologyforlove.com/moon-sign-compatibility
+Calculates each person's Moon sign from birth date and optional time, then compares by sign-distance and element. Returns emotional compatibility dimensions: nurturing style, security needs, emotional expression, and domestic harmony.
+
+## Love Language Calculator
+URL: https://www.astrologyforlove.com/love-language-calculator
+Analyzes Venus, Moon, and Mars placements to identify your astrological love language. Maps planetary positions to communication preferences and emotional expression styles.
+
+## Relationship Pattern Analyzer
+URL: https://www.astrologyforlove.com/relationship-pattern-analyzer
+Examines natal chart patterns to uncover recurring attraction dynamics and growth edges. Identifies Venus-Mars-Pluto configurations, 7th house patterns, and nodal axis themes.
+
+## Relationship Forecast
+URL: https://www.astrologyforlove.com/relationship-forecast
+Calculates a baseline compatibility score, then projects 12 months of transit windows relevant to the relationship. Shows favorable and challenging periods based on transiting planets to natal Venus, Mars, and 7th house.
+
+## Venus–Mars Attraction
+URL: https://www.astrologyforlove.com/venus-mars-attraction
+Compares Venus and Mars positions across two charts for cross-chart contacts (Venus-Mars conjunctions, oppositions, trines) that indicate romantic and physical chemistry.
+
+## Marriage Compatibility
+URL: https://www.astrologyforlove.com/marriage-compatibility
+Tropical marriage astrology analyzing both birth charts. Evaluates 7th house rulers, Venus and Saturn conditions, Juno aspects, and long-term stability indicators.
+
+## Soulmate Calculator
+URL: https://www.astrologyforlove.com/soulmate-calculator
+One-person analysis of romantic tendencies through Venus (love style), Moon (emotional needs), and Mars (passion and drive). Builds a soulmate profile from the natal chart.
+
+## Composite Chart
+URL: https://www.astrologyforlove.com/composite-chart
+Calculates the midpoint composite chart from two birth charts. When both birth places are known, also generates a Davison relocated chart. Shows the relationship as its own entity.
+
+## Synastry Chart
+URL: https://www.astrologyforlove.com/synastry-chart
+Full synastry analysis with aspect grid, biwheel visualization, house overlays, and relationship themes from every planet-to-planet connection between two birth charts.
+
+## Birth Chart Compatibility
+URL: https://www.astrologyforlove.com/birth-chart-compatibility
+Weighted compatibility score using real planetary positions from both birth charts. Breaks down emotional, romantic, and long-term compatibility with planet-by-planet analysis.
+
+## Rising Sign Compatibility
+URL: https://www.astrologyforlove.com/rising-sign-compatibility
+Compares Ascendant signs between two people for first-impression dynamics, social compatibility, and partnership style.
+
+## Moon Phase Soulmate
+URL: https://www.astrologyforlove.com/moon-phase-soulmate
+Determines each person's birth moon phase (new, waxing crescent, first quarter, etc.) and checks if the two phases combine to form a symbolic full moon.
+
+## Mars Sign Compatibility
+URL: https://www.astrologyforlove.com/mars-sign-compatibility
+Compares Mars placements for passion style, sexual chemistry, drive, ambition alignment, and conflict resolution patterns.
+
+## Ex-Relationship Insights
+URL: https://www.astrologyforlove.com/ex-compatibility
+Retrospective relationship analysis through an astrological lens. Examines what worked, what clashed, and what patterns to watch for in future relationships.
+
+## Twin Flame Calculator
+URL: https://www.astrologyforlove.com/twin-flame-calculator
+Examines synastry for markers traditionally associated with twin flame connections: nodal contacts, Pluto aspects, 12th house overlays, and mirrored chart patterns.
+
+## Relationship Numerology
+URL: https://www.astrologyforlove.com/relationship-numerology
+Calculates Life Path numbers for two people and interprets their numerological compatibility, including Master Numbers (11, 22, 33).
+
+## Zodiac Love Guide
+URL: https://www.astrologyforlove.com/zodiac-love
+Comprehensive guide for each of the 12 zodiac signs covering love expression, strengths, challenges, and best matches.
+
+## Kundli Matching
+URL: https://www.astrologyforlove.com/kundli-matching
+Vedic (sidereal) marriage compatibility using the Lahiri Ayanamsa. Calculates 36 guna Ashtakoota matching, checks Mangal Dosha, and evaluates ten South Indian poruthams.
+
+## Weton Jodoh
+URL: https://www.astrologyforlove.com/weton-jodoh
+Javanese love compatibility from two birth dates. Each weton (5-day × 7-day cycle combination) carries a neptu value; the total maps to one of eight traditional compatibility labels.
+
+## Sign Pair Compatibility
+URL: https://www.astrologyforlove.com/compatibility/{sign1}-and-{sign2}
+78 unique sign-pair pages covering every zodiac combination with detailed compatibility breakdowns.
+
+---
+
+## Technical Details
+- Ephemeris: astronomy-engine (sub-arc-second precision)
+- Zodiac: Tropical (Western) for most tools; Lahiri sidereal for Kundli
+- Privacy: All calculations run client-side in the browser
+- No account required, no data uploaded

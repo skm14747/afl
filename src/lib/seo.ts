@@ -3,7 +3,7 @@ import { getPathname } from "@/i18n/navigation";
 import { defaultLocale, locales, localePublicationStatus } from "@/i18n/locales";
 import { translatedRoutes } from "@/i18n/translated-routes";
 
-const SITE = "https://astrologyforlove.com";
+const SITE = "https://www.astrologyforlove.com";
 
 /**
  * Build static Metadata with canonical, hreflang, and OpenGraph for a tool page.

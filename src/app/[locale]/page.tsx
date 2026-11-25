@@ -37,7 +37,7 @@ import { setRequestLocale } from "next-intl/server";
 /** Page component reads params for setRequestLocale + JSON-LD canonical. */
 export const instant = false;
 
-const SITE = "https://astrologyforlove.com";
+const SITE = "https://www.astrologyforlove.com";
 
 const HOME_TITLE = "Love Astrology & Zodiac Compatibility | AstrologyForLove";
 
@@ -314,6 +314,11 @@ export default async function HomePage({
         description: HOME_DESCRIPTION,
         slogan: "Written in the Stars. Felt in the Heart.",
         inLanguage: "en",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: `${SITE}/{search_term}`,
+          "query-input": "required name=search_term",
+        },
       },
       {
         "@type": "ItemList",
@@ -342,7 +347,7 @@ export default async function HomePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <MainHeader theme="dark" />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         {/* ═══════════════════════════════════════
             Section A — COSMIC HEARTS Hero
         ═══════════════════════════════════════ */}
@@ -692,6 +697,86 @@ export default async function HomePage({
                 className="inline-flex items-center gap-2 text-sm font-medium text-[var(--crimson-love)] hover:underline"
               >
                 View all 78 sign pairings
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </Container>
+        </section>
+
+        {/* ═══════════════════════════════════════
+            Section C¾ — Editorial Guides
+        ═══════════════════════════════════════ */}
+        <section className="py-20 md:py-28">
+          <Container size="standard">
+            <ScrollFadeIn>
+              <SectionHeading
+                eyebrow="Learn & Explore"
+                headline={
+                  <>
+                    Love Astrology{" "}
+                    <em className="text-serif-italic">Guides</em>
+                  </>
+                }
+                body="Educational articles on zodiac compatibility, Venus and Moon signs, synastry, marriage astrology, and more."
+              />
+            </ScrollFadeIn>
+            <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+              {[
+                {
+                  slug: "zodiac-compatibility-guide",
+                  title: "Zodiac Compatibility Guide",
+                  desc: "Elements, aspects, and modalities in love.",
+                },
+                {
+                  slug: "venus-in-signs-guide",
+                  title: "Venus in Every Sign",
+                  desc: "How your Venus placement shapes romance.",
+                },
+                {
+                  slug: "synastry-explained",
+                  title: "Synastry Explained",
+                  desc: "How to read a relationship chart.",
+                },
+                {
+                  slug: "moon-signs-emotional-needs",
+                  title: "Moon Signs & Emotional Needs",
+                  desc: "What you truly need to feel loved.",
+                },
+                {
+                  slug: "marriage-astrology-guide",
+                  title: "Marriage Astrology",
+                  desc: "The 7th house, Saturn, and commitment.",
+                },
+                {
+                  slug: "venus-mars-chemistry",
+                  title: "Venus–Mars Chemistry",
+                  desc: "The astrology of attraction and desire.",
+                },
+              ].map((item) => (
+                <ScrollFadeIn key={item.slug}>
+                  <Link
+                    href={`/guides/${item.slug}` as never}
+                    className="group flex flex-col gap-1.5 p-5 rounded-[var(--radius-lg)] border border-[var(--color-border-subtle)] bg-[var(--color-surface)] hover:border-[var(--cosmic-rose)]/40 hover:shadow-[var(--shadow-sm)] transition-all"
+                  >
+                    <span
+                      className="text-sm font-semibold group-hover:text-[var(--crimson-love)] transition-colors"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {item.title}
+                    </span>
+                    <span className="text-xs text-[var(--color-muted-fg)]">
+                      {item.desc}
+                    </span>
+                  </Link>
+                </ScrollFadeIn>
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Link
+                href={"/guides" as never}
+                className="inline-flex items-center gap-2 text-sm font-medium text-[var(--crimson-love)] hover:underline"
+              >
+                View all guides
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

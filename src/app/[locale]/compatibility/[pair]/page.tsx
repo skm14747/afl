@@ -139,7 +139,7 @@ export default function SignPairPage() {
     return (
       <>
         <MainHeader />
-        <main className="flex-1 pt-[60px]">
+        <main id="main-content" className="flex-1 pt-[60px]">
           <Container size="standard" className="py-24 text-center">
             <h1
               style={{
@@ -231,13 +231,13 @@ export default function SignPairPage() {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://astrologyforlove.com/",
+            item: "https://www.astrologyforlove.com/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Compatibility",
-            item: "https://astrologyforlove.com/love-compatibility",
+            item: "https://www.astrologyforlove.com/love-compatibility",
           },
           {
             "@type": "ListItem",
@@ -264,7 +264,7 @@ export default function SignPairPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <MainHeader theme="dark" />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         {/* Hero */}
         <section className="bg-immersive text-[var(--moonlight-cream)] relative overflow-hidden bg-stars">
           <Container size="standard" className="py-20 md:py-28 relative text-center">

@@ -17,7 +17,7 @@ export default function AboutPage() {
   return (
     <>
       <MainHeader />
-      <main className="flex-1 pt-[60px]">
+      <main id="main-content" className="flex-1 pt-[60px]">
         <Container size="standard" className="py-16 max-w-2xl">
           <h1
             className="mb-6"

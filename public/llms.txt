@@ -1,0 +1,38 @@
+# AstrologyForLove
+
+> Free zodiac compatibility calculators for love, soulmates, and marriage. Real planetary positions from the astronomy-engine ephemeris, calculated in your browser.
+
+## Tools
+
+- [Love Compatibility](https://www.astrologyforlove.com/love-compatibility): Zodiac compatibility for two Sun signs — romance, communication, and long-term potential.
+- [Venus Sign Calculator](https://www.astrologyforlove.com/venus-sign-calculator): Find your Venus sign and understand your romantic nature and love language.
+- [Moon Sign Compatibility](https://www.astrologyforlove.com/moon-sign-compatibility): Compare Moon placements to reveal emotional compatibility and nurturing styles.
+- [Love Language Calculator](https://www.astrologyforlove.com/love-language-calculator): Discover your astrological love language through Venus, Moon, and Mars placements.
+- [Relationship Pattern Analyzer](https://www.astrologyforlove.com/relationship-pattern-analyzer): Uncover recurring attraction patterns and growth edges in your natal chart.
+- [Relationship Forecast](https://www.astrologyforlove.com/relationship-forecast): A score for how two charts meet, then dated windows for the next 12 months.
+- [Venus–Mars Attraction](https://www.astrologyforlove.com/venus-mars-attraction): Compare two charts for the Venus–Mars contacts that create romantic and physical chemistry.
+- [Marriage Compatibility](https://www.astrologyforlove.com/marriage-compatibility): Tropical marriage astrology from both birth charts.
+- [Soulmate Calculator](https://www.astrologyforlove.com/soulmate-calculator): Discover your romantic tendencies through Venus, Moon, and Mars — a one-person soulmate profile.
+- [Composite Chart](https://www.astrologyforlove.com/composite-chart): The midpoint chart of two people, plus a Davison chart when both birth places are known.
+- [Synastry Chart](https://www.astrologyforlove.com/synastry-chart): Full aspect grid and biwheel from two birth charts.
+- [Birth Chart Compatibility](https://www.astrologyforlove.com/birth-chart-compatibility): Weighted compatibility score with planet-by-planet breakdowns.
+- [Rising Sign Compatibility](https://www.astrologyforlove.com/rising-sign-compatibility): Compare Ascendants for first-impression and partnership dynamics.
+- [Moon Phase Soulmate](https://www.astrologyforlove.com/moon-phase-soulmate): Find each person's birth moon phase and see if your moons make one full moon together.
+- [Mars Sign Compatibility](https://www.astrologyforlove.com/mars-sign-compatibility): Compare two Mars signs for passion, sexual chemistry, drive, and conflict style.
+- [Ex-Relationship Insights](https://www.astrologyforlove.com/ex-compatibility): Reflect on past relationship dynamics through an astrological lens.
+- [Twin Flame Calculator](https://www.astrologyforlove.com/twin-flame-calculator): Examine synastry indicators traditionally associated with deep soul connections.
+- [Relationship Numerology](https://www.astrologyforlove.com/relationship-numerology): Compare Life Path numbers for numerological relationship insights.
+- [Zodiac Love Guide](https://www.astrologyforlove.com/zodiac-love): Explore how each zodiac sign expresses love, with strengths and best matches.
+- [Kundli Matching](https://www.astrologyforlove.com/kundli-matching): Vedic marriage match — 36 guna, Mangal dosha, and ten poruthams.
+- [Weton Jodoh](https://www.astrologyforlove.com/weton-jodoh): Javanese love match from two birth dates.
+
+## About
+
+All calculations use the astronomy-engine ephemeris for real planetary positions. Birth data stays in the browser — nothing is sent to a server.
+
+## Links
+
+- Website: https://www.astrologyforlove.com
+- Privacy: https://www.astrologyforlove.com/privacy
+- Terms: https://www.astrologyforlove.com/terms
+- Contact: https://www.astrologyforlove.com/contact

@@ -7,8 +7,20 @@ import { Footer } from "@/components/layout/Footer";
 import { Sparkles, ChevronRight } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { CosmicHeartBackground } from "@/components/cosmic/CosmicHeartBackground";
+import { JsonLd, FAQJsonLd, HowToJsonLd } from "@/components/seo/JsonLd";
 
-const SITE = "https://astrologyforlove.com";
+const SITE = "https://www.astrologyforlove.com";
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface HowToItem {
+  name: string;
+  description: string;
+  steps: { name: string; text: string }[];
+}
 
 interface CalculatorShellProps {
   children: React.ReactNode;
@@ -16,6 +28,8 @@ interface CalculatorShellProps {
   subtitle?: string;
   description?: string;
   icon?: React.ReactNode;
+  faqs?: FaqItem[];
+  howTo?: HowToItem;
 }
 
 export function CalculatorShell({
@@ -24,53 +38,41 @@ export function CalculatorShell({
   subtitle,
   description,
   icon,
+  faqs,
+  howTo,
 }: CalculatorShellProps) {
   const pathname = usePathname();
   const pageUrl = `${SITE}${pathname}`;
 
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: SITE,
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: title,
-          item: pageUrl,
-        },
-      ],
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: title,
-      url: pageUrl,
-      applicationCategory: "LifestyleApplication",
-      operatingSystem: "All",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-      },
-      ...(description ? { description } : {}),
-    },
-  ];
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: SITE },
+            { "@type": "ListItem", position: 2, name: title, item: pageUrl },
+          ],
+        }}
       />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: title,
+          url: pageUrl,
+          applicationCategory: "LifestyleApplication",
+          operatingSystem: "All",
+          isAccessibleForFree: true,
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          ...(description ? { description } : {}),
+        }}
+      />
+      {faqs && faqs.length > 0 && <FAQJsonLd faqs={faqs} />}
+      {howTo && <HowToJsonLd {...howTo} />}
       <MainHeader />
-      <main className="flex-1 pt-[60px]">
+      <main id="main-content" className="flex-1 pt-[60px]">
         {/* Hero header */}
         <div className="bg-immersive text-[var(--moonlight-cream)] py-16 md:py-24 relative overflow-hidden">
           <CosmicHeartBackground intensity="quiet" heart="corner" />
@@ -119,6 +121,36 @@ export function CalculatorShell({
         {/* Content */}
         <Container size="standard" className="py-12 md:py-16">
           {children}
+
+          {faqs && faqs.length > 0 && (
+            <section className="mt-16 max-w-3xl mx-auto">
+              <h2
+                className="text-[var(--moonlight-cream)] mb-6"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "var(--text-h3)",
+                  fontWeight: 500,
+                }}
+              >
+                Frequently Asked Questions
+              </h2>
+              <div className="space-y-3">
+                {faqs.map((faq) => (
+                  <details
+                    key={faq.question}
+                    className="group rounded-[var(--radius-lg)] border border-[var(--color-border-subtle)] bg-[var(--color-surface)]/50"
+                  >
+                    <summary className="flex cursor-pointer items-center px-5 py-4 text-[0.95rem] font-medium text-[var(--moonlight-cream)]">
+                      {faq.question}
+                    </summary>
+                    <p className="px-5 pb-4 text-sm leading-relaxed text-[var(--neutral-300)]">
+                      {faq.answer}
+                    </p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
         </Container>
       </main>
       <Footer />
