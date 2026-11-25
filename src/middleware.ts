@@ -38,6 +38,12 @@ export default function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
+  // Let Next.js serve sitemap.xml, robots.txt, and other static assets
+  // directly — next-intl must not rewrite these to a locale-prefixed path.
+  if (/\.\w+$/.test(request.nextUrl.pathname)) {
+    return NextResponse.next();
+  }
+
   const response = intlMiddleware(request);
 
   const pathname = request.nextUrl.pathname;
@@ -88,6 +94,6 @@ export const config = {
   matcher: [
     "/",
     "/(en|es|fr|de|pt|hi|it|ja|id|ar)/:path*",
-    "/((?!_next|_vercel|api|icon|apple-icon|opengraph-image|.*\\..*).*)",
+    "/((?!_next|_vercel|api|icon|apple-icon|opengraph-image|sitemap|robots|manifest|.*\\..*).*)",
   ],
 };
